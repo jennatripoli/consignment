@@ -181,7 +181,60 @@ export const siteManagerLogin = {
     }
 }
 
-export const siteManagerList = {}
+export const siteManagerListStores = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    sort: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '50%',
+        left: '23%',
+        right: '23%',
+        backgroundColor: 'white',
+        padding: '0.3em 0.5em 0.5em 0.5em',
+        borderRadius: '1em',
+        fontSize: '1.5em'
+    },
+
+    stores: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '70%',
+        left: '15%',
+        right: '15%'
+    },
+
+    store: {
+        display: 'inline-block',
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        margin: '0 1em 1em 1em',
+        border: 'none',
+        fontSize: '1.5em',
+        backgroundColor: '#475841',
+        color: 'white',
+        width: '40%'
+    },
+
+    button: {
+        display: 'inline-block',
+        textAlign: 'center',
+        transform: 'translate(0, -1em)'
+    }
+}
 
 export const ownerCreateStore = {
     position: 'relative',

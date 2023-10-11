@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  color: #475841;
 }
 
 html {
@@ -26,6 +27,36 @@ html {
   transition: 0.5s;
 }
 
+.Button-white {
+  background-color: transparent;
+  fill: white;
+  outline: none;
+  border: none;
+}
+
+.Button-white:hover {
+  background-color: transparent;
+  stroke: #9FB8AD;
+  stroke-width: 1em;
+  transition: 0.5s;
+}
+
+.Radio {
+  appearance: none;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-clip: content-box;
+  border: 2px solid #9FB8AD;
+  margin: 0 0.35em -0.35em 0;
+}
+
+.Radio:checked {
+  background-color: #9FB8AD;
+  padding: 4px;
+  border: 2px solid #9FB8AD;
+}
+
 .Entry-light {
   border: 3px solid #9FB8AD;
 }
@@ -36,9 +67,11 @@ html {
   transition: 0.5s;
 }
 
-@media screen and (max-width: 1000px) {
-  body { font-size: 80% }
+@media screen and (max-width: 1200px) {
+  body { font-size: 80%; }
+  svg { width: 80%; height: 80%; }
 }
-@media screen and (max-width: 800px) {
-  body { font-size: 55% }
+@media screen and (max-width: 900px) {
+  body { font-size: 55%; }
+  svg { width: 55%; height: 55%; }
 }
