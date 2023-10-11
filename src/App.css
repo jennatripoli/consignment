@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+
+html {
+  background-color: #CED0CE;
+}
+
+.Button-light {
+  background-color: #9FB8AD;
+  color: white;
+}
+
+.Button-light:hover {
+  background-color: #799186;
+  transition: 0.5s;
+}
+
+.Button-dark {
+  background-color: #475841;
+  color: white;
+}
+
+.Button-dark:hover {
+  background-color: #333f2e;
+  transition: 0.5s;
+}
+
+.Entry-light {
+  border: 3px solid #9FB8AD;
+}
+
+.Entry-light:focus, .Entry-light:hover {
+  outline: none;
+  border: 3px solid #799186;
+  transition: 0.5s;
+}
+
+@media screen and (max-width: 1000px) {
+  body { font-size: 80% }
+}
+@media screen and (max-width: 800px) {
+  body { font-size: 55% }
+}

@@ -1,0 +1,270 @@
+export const header = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'left',
+
+    title: {
+        position: 'relative',
+        fontSize: '3em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    subtitle: {
+        position: 'relative',
+        fontSize: '1.5em',
+        color: '#475841'
+    },
+
+    buttonRight: {
+        position: 'absolute',
+        borderRadius: '1em',
+        maxWidth: '7em',
+        padding: '0.2em 0.5em 0.2em 0.5em',
+        borderColor: 'transparent',
+        fontSize: '1.5em',
+        right: '0',
+        top: '0.8em'
+    },
+
+    buttonMiddle: {
+        position: 'absolute',
+        borderRadius: '1em',
+        maxWidth: '7em',
+        padding: '0.2em 0.5em 0.2em 0.5em',
+        borderColor: 'transparent',
+        fontSize: '1.5em',
+        right: '7.5em',
+        top: '0.8em'
+    },
+
+    buttonLeft: {
+        position: 'absolute',
+        borderRadius: '1em',
+        maxWidth: '7em',
+        padding: '0.2em 0.5em 0.2em 0.5em',
+        borderColor: 'transparent',
+        fontSize: '1.5em',
+        right: '15em',
+        top: '0.8em'
+    },
+}
+
+export const customerListStores = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    buttonInventory: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        margin: '1em',
+        border: 'none',
+        fontSize: '1.5em'
+    },
+
+    stores: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '70%',
+        left: '15%',
+        right: '15%'
+    },
+
+    buttonStore: {
+        position: 'relative',
+        margin: '0.5em',
+        borderRadius: '1em',
+        borderColor: 'transparent',
+        width: '35%',
+        height: '4em',
+        fontSize: '1.5em',
+        fontWeight: 'bold'
+    }
+}
+
+export const customerSetGPS = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    gps: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '38%',
+        left: '29%',
+        right: '29%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}
+
+export const customerViewStore = {}
+export const customerViewAll = {}
+export const customerCompare = {}
+
+export const siteManagerLogin = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    login: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '38%',
+        left: '29%',
+        right: '29%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}
+
+export const siteManagerList = {}
+
+export const ownerCreateStore = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    store: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '38%',
+        left: '29%',
+        right: '29%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}
+
+export const ownerLogin = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    login: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '38%',
+        left: '29%',
+        right: '29%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}
+
+export const ownerViewStore = {}
+export const ownerAddComputer = {}
+export const ownerEditPrice = {}
