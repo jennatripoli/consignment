@@ -1,16 +1,19 @@
-
+import { useState } from "react"
+import { header, ownerCreateStore } from "./Layout"
+import { useNavigate } from "react-router-dom"
 
 export default function OwnerCreateStore() {
-  const [storeName, setStoreName] = React.useState('')
-  const [username, setUsername] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [longitude, setLongitude] = React.useState('')
-  const [latitude, setLatitude] = React.useState('')
-  const [confirmation, setConfirmation] = React.useState(undefined)
+  const [storeName, setStoreName] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [latitude, setLatitude] = useState('')
+  const [confirmation, setConfirmation] = useState(undefined)
+  const navigate = useNavigate()
 
-  function handleButtonBack() {
-    setCurrentPageName(previousPageName)
-  }
+  // function handleButtonBack() {
+  //   setCurrentPageName(previousPageName)
+  // }
 
   function handleButtonCreate() {
     setStoreName(document.getElementById('storeName').value)
@@ -45,7 +48,7 @@ export default function OwnerCreateStore() {
       <div style={header}>
         <div style={header.title}>Used Computers</div>
         <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-        <button onClick={handleButtonBack} style={header.buttonRight} className='Button-light'>Back</button>
+        <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
       </div>
 
       <div style={ownerCreateStore}>
@@ -69,6 +72,6 @@ export default function OwnerCreateStore() {
         <button onClick={handleButtonCreate} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
         <label>{confirmation}</label>
       </div>
-    </div>
+    </div >
   )
 }

@@ -1,9 +1,10 @@
-import { header } from './Layout'
+import { header, ownerLogin } from './Layout'
+import { useState } from 'react'
 
 export default function OwnerLogin() {
-    const [username, setUsername] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [confirmation, setConfirmation] = React.useState(undefined)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmation, setConfirmation] = useState(undefined)
 
     // ADD RETRIEVING THE STORE NAME
 

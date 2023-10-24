@@ -1,11 +1,16 @@
-export default function SiteManagerLogin() {
-    const [username, setUsername] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [confirmation, setConfirmation] = React.useState(undefined)
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { header, siteManagerLogin } from "./Layout"
 
-    function handleButtonBack() {
-        setCurrentPageName(previousPageName)
-    }
+export default function SiteManagerLogin() {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmation, setConfirmation] = useState(undefined)
+    const navigate = useNavigate()
+
+    // function handleButtonBack() {
+    //     setCurrentPageName(previousPageName)
+    // }
 
     function handleButtonLogin() {
         setUsername(document.getElementById('username').value)
@@ -19,7 +24,7 @@ export default function SiteManagerLogin() {
             const data = { 'body': JSON.stringify(msg) }
 
             // FOR TESTING
-            setCurrentPageName('SiteManagerListStores')
+            navigate('/SiteManagerListStores')
 
             /*instance.post('/siteManagerLogin', data).then((response) => {
               if (response.status === 200) {
@@ -34,7 +39,7 @@ export default function SiteManagerLogin() {
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <button onClick={handleButtonBack} style={header.buttonRight} className='Button-light'>Back</button>
+                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
 
             <div style={siteManagerLogin}>

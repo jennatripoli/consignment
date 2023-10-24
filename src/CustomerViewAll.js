@@ -1,14 +1,20 @@
+import { useState, useEffect } from "react"
+import { header, customerViewAll } from "./Layout"
+import { useNavigate } from "react-router-dom"
+
 export default function CustomerViewAll() {
-    const [retrieved, setRetreived] = React.useState(false)
-    const [allInventory, setAllInventory] = React.useState([])
-    const [inventory, setInventory] = React.useState([])
-    const [inventoryHTML, setInventoryHTML] = React.useState([])
-    const [price, setPrice] = React.useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
-    const [memory, setMemory] = React.useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
-    const [storage, setStorage] = React.useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
-    const [processor, setProcessor] = React.useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
-    const [processorGen, setProcessorGen] = React.useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
-    const [graphics, setGraphics] = React.useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
+    const [retrieved, setRetreived] = useState(false)
+    const [allInventory, setAllInventory] = useState([])
+    const [inventory, setInventory] = useState([])
+    const [inventoryHTML, setInventoryHTML] = useState([])
+    const [price, setPrice] = useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
+    const [memory, setMemory] = useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
+    const [storage, setStorage] = useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
+    const [processor, setProcessor] = useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
+    const [processorGen, setProcessorGen] = useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
+    const [graphics, setGraphics] = useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
+
+    const navigate = useNavigate()
 
     retrieve()
     function retrieve() {
@@ -32,7 +38,7 @@ export default function CustomerViewAll() {
         })*/
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const computersToRemove = []
         allInventory.forEach(computer => {
             let flag = false
@@ -68,7 +74,7 @@ export default function CustomerViewAll() {
         removeComputers(computersToRemove)
     }, [price, memory, storage, processor, processorGen, graphics])
 
-    React.useEffect(() => {
+    useEffect(() => {
         inventoryHTML.length = 0
         inventory.forEach(computer => {
             // TODO ADD SHIPPING CALCULATION
@@ -120,16 +126,16 @@ export default function CustomerViewAll() {
         setGraphics(graphicsFilter)
     }
 
-    function handleButtonBack() {
-        setCurrentPageName('CustomerListStores')
-    }
+    // function handleButtonBack() {
+    //     setCurrentPageName('CustomerListStores')
+    // }
 
     return (
         <div className='CustomerViewAll'>
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <button onClick={handleButtonBack} style={header.buttonRight} className='Button-light'>Back</button>
+                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
 
             <div style={customerViewAll}>

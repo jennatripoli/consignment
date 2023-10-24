@@ -1,8 +1,14 @@
+import { useState, useEffect } from "react"
+import { header, siteManagerListStores } from "./Layout"
+import { useNavigate } from "react-router-dom"
+
 export default function SiteManagerListStores() {
-    const [retrieved, setRetreived] = React.useState(false)
-    const [stores, setStores] = React.useState([])
-    const [storesHTML, setStoresHTML] = React.useState([])
-    const [sort, setSort] = React.useState('')
+    const [retrieved, setRetreived] = useState(false)
+    const [stores, setStores] = useState([])
+    const [storesHTML, setStoresHTML] = useState([])
+    const [sort, setSort] = useState('')
+
+    const navigate = useNavigate()
 
     retrieve()
     function retrieve() {
@@ -21,7 +27,7 @@ export default function SiteManagerListStores() {
         })*/
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (sort === 'ascending')
         {
             document.getElementById('ascending').checked = true
@@ -35,7 +41,7 @@ export default function SiteManagerListStores() {
         }
     }, [sort])
 
-    React.useEffect(() => {
+    useEffect(() => {
         storesHTML.length = 0
         stores.forEach(store => {
             const entry = (
@@ -50,7 +56,7 @@ export default function SiteManagerListStores() {
     }, [stores])
 
     function handleButtonLogout() {
-        setCurrentPageName('CustomerListStores')
+        navigate('/CustomerListStores')
     }
 
     function handleButtonDelete(storeNameDelete) {
