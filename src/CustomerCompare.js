@@ -1,0 +1,2 @@
+export default function CustomerCompare() {
+}
