@@ -1,20 +1,29 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { header, customerViewAll } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
 export default function CustomerViewAll() {
-    const [retrieved, setRetreived] = useState(false)
-    const [allInventory, setAllInventory] = useState([])
-    const [inventory, setInventory] = useState([])
-    const [inventoryHTML, setInventoryHTML] = useState([])
-    const [price, setPrice] = useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
-    const [memory, setMemory] = useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
-    const [storage, setStorage] = useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
-    const [processor, setProcessor] = useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
-    const [processorGen, setProcessorGen] = useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
-    const [graphics, setGraphics] = useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
-
     const navigate = useNavigate()
+    // Boolean to indicate if data is retrieved.
+    const [retrieved, setRetreived] = React.useState(false)
+    // List of all inventory in the site.
+    const [allInventory, setAllInventory] = React.useState([])
+    // List of inventory to display, based on active filters.
+    const [inventory, setInventory] = React.useState([])
+    // HTML to display the list of inventory.
+    const [inventoryHTML, setInventoryHTML] = React.useState([])
+    // List of active price filters.
+    const [price, setPrice] = React.useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
+    // List of active memory filters.
+    const [memory, setMemory] = React.useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
+    // List of active storage filters.
+    const [storage, setStorage] = React.useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
+    // List of active processor filters.
+    const [processor, setProcessor] = React.useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
+    // List of active processor generation filters.
+    const [processorGen, setProcessorGen] = React.useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
+    // List of active graphics filters.
+    const [graphics, setGraphics] = React.useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
 
     retrieve()
     function retrieve() {
@@ -30,21 +39,15 @@ export default function CustomerViewAll() {
             { storeName: 'Store3', longitude: 500, latitude: 800, id: 5, name: 'Computer5', price: 400, memory: '12 GB', storage: '512 GB', processor: 'AMD Ryzen 7', processorGen: 'AMD Ryzen 6000 Series', graphics: 'AMD Radeon Pro W6400' },
             { storeName: 'Store4', longitude: 1000, latitude: 900, id: 6, name: 'Computer6', price: 1050, memory: '16 GB', storage: '1 TB', processor: 'AMD Ryzen 9', processorGen: 'AMD Ryzen 7000 Series', graphics: 'AMD Radeon Pro W6300' },
             { storeName: 'Store4', longitude: 300, latitude: 100, id: 7, name: 'Computer7', price: 2050, memory: '32 GB', storage: '1 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'Intel UHD Graphics 770' }])
-
-        /*instance.get('/customerViewAll').then((response) => {
-          if (response.status === 200) {
-            setAllInventory(response)
-          }
-        })*/
     }
 
+    // Update inventory when any active filters change.
     useEffect(() => {
         const computersToRemove = []
         allInventory.forEach(computer => {
             let flag = false
             price.forEach(filter => {
-                if (computer.price >= filter[0])
-                {
+                if (computer.price >= filter[0]) {
                     if (!isNaN(filter[1]) && computer.price <= filter[1]) flag = true
                     else if (isNaN(filter[1])) flag = true
                 }
@@ -74,6 +77,7 @@ export default function CustomerViewAll() {
         removeComputers(computersToRemove)
     }, [price, memory, storage, processor, processorGen, graphics])
 
+    // Update inventoryHTML when inventory changes.
     useEffect(() => {
         inventoryHTML.length = 0
         inventory.forEach(computer => {
@@ -95,12 +99,16 @@ export default function CustomerViewAll() {
         setInventoryHTML([].concat(inventoryHTML))
     }, [inventory])
 
+    /** Set inventory to not include computers that are removed through filters. 
+     * @param ids An array of the id of each computer to be removed.
+     */
     function removeComputers(ids) {
         const inventoryWithoutDeleted = []
         allInventory.forEach(computer => { if (!ids.includes(computer.id)) inventoryWithoutDeleted.push(computer) })
         setInventory([].concat(inventoryWithoutDeleted))
     }
 
+    /** Update all active filters based on user selection. If no filters are selected for a specific criteria, the inventory will not be filtered on that criteria. */
     function handleFilter() {
         let priceFilter = [], memoryFilter = [], storageFilter = [], processorFilter = [], processorGenFilter = [], graphicsFilter = []
 
@@ -125,10 +133,6 @@ export default function CustomerViewAll() {
         setProcessorGen(processorGenFilter)
         setGraphics(graphicsFilter)
     }
-
-    // function handleButtonBack() {
-    //     setCurrentPageName('CustomerListStores')
-    // }
 
     return (
         <div className='CustomerViewAll'>

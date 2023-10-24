@@ -3,18 +3,21 @@ import { header, ownerCreateStore } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
 export default function OwnerCreateStore() {
-  const [storeName, setStoreName] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [longitude, setLongitude] = useState('')
-  const [latitude, setLatitude] = useState('')
-  const [confirmation, setConfirmation] = useState(undefined)
   const navigate = useNavigate()
+  // The input for the store name.
+  const [storeName, setStoreName] = useState('')
+  // The input for the store username.
+  const [username, setUsername] = useState('')
+  // The input for the store password.
+  const [password, setPassword] = useState('')
+  // The input for the store longitude.
+  const [longitude, setLongitude] = useState('')
+  // The input for the store latitude.
+  const [latitude, setLatitude] = useState('')
+  // The confirmation text that will indicate failure to create.
+  const [confirmation, setConfirmation] = useState(undefined)
 
-  // function handleButtonBack() {
-  //   setCurrentPageName(previousPageName)
-  // }
-
+  /** Create a store with input data. */
   function handleButtonCreate() {
     setStoreName(document.getElementById('storeName').value)
     setUsername(document.getElementById('username').value)
@@ -22,24 +25,10 @@ export default function OwnerCreateStore() {
     setLongitude(document.getElementById('longitude').value)
     setLatitude(document.getElementById('latitude').value)
 
-    if (storeName && username && password && longitude && latitude)
-    {
-      const msg = {}
-      msg['storeName'] = storeName
-      msg['username'] = username
-      msg['password'] = password
-      msg['longitude'] = longitude
-      msg['latitude'] = latitude
-      const data = { 'body': JSON.stringify(msg) }
-
+    if (storeName && username && password && longitude && latitude) {
       // FOR TESTING
       navigate('/OwnerViewStore')
-
-      /*instance.post('/ownerCreateStore', data).then((response) => {
-        if (response.status === 200) {
-          setCurrentPageName('OwnerViewStore')
-        } else setConfirmation('Failed to create store, please choose a unique store name.')
-      })*/
+      // setConfirmation('Failed to create store, please choose a unique store name.')
     } else setConfirmation('Failed to create store, please fill in all fields.')
   }
 

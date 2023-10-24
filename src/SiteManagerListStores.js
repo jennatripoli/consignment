@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { header, siteManagerListStores } from "./Layout"
-import { useNavigate } from "react-router-dom"
 
 export default function SiteManagerListStores() {
+    // Boolean to indicate if data is retrieved.
     const [retrieved, setRetreived] = useState(false)
+    // List of all stores on the site.
     const [stores, setStores] = useState([])
+    // HTML to display list of all stores.
     const [storesHTML, setStoresHTML] = useState([])
+    // How to sort the stores based on inventory ('ascending' or 'descending').
     const [sort, setSort] = useState('')
-
-    const navigate = useNavigate()
 
     retrieve()
     function retrieve() {
@@ -18,29 +20,22 @@ export default function SiteManagerListStores() {
         // FOR TESTING
         setStores([{ storeName: 'Store1', inventory: 300, balance: 300 }, { storeName: 'Store2', inventory: 500, balance: 100 }, { storeName: 'Store3', inventory: 200, balance: 400 }, { storeName: 'Store4', inventory: 100, balance: 500 }])
         setSort('ascending')
-
-        /*instance.get('/siteManagerListStores').then((response) => {
-          if (response.status === 200) {
-            setStores(response)
-            setSort('ascending')
-          }
-        })*/
     }
 
+    // Update stores when sort changes.
     useEffect(() => {
-        if (sort === 'ascending')
-        {
+        if (sort === 'ascending') {
             document.getElementById('ascending').checked = true
             document.getElementById('descending').checked = false
             setStores([].concat(stores).sort((a, b) => b.inventory - a.inventory))
-        } else if (sort === 'descending')
-        {
+        } else if (sort === 'descending') {
             document.getElementById('descending').checked = true
             document.getElementById('ascending').checked = false
             setStores([].concat(stores).sort((a, b) => a.inventory - b.inventory))
         }
     }, [sort])
 
+    // Update storesHTML when stores changes.
     useEffect(() => {
         storesHTML.length = 0
         stores.forEach(store => {
@@ -55,27 +50,15 @@ export default function SiteManagerListStores() {
         setStoresHTML([].concat(storesHTML))
     }, [stores])
 
-    function handleButtonLogout() {
-        navigate('/CustomerListStores')
-    }
-
+    /** Delete a store from the site. */
     function handleButtonDelete(storeNameDelete) {
         // FOR TESTING
         const storesWithoutDeleted = []
         stores.forEach(store => { if (store.storeName !== storeNameDelete) storesWithoutDeleted.push(store) })
         setStores([].concat(storesWithoutDeleted))
-
-        const msg = {}
-        msg['storeName'] = storeNameDelete
-        const data = { 'body': JSON.stringify(msg) }
-
-        /*instance.post('/siteManagerDeleteStore', data).then((response) => {
-          if (response.status === 200) {
-            setStores(response)
-          }
-        })*/
     }
 
+    /** Sort the stores by their inventory. */
     function handleSort() {
         if (document.getElementById('ascending').checked) setSort('ascending')
         else if (document.getElementById('descending').checked) setSort('descending')
@@ -86,7 +69,7 @@ export default function SiteManagerListStores() {
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <button onClick={handleButtonLogout} style={header.buttonRight} className='Button-light'>Logout</button>
+                <Link to='/CustomerListStores'><button style={header.buttonRight} className='Button-light'>Logout</button></Link>
             </div>
 
             <div style={siteManagerListStores}>
