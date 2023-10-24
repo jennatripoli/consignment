@@ -5,12 +5,18 @@ import React, { useState } from 'react'
 // const instance = axios.create({ baseURL: 'URL' })
 
 function App() {
+  // The function for the current page.
   const [currentPage, setCurrentPage] = React.useState(<CustomerListStores/>)
+  // The name of the current page.
   const [currentPageName, setCurrentPageName] = React.useState('CustomerListStores')
+  // The name of the previous page, for going back.
   const [previousPageName, setPreviousPageName] = React.useState('CustomerListStores')
+  // The name of the destination page, for redirecting if another page must be accessed first.
   const [destinationPageName, setDestinationPageName] = React.useState('')
+  // The customer's GPS coordinates [longitude, latitude].
   const [customerGPS, setCustomerGPS] = React.useState([33.9727, -118.3507])
 
+  // Change currentPage and previousPageName when currentPageName changes
   React.useEffect (() => {
     if (currentPageName === 'CustomerListStores') setCurrentPage(<CustomerListStores/>)
     else if (currentPageName === 'CustomerSetGPS') setCurrentPage(<CustomerSetGPS/>)
@@ -30,40 +36,51 @@ function App() {
     if (currentPageName !== previousPageName) setPreviousPageName(currentPageName)
   }, [currentPageName])
 
+  /**
+   * Customer views a list of all stores on the site (launch page).
+   * Can navigate to SiteManagerLogin, OwnerCreateStore, CustomerSetGPS, CustomerViewStore, and CustomerViewAll.
+   */
   function CustomerListStores() {
-    const storesHTML = []
+    // Boolean to indicate if data is retrieved.
+    const [retrieved, setRetreived] = React.useState(false)
+    // List of all stores.
+    const [stores, setStores] = React.useState([])
+    // HTML to display the list of all stores.
+    const [storesHTML, setStoresHTML] = React.useState([])
 
-    // FOR TESTING
-    const stores = ['Store 1', 'Store 2', 'Store 3', 'Store 4']
-    stores.forEach(store => {
-      const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
-      storesHTML.push(entry)
-    })
+    retrieve()
+    function retrieve() {
+      if (retrieved) return
+      else setRetreived(true)
 
-    /*instance.get('/customerListStores').then((response) => {
-      if (response.status === 200) {
-        response.stores.forEach(store => {
-          const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
-          storesHTML.push(entry)
-        })
-      }
-    })*/
-
-    function handleButtonLogin() {
-      setCurrentPageName('SiteManagerLogin')
+      // FOR TESTING
+      setStores(['Store 1', 'Store 2', 'Store 3', 'Store 4'])
     }
 
-    function handleButtonCreate() {
-      setCurrentPageName('OwnerCreateStore')
-    }
+    // Update storesHTML when stores changes.
+    React.useEffect(() => {
+      storesHTML.length = 0
+      stores.forEach(store => {
+        const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
+        storesHTML.push(entry)
+      })
+      setStoresHTML([].concat(storesHTML))
+    }, [stores])
 
+    /** Go to SiteManagerLogin. */
+    function handleButtonLogin() { setCurrentPageName('SiteManagerLogin') }
+
+    /** Go to OwnerCreateStore. */
+    function handleButtonCreate() { setCurrentPageName('OwnerCreateStore') }
+
+    /** Go to CustomerSetGPS. */
     function handleButtonGPS() {
       setCurrentPageName('CustomerSetGPS')
       setDestinationPageName('CustomerSetGPS')
     }
 
+    /** Go to CustomerViewAll (but first to CustomerSetGPS if GPS is not set). */
     function handleButtonViewAll() {
-      console.log(customerGPS)
       if (customerGPS.length > 0) setCurrentPageName('CustomerViewAll')
       else {
         setCurrentPageName('CustomerSetGPS')
@@ -90,27 +107,31 @@ function App() {
     )
   }
 
+  /**
+   * Customer sets their GPS location.
+   * Can navigate to CustomerListStores or CustomerViewStore/CustomerViewAll, depending on the destination page.
+   */
   function CustomerSetGPS() {
+    // The input for the longitude coordinate.
     const [longitude, setLongitude] = React.useState(customerGPS[0])
+    // The input for the latitude coordinate.
     const [latitude, setLatitude] = React.useState(customerGPS[1])
+    // The confirmation text that will indicate failure to save.
     const [confirmation, setConfirmation] = React.useState(undefined)
 
+    /** Go back to the previous page. */
     function handleButtonBack() {
       setCurrentPageName(previousPageName)
     }
 
+    /** Save the GPS data. */
     function handleButtonSave() {
       setLongitude(document.getElementById('longitude').value)
       setLatitude(document.getElementById('latitude').value)
 
       if (longitude && latitude) {
         setCustomerGPS([longitude, latitude])
-        setConfirmation('Save Successful!')
-
-        if (destinationPageName !== currentPageName) {
-          setTimeout(2000)
-          setCurrentPageName(destinationPageName)
-        }
+        if (destinationPageName !== currentPageName) setCurrentPageName(destinationPageName)
       } else setConfirmation('Failed to save GPS, please fill in all fields.')
     }
 
@@ -125,11 +146,9 @@ function App() {
         <div style={customerSetGPS}>
           <div style={customerSetGPS.title}>-- SET GPS LOCATION --</div>
           <div style={customerSetGPS.gps}>
-            <label>Longitude:&emsp;</label>
-            <input id='longitude' type='number' value={longitude} onChange={e => setLongitude(e.target.value)} style={customerSetGPS.entry} className='Entry-light'></input>
+            <label>Longitude:&emsp;</label><input id='longitude' type='number' value={longitude} onChange={e => setLongitude(e.target.value)} style={customerSetGPS.entry} className='Entry-light'></input>
             <br/><br/>
-            <label>Latitude:&emsp;&nbsp;&nbsp;&nbsp;</label>
-            <input id='latitude' type='number' value={latitude} onChange={e => setLatitude(e.target.value)} style={customerSetGPS.entry} className='Entry-light'></input>
+            <label>Latitude:&emsp;&nbsp;&nbsp;&nbsp;</label><input id='latitude' type='number' value={latitude} onChange={e => setLatitude(e.target.value)} style={customerSetGPS.entry} className='Entry-light'></input>
           </div>
           <button onClick={handleButtonSave} style={customerSetGPS.button} className='Button-light'>Save</button><br/>
           <label>{confirmation}</label>
@@ -141,16 +160,30 @@ function App() {
   function CustomerViewStore() {
   }
 
+  /**
+   * Customer views all inventory for the entire site, where they can filter, compare, and buy.
+   * Can navigate to CustomerListStores and CustomerCompare.
+   */
   function CustomerViewAll() {
+    // Boolean to indicate if data is retrieved.
     const [retrieved, setRetreived] = React.useState(false)
+    // List of all inventory in the site.
     const [allInventory, setAllInventory] = React.useState([])
+    // List of inventory to display, based on active filters.
     const [inventory, setInventory] = React.useState([])
+    // HTML to display the list of inventory.
     const [inventoryHTML, setInventoryHTML] = React.useState([])
+    // List of active price filters.
     const [price, setPrice] = React.useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
+    // List of active memory filters.
     const [memory, setMemory] = React.useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
+    // List of active storage filters.
     const [storage, setStorage] = React.useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
+    // List of active processor filters.
     const [processor, setProcessor] = React.useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
+    // List of active processor generation filters.
     const [processorGen, setProcessorGen] = React.useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
+    // List of active graphics filters.
     const [graphics, setGraphics] = React.useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
 
     retrieve()
@@ -167,14 +200,9 @@ function App() {
       {storeName: 'Store3',  longitude: 500, latitude: 800, id: 5, name: 'Computer5', price: 400, memory: '12 GB', storage: '512 GB', processor: 'AMD Ryzen 7', processorGen: 'AMD Ryzen 6000 Series', graphics: 'AMD Radeon Pro W6400'}, 
       {storeName: 'Store4',  longitude: 1000, latitude: 900, id: 6, name: 'Computer6', price: 1050, memory: '16 GB', storage: '1 TB', processor: 'AMD Ryzen 9', processorGen: 'AMD Ryzen 7000 Series', graphics: 'AMD Radeon Pro W6300'},
       {storeName: 'Store4',  longitude: 300, latitude: 100, id: 7, name: 'Computer7', price: 2050, memory: '32 GB', storage: '1 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'Intel UHD Graphics 770'}])
-
-      /*instance.get('/customerViewAll').then((response) => {
-        if (response.status === 200) {
-          setAllInventory(response)
-        }
-      })*/
     }
     
+    // Update inventory when any active filters change.
     React.useEffect (() => {
       const computersToRemove = []
       allInventory.forEach(computer => {
@@ -210,6 +238,7 @@ function App() {
       removeComputers(computersToRemove)
     }, [price, memory, storage, processor, processorGen, graphics])
 
+    // Update inventoryHTML when inventory changes.
     React.useEffect (() => {
       inventoryHTML.length = 0
       inventory.forEach(computer => {
@@ -231,15 +260,18 @@ function App() {
       setInventoryHTML([].concat(inventoryHTML))
     }, [inventory])
 
+    /** Set inventory to not include computers that are removed through filters. 
+     * @param ids An array of the id of each computer to be removed.
+     */
     function removeComputers(ids) {
       const inventoryWithoutDeleted = []
       allInventory.forEach(computer => { if (!ids.includes(computer.id)) inventoryWithoutDeleted.push(computer) })
       setInventory([].concat(inventoryWithoutDeleted))
     }
 
+    /** Update all active filters based on user selection. If no filters are selected for a specific criteria, data will not be filtered on that criteria. */
     function handleFilter() {
       let priceFilter = [], memoryFilter = [], storageFilter = [], processorFilter = [], processorGenFilter = [], graphicsFilter = []
-
       document.getElementsByName('price').forEach(checkbox => { if (checkbox.checked) priceFilter.push([parseInt(checkbox.value.split(',')[0]), parseInt(checkbox.value.split(',')[1])]) })
       document.getElementsByName('memory').forEach(checkbox => { if (checkbox.checked) memoryFilter = memoryFilter.concat(checkbox.value.split(',')) })
       document.getElementsByName('storage').forEach(checkbox => { if (checkbox.checked) storageFilter = storageFilter.concat(checkbox.value.split(',')) })
@@ -262,9 +294,8 @@ function App() {
       setGraphics(graphicsFilter)
     }
 
-    function handleButtonBack() {
-      setCurrentPageName('CustomerListStores')
-    }
+    /** Go back to the previous page. */
+    function handleButtonBack() { setCurrentPageName('CustomerListStores') }
 
     return (
       <div className='CustomerViewAll'>
