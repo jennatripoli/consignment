@@ -3,34 +3,22 @@ import { useNavigate } from "react-router-dom"
 import { header, siteManagerLogin } from "./Layout"
 
 export default function SiteManagerLogin() {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmation, setConfirmation] = useState(undefined)
     const navigate = useNavigate()
+    // The input for the username.
+    const [username, setUsername] = useState('')
+    // The input for the password.
+    const [password, setPassword] = useState('')
+        // The confirmation text that will indicate failure to log in.
+    const [confirmation, setConfirmation] = useState(undefined)
 
-    // function handleButtonBack() {
-    //     setCurrentPageName(previousPageName)
-    // }
-
+    /** Log in to the site with the entered credentials. */
     function handleButtonLogin() {
         setUsername(document.getElementById('username').value)
         setPassword(document.getElementById('password').value)
 
-        if (username && password)
-        {
-            const msg = {}
-            msg['username'] = username
-            msg['password'] = password
-            const data = { 'body': JSON.stringify(msg) }
-
+        if (username && password) {
             // FOR TESTING
             navigate('/SiteManagerListStores')
-
-            /*instance.post('/siteManagerLogin', data).then((response) => {
-              if (response.status === 200) {
-                setCurrentPageName('SiteManagerListStores')
-              } else setConfirmation('Invalid credentials.')
-            })*/
         } else setConfirmation('Invalid credentials.')
     }
 

@@ -1,36 +1,22 @@
+import { Link, useNavigate } from "react-router-dom"
 import { header, ownerLogin } from './Layout'
 import { useState } from 'react'
 
 export default function OwnerLogin() {
+    const navigate = useNavigate()
+    // The input for the username.
     const [username, setUsername] = useState('')
+    // The input for the password.
     const [password, setPassword] = useState('')
+    // The confirmation text that will indicate failure to log in.
     const [confirmation, setConfirmation] = useState(undefined)
 
-    // ADD RETRIEVING THE STORE NAME
-
-    function handleButtonBack() {
-        setCurrentPageName(previousPageName)
-    }
-
+    /** Log in to the store with the entered credentials. */
     function handleButtonLogin() {
         setUsername(document.getElementById('username').value)
         setPassword(document.getElementById('password').value)
 
-        if (username && password)
-        {
-            const msg = {}
-            msg['username'] = username
-            msg['password'] = password
-            const data = { 'body': JSON.stringify(msg) }
-
-            // FOR TESTING
-            setCurrentPageName('OwnerViewStore')
-
-            /*instance.post('/ownerLogin', data).then((response) => {
-              if (response.status === 200) {
-                setCurrentPageName('OwnerViewStore')
-              } else setConfirmation('Invalid credentials.')
-            })*/
+        if (username && password) {
         } else setConfirmation('Invalid credentials.')
     }
 
@@ -39,7 +25,7 @@ export default function OwnerLogin() {
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <button onClick={handleButtonBack} style={header.buttonRight} className='Button-light'>Back</button>
+                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
             <div style={ownerLogin}>
                 <div style={ownerLogin.title}>-- STORE NAME LOGIN --</div>

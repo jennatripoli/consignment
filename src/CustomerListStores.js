@@ -1,53 +1,42 @@
 import { Link, useNavigate } from "react-router-dom"
 import { customerListStores, header } from "./Layout"
-import CustomerGPSContext from "./CustomerGPSContext";
-import { useContext } from "react";
+import CustomerGPSContext from "./CustomerGPSContext"
+import React, { useContext } from "react"
 
 function CustomerListStores(props) {
-    const storesHTML = []
     const navigate = useNavigate()
+    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
+    // Boolean to indicate if data is retrieved.
+    const [retrieved, setRetreived] = React.useState(false)
+    // List of all stores.
+    const [stores, setStores] = React.useState([])
+    // HTML to display the list of all stores.
+    const [storesHTML, setStoresHTML] = React.useState([])
 
-    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext);
+    retrieve()
+    function retrieve() {
+        if (retrieved) return
+        else setRetreived(true)
 
+        // FOR TESTING
+        setStores(['Store 1', 'Store 2', 'Store 3', 'Store 4'])
+    }
 
-    // FOR TESTING
-    const stores = ['Store 1', 'Store 2', 'Store 3', 'Store 4']
-    stores.forEach(store => {
-        const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
-        storesHTML.push(entry)
-    })
-
-    /*instance.get('/customerListStores').then((response) => {
-      if (response.status === 200) {
-        response.stores.forEach(store => {
-          const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
-          storesHTML.push(entry)
+    // Update storesHTML when stores changes.
+    React.useEffect(() => {
+        storesHTML.length = 0
+        stores.forEach(store => {
+            const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
+            storesHTML.push(entry)
         })
-      }
-    })*/
+        setStoresHTML([].concat(storesHTML))
+    }, [stores])
 
-    // function handleButtonLogin() {
-    //     setCurrentPageName('SiteManagerLogin')
-    // }
-
-    // function handleButtonCreate() {
-    //     setCurrentPageName('OwnerCreateStore')
-    // }
-
-    // function handleButtonGPS() {
-    //     setCurrentPageName('CustomerSetGPS')
-    //     setDestinationPageName('CustomerSetGPS')
-    // }
-
+    /** Go to CustomerViewAll if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
-        console.log(props.history);
-        if (customerGPS.length > 0)
-        {
-            navigate('/CustomerViewAll'); // Navigate to the 'CustomerViewAll' route
-        } else
-        {
-            navigate('/CustomerSetGPS'); // Navigate to the 'CustomerSetGPS' route
-        }
+        console.log(props.history)
+        if (customerGPS.length > 0) navigate('/CustomerViewAll')
+        else navigate('/CustomerSetGPS')
     }
 
     return (
@@ -55,15 +44,9 @@ function CustomerListStores(props) {
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <Link to='/SiteManagerLogin'>
-                    <button style={header.buttonRight} className='Button-light'>Manage Site</button>
-                </Link>
-                <Link to='/OwnerCreateStore'>
-                    <button style={header.buttonMiddle} className='Button-light'>Create Store</button>
-                </Link>
-                <Link to='/CustomerSetGPS'>
-                    <button style={header.buttonLeft} className='Button-light'>Set GPS</button>
-                </Link>
+                <Link to='/SiteManagerLogin'><button style={header.buttonRight} className='Button-light'>Manage Site</button></Link>
+                <Link to='/OwnerCreateStore'><button style={header.buttonMiddle} className='Button-light'>Create Store</button></Link>
+                <Link to='/CustomerSetGPS'><button style={header.buttonLeft} className='Button-light'>Set GPS</button></Link>
             </div>
 
             <div style={customerListStores}>
