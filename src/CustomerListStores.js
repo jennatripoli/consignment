@@ -1,17 +1,17 @@
 import { Link, useNavigate } from "react-router-dom"
 import { customerListStores, header } from "./Layout"
 import CustomerGPSContext from "./CustomerGPSContext"
-import React, { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 
 function CustomerListStores(props) {
     const navigate = useNavigate()
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // Boolean to indicate if data is retrieved.
-    const [retrieved, setRetreived] = React.useState(false)
+    const [retrieved, setRetreived] = useState(false)
     // List of all stores.
-    const [stores, setStores] = React.useState([])
+    const [stores, setStores] = useState([])
     // HTML to display the list of all stores.
-    const [storesHTML, setStoresHTML] = React.useState([])
+    const [storesHTML, setStoresHTML] = useState([])
 
     retrieve()
     function retrieve() {
@@ -23,7 +23,7 @@ function CustomerListStores(props) {
     }
 
     // Update storesHTML when stores changes.
-    React.useEffect(() => {
+    useEffect(() => {
         storesHTML.length = 0
         stores.forEach(store => {
             const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import CustomerGPSContext from './CustomerGPSContext'
 
 const CustomerGPSProvider = ({ children }) => {
-    const [customerGPS, setCustomerGPS] = useState([33.9727, -118.3507])
+    const [customerGPS, setCustomerGPS] = useState(['', ''])
 
     return (
         <CustomerGPSContext.Provider value={{ customerGPS, setCustomerGPS }}>
