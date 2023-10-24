@@ -15,11 +15,10 @@ export default function CustomerSetGPS(props) {
 
     /** Save the GPS data. */
     function handleButtonSave() {
-        setLongitude(document.getElementById('longitude').value)
-        setLatitude(document.getElementById('latitude').value)
-
-        if (longitude && latitude) setCustomerGPS([longitude, latitude])
-        else setConfirmation('Failed to save GPS, please fill in all fields.')
+        if (longitude && latitude) {
+            setCustomerGPS([longitude, latitude])
+            setConfirmation('Save successful!')
+        } else setConfirmation('Failed to save GPS, please fill in all fields.')
     }
 
     return (
@@ -34,10 +33,10 @@ export default function CustomerSetGPS(props) {
                 <div style={customerSetGPS.title}>-- SET GPS LOCATION --</div>
                 <div style={customerSetGPS.gps}>
                     <label>Longitude:&emsp;</label>
-                    <input id='longitude' type='number' value={longitude} style={customerSetGPS.entry} className='Entry-light'></input>
+                    <input id='longitude' type='number' value={longitude} style={customerSetGPS.entry} onChange={(e) => setLongitude(e.target.value)} className='Entry-light'></input>
                     <br /><br />
                     <label>Latitude:&emsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input id='latitude' type='number' value={latitude} style={customerSetGPS.entry} className='Entry-light'></input>
+                    <input id='latitude' type='number' value={latitude} style={customerSetGPS.entry} onChange={(e) => setLatitude(e.target.value)} className='Entry-light'></input>
                 </div>
                 <button onClick={handleButtonSave} style={customerSetGPS.button} className='Button-light'>Save</button><br />
                 <label>{confirmation}</label>

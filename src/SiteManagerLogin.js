@@ -8,7 +8,7 @@ export default function SiteManagerLogin() {
     const [username, setUsername] = useState('')
     // The input for the password.
     const [password, setPassword] = useState('')
-        // The confirmation text that will indicate failure to log in.
+    // The confirmation text that will indicate failure to log in.
     const [confirmation, setConfirmation] = useState(undefined)
 
     /** Log in to the site with the entered credentials. */

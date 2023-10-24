@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { header, customerViewAll } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
 export default function CustomerViewAll() {
     const navigate = useNavigate()
     // Boolean to indicate if data is retrieved.
-    const [retrieved, setRetreived] = React.useState(false)
+    const [retrieved, setRetreived] = useState(false)
     // List of all inventory in the site.
-    const [allInventory, setAllInventory] = React.useState([])
+    const [allInventory, setAllInventory] = useState([])
     // List of inventory to display, based on active filters.
-    const [inventory, setInventory] = React.useState([])
+    const [inventory, setInventory] = useState([])
     // HTML to display the list of inventory.
-    const [inventoryHTML, setInventoryHTML] = React.useState([])
+    const [inventoryHTML, setInventoryHTML] = useState([])
     // List of active price filters.
-    const [price, setPrice] = React.useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
+    const [price, setPrice] = useState([[2001, NaN], [1501, 2000], [1001, 1500], [501, 1000], [0, 500]])
     // List of active memory filters.
-    const [memory, setMemory] = React.useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
+    const [memory, setMemory] = useState(['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB'])
     // List of active storage filters.
-    const [storage, setStorage] = React.useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
+    const [storage, setStorage] = useState(['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'])
     // List of active processor filters.
-    const [processor, setProcessor] = React.useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
+    const [processor, setProcessor] = useState(['Intel', 'AMD', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'])
     // List of active processor generation filters.
-    const [processorGen, setProcessorGen] = React.useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
+    const [processorGen, setProcessorGen] = useState(['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'])
     // List of active graphics filters.
-    const [graphics, setGraphics] = React.useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
+    const [graphics, setGraphics] = useState(['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'])
 
     retrieve()
     function retrieve() {
