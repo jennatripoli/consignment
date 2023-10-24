@@ -23,12 +23,12 @@ export default function CustomerSetGPS(props) {
         {
             setCustomerGPS([longitude, latitude])
             setConfirmation('Save Successful!')
-
-            if (destinationPageName !== currentPageName)
-            {
-                setTimeout(2000)
-                setCurrentPageName(destinationPageName)
-            }
+            // navigate('/CustomerSetGPS')
+            // if (destinationPageName !== currentPageName)
+            // {
+            //     setTimeout(2000)
+            //     setCurrentPageName(destinationPageName)
+            // }
         } else setConfirmation('Failed to save GPS, please fill in all fields.')
     }
 
