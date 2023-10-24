@@ -33,7 +33,7 @@ export default function OwnerCreateStore() {
       const data = { 'body': JSON.stringify(msg) }
 
       // FOR TESTING
-      setCurrentPageName('OwnerViewStore')
+      navigate('/OwnerViewStore')
 
       /*instance.post('/ownerCreateStore', data).then((response) => {
         if (response.status === 200) {
