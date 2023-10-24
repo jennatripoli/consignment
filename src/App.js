@@ -6,7 +6,6 @@ import { CustomerListStores, CustomerSetGPS, CustomerViewStore, CustomerViewAll,
 import { SiteManagerLogin, SiteManagerListStores } from './SiteManagerViews'
 import { OwnerCreateStore, OwnerLogin, OwnerViewStore, OwnerAddComputer, OwnerEditPrice } from './OwnerViews'
 import CustomerGPSProvider from './CustomerGPSProvider';
-import Home from './Home'
 
 // const instance = axios.create({ baseURL: 'URL' })
 
