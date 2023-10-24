@@ -137,7 +137,75 @@ export const customerSetGPS = {
 }
 
 export const customerViewStore = {}
-export const customerViewAll = {}
+
+export const customerViewAll = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    filter: {
+        position: 'absolute',
+        textAlign: 'left',
+        width: '17%',
+        left: '21%',
+        backgroundColor: 'white',
+        margin: '1.5em 0 0 0',
+        borderRadius: '0.8em',
+        fontSize: '1em',
+        padding: '0.6em'
+    },
+
+    inventory: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '40%',
+        left: '40%'
+    },
+
+    computer: {
+        display: 'flex',
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.6em',
+        margin: '1.5em 1em 0 1em',
+        border: 'none',
+        fontSize: '1em',
+        backgroundColor: '#475841',
+        color: 'white'
+    },
+
+    left: {
+        textAlign: 'left',
+        width: '70%',
+        float: 'left'
+    },
+
+    right: {
+        textAlign: 'right',
+        height: 'fit-content',
+        width: '40%',
+        float: 'right'
+    },
+
+    button: {
+        display: 'inline',
+        borderRadius: '1em',
+        padding: '0.2em 0.5em 0.2em 0.5em',
+        borderColor: 'transparent',
+        fontSize: '1.5em',
+        margin: '1em 1em 1em 0'
+    }
+}
+
 export const customerCompare = {}
 
 export const siteManagerLogin = {

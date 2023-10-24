@@ -57,6 +57,22 @@ html {
   border: 2px solid #9FB8AD;
 }
 
+.Checkbox {
+  appearance: none;
+  width: 2em;
+  height: 2em;
+  border-radius: 30%;
+  background-clip: content-box;
+  border: 2px solid #9FB8AD;
+  margin: 0 0.35em -0.35em 0;
+}
+
+.Checkbox:checked {
+  background-color: #9FB8AD;
+  padding: 4px;
+  border: 2px solid #9FB8AD;
+}
+
 .Entry-light {
   border: 3px solid #9FB8AD;
 }
