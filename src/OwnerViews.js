@@ -1,5 +1,5 @@
-import OwnerCreateStore from "./OwnerCreateStore"
-import OwnerLogin from "./OwnerLogin"
+import OwnerCreateStore from './OwnerCreateStore'
+import OwnerLogin from './OwnerLogin'
 import OwnerViewStore from './OwnerViewStore'
 import OwnerAddComputer from './OwnerAddComputer'
 import OwnerEditPrice from './OwnerEditPrice'

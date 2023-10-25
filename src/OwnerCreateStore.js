@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { header, ownerCreateStore } from "./Layout"
-import { useNavigate } from "react-router-dom"
+import { useState } from 'react'
+import { header, ownerCreateStore } from './Layout'
+import { useNavigate } from 'react-router-dom'
 
 export default function OwnerCreateStore() {
-    // Route navigation.
+  // Route navigation.
   const navigate = useNavigate()
   // The input for the store name.
   const [storeName, setStoreName] = useState('')

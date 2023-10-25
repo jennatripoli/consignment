@@ -1,26 +1,19 @@
-import { Link } from "react-router-dom"
-import { useState, useEffect } from "react"
-import { header, siteManagerListStores } from "./Layout"
+import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { header, siteManagerListStores } from './Layout'
+
+function retrieve() {
+    // FOR TESTING
+    return [{ storeName: 'Store1', inventory: 300, balance: 300 }, { storeName: 'Store2', inventory: 500, balance: 100 }, { storeName: 'Store3', inventory: 200, balance: 400 }, { storeName: 'Store4', inventory: 100, balance: 500 }]
+}
 
 export default function SiteManagerListStores() {
-    // Boolean to indicate if data is retrieved.
-    const [retrieved, setRetreived] = useState(false)
     // List of all stores on the site.
-    const [stores, setStores] = useState([])
+    const [stores, setStores] = useState(retrieve())
     // HTML to display list of all stores.
     const [storesHTML, setStoresHTML] = useState([])
     // How to sort the stores based on inventory ('ascending' or 'descending').
-    const [sort, setSort] = useState('')
-
-    retrieve()
-    function retrieve() {
-        if (retrieved) return
-        else setRetreived(true)
-
-        // FOR TESTING
-        setStores([{ storeName: 'Store1', inventory: 300, balance: 300 }, { storeName: 'Store2', inventory: 500, balance: 100 }, { storeName: 'Store3', inventory: 200, balance: 400 }, { storeName: 'Store4', inventory: 100, balance: 500 }])
-        setSort('ascending')
-    }
+    const [sort, setSort] = useState('ascending')    
 
     // Update stores when sort changes.
     useEffect(() => {
@@ -42,7 +35,7 @@ export default function SiteManagerListStores() {
             const entry = (
                 <div key={store.storeName}>
                     <div style={siteManagerListStores.store}><span style={{ fontWeight: 'bold' }}>{store.storeName}<br />Inventory: </span>${store.inventory}<br /><span style={{ fontWeight: 'bold' }}>Balance: </span>${store.balance}</div>
-                    <button key={store.storeName.concat(' Button')} onClick={() => handleButtonDelete(store.storeName)} style={siteManagerListStores.button} className='Button-white'><svg xmlns="http://www.w3.org/2000/svg" height="4em" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" /></svg></button>
+                    <button key={store.storeName.concat(' Button')} onClick={() => handleButtonDelete(store.storeName)} style={siteManagerListStores.button} className='Button-white'><svg xmlns='http://www.w3.org/2000/svg' height='4em' viewBox='0 0 448 512'><path d='M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z' /></svg></button>
                 </div>
             )
             storesHTML.push(entry)
@@ -51,11 +44,7 @@ export default function SiteManagerListStores() {
     }, [stores])
 
     /** Delete a store from the site. */
-    function handleButtonDelete(storeNameDelete) {
-        // FOR TESTING
-        const storesWithoutDeleted = []
-        stores.forEach(store => { if (store.storeName !== storeNameDelete) storesWithoutDeleted.push(store) })
-        setStores([].concat(storesWithoutDeleted))
+    function handleButtonDelete(storeName) {
     }
 
     /** Sort the stores by their inventory. */

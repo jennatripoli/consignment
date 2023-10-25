@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
 import { header, ownerLogin } from './Layout'
 import { useState } from 'react'
 
@@ -18,6 +18,7 @@ export default function OwnerLogin() {
         setPassword(document.getElementById('password').value)
 
         if (username && password) {
+            // FOR TESTING
             navigate('/OwnerViewStore')
         } else setConfirmation('Invalid credentials.')
     }

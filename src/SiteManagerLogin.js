@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { header, siteManagerLogin } from "./Layout"
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { header, siteManagerLogin } from './Layout'
 
 export default function SiteManagerLogin() {
     // Route navigation.

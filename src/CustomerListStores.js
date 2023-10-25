@@ -1,7 +1,12 @@
-import { Link, useNavigate } from "react-router-dom"
-import { customerListStores, header } from "./Layout"
-import CustomerGPSContext from "./CustomerGPSContext"
-import { useContext, useEffect, useState } from "react"
+import { Link, useNavigate } from 'react-router-dom'
+import { customerListStores, header } from './Layout'
+import CustomerGPSContext from './CustomerGPSContext'
+import { useContext, useEffect, useState } from 'react'
+
+function retrieve() {
+    // FOR TESTING
+    return ['Store 1', 'Store 2', 'Store 3', 'Store 4']
+}
 
 function CustomerListStores(props) {
     // Route navigation.
@@ -11,18 +16,9 @@ function CustomerListStores(props) {
     // Boolean to indicate if data is retrieved.
     const [retrieved, setRetreived] = useState(false)
     // List of all stores.
-    const [stores, setStores] = useState([])
+    const [stores, setStores] = useState(retrieve())
     // HTML to display the list of all stores.
     const [storesHTML, setStoresHTML] = useState([])
-
-    retrieve()
-    function retrieve() {
-        if (retrieved) return
-        else setRetreived(true)
-
-        // FOR TESTING
-        setStores(['Store 1', 'Store 2', 'Store 3', 'Store 4'])
-    }
 
     // Update storesHTML when stores changes.
     useEffect(() => {
@@ -34,7 +30,7 @@ function CustomerListStores(props) {
         setStoresHTML([].concat(storesHTML))
     }, [stores])
 
-    /** Go to CustomerViewAll if GPS is set, otherwise go to CustomerSetGPS. */
+    /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
         if (customerGPS.length > 0) navigate('/CustomerViewInventory')
         else navigate('/CustomerSetGPS')

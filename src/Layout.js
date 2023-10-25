@@ -118,12 +118,14 @@ export const customerSetGPS = {
         right: '29%',
         backgroundColor: 'white',
         padding: '1em',
-        borderRadius: '1em'
+        borderRadius: '1em',
+        color: '#475841'
     },
 
     entry: {
         borderRadius: '1em',
-        padding: '0.5em'
+        padding: '0.5em',
+        color: '#475841'
     },
 
     button: {
@@ -235,12 +237,14 @@ export const siteManagerLogin = {
         right: '29%',
         backgroundColor: 'white',
         padding: '1em',
-        borderRadius: '1em'
+        borderRadius: '1em',
+        color: '#475841'
     },
 
     entry: {
         borderRadius: '1em',
-        padding: '0.5em'
+        padding: '0.5em',
+        color: '#475841'
     },
 
     button: {
@@ -277,7 +281,8 @@ export const siteManagerListStores = {
         backgroundColor: 'white',
         padding: '0.3em 0.5em 0.5em 0.5em',
         borderRadius: '1em',
-        fontSize: '1.5em'
+        fontSize: '1.5em',
+        color: '#475841'
     },
 
     stores: {
@@ -331,12 +336,14 @@ export const ownerCreateStore = {
         right: '29%',
         backgroundColor: 'white',
         padding: '1em',
-        borderRadius: '1em'
+        borderRadius: '1em',
+        color: '#475841'
     },
 
     entry: {
         borderRadius: '1em',
-        padding: '0.5em'
+        padding: '0.5em',
+        color: '#475841'
     },
 
     button: {
@@ -372,12 +379,14 @@ export const ownerLogin = {
         right: '29%',
         backgroundColor: 'white',
         padding: '1em',
-        borderRadius: '1em'
+        borderRadius: '1em',
+        color: '#475841'
     },
 
     entry: {
         borderRadius: '1em',
-        padding: '0.5em'
+        padding: '0.5em',
+        color: '#475841'
     },
 
     button: {
