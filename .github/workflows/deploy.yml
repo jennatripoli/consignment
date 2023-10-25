@@ -35,15 +35,16 @@ jobs:
       - name: Initialize Terraform
         run: terraform init
           
-      - name: Empty Bucket
-        uses: vitorsgomes/s3-rm-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --recursive
-        env:
-          AWS_S3_BUCKET: "shishapangma-front-end"
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          PATH_TO_DELETE: "/"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Delete S3 bucket objects
+        run: |
+          aws s3 rm s3://shishapangma-front-end --recursive
 
       - name: Refresh State File
         run: |

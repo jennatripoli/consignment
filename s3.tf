@@ -16,7 +16,6 @@ resource "aws_s3_object" "objects" {
   key          = each.key
   source       = each.value.source_path
   content_type = each.value.content_type
-  etag         = filemd5("${each.value}")
 }
 
 resource "aws_s3_bucket_policy" "cloudfront_policy" {
