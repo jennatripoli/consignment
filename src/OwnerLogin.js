@@ -3,6 +3,7 @@ import { header, ownerLogin } from './Layout'
 import { useState } from 'react'
 
 export default function OwnerLogin() {
+    // Route navigation.
     const navigate = useNavigate()
     // The input for the username.
     const [username, setUsername] = useState('')
@@ -17,6 +18,7 @@ export default function OwnerLogin() {
         setPassword(document.getElementById('password').value)
 
         if (username && password) {
+            navigate('/OwnerViewStore')
         } else setConfirmation('Invalid credentials.')
     }
 

@@ -4,7 +4,9 @@ import CustomerGPSContext from "./CustomerGPSContext"
 import { useContext, useEffect, useState } from "react"
 
 function CustomerListStores(props) {
+    // Route navigation.
     const navigate = useNavigate()
+    // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // Boolean to indicate if data is retrieved.
     const [retrieved, setRetreived] = useState(false)

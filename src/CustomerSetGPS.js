@@ -4,6 +4,7 @@ import { customerSetGPS, header } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
 export default function CustomerSetGPS(props) {
+    // Route navigation.
     const navigate = useNavigate()
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // The input for the longitude coordinate.

@@ -1,5 +1,4 @@
 import './App.css'
-import React, { createContext, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CustomerListStores, CustomerSetGPS, CustomerViewStore, CustomerViewAll, CustomerCompare } from './CustomerViews'
 import { SiteManagerLogin, SiteManagerListStores } from './SiteManagerViews'

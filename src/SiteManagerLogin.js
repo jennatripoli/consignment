@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { header, siteManagerLogin } from "./Layout"
 
 export default function SiteManagerLogin() {
+    // Route navigation.
     const navigate = useNavigate()
     // The input for the username.
     const [username, setUsername] = useState('')
