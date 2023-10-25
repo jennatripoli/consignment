@@ -63,7 +63,7 @@ export const customerListStores = {
         position: 'relative',
         fontSize: '2em',
         fontWeight: 'bold',
-        color: '#475841'
+        color: '#ff0000'
     },
 
     buttonInventory: {
