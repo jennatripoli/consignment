@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useReducer } from "react"
+import { useState, useMemo, useReducer } from "react"
 import { header, customerViewAll } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
@@ -16,37 +16,25 @@ function retrieve() {
 }
 
 export default function CustomerViewAll() {
+    // Route navigation.
     const navigate = useNavigate()
-    const [allInventory, setAllInventory] = useState([])
-    useEffect(() => setAllInventory(retrieve()), [])
-
-    const containsString = searchStr => str => str.toLowerCase().includes(searchStr.toLowerCase())
-    const inRange = (low, high) => n => n >= low && n <= high;
-    const filterSets = [{
+    // List of all inventory on site.
+    const [inventory, setInventory] = useState(retrieve())
+    // Determine if string contains a search string.
+    const containsString = searchStr => str => str.includes(searchStr)
+    // Determine if value is within a range.
+    const inRange = (low, high) => n => n >= low && n <= high
+    
+    // Categories of filters and the values to use for filtering.
+    const filterCategories = [{
         humanReadable: "Price",
         itemProperty: 'price',
         filters: [
-            {
-                name: "<$500",
-                validate: inRange(0, 500)
-            },
-            {
-                name: "$501-$1000",
-                validate: inRange(501, 1000)
-            },
-            {
-                name: "$1001-$1500",
-                validate: inRange(1001, 1500)
-            },
-            {
-                name: "$1501-$2000",
-                validate: inRange(1501, 2000)
-            },
-            {
-                name: ">$2000",
-                validate: inRange(2001, Infinity)
-            }
-        ]
+            { name: "$2001 or more", validate: inRange(2001, Infinity) },
+            { name: "$1501 - $2000", validate: inRange(1501, 2000) },
+            { name: "$1001 - $1500", validate: inRange(1001, 1500) },
+            { name: "$501 - $1000", validate: inRange(501, 1000) },
+            { name: "$500 or less", validate: inRange(0, 500) }]
     }, {
         humanReadable: "Memory",
         itemProperty: 'memory',
@@ -56,79 +44,55 @@ export default function CustomerViewAll() {
         itemProperty: 'storage',
         filters: ['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'],
     }, {
+        humanReadable: "Processor",
+        itemProperty: 'processor',
+        filters: [
+            { name: 'AMD', validate: containsString('AMD') },
+            { name: 'Intel', validate: containsString('Intel') }, 
+            'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'],
+    }, {
         humanReadable: "Processor Generation",
         itemProperty: 'processorGen',
         filters: ['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series'],
     }, {
-        humanReadable: "Processor",
-        itemProperty: 'processor',
-        filters: [
-            {
-                name: 'AMD',
-                validate: containsString('AMD')
-            },
-            {
-                name: 'Intel',
-                validate: containsString('Intel')
-            }, 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7'],
-    }, {
         humanReadable: "Graphics Card",
         itemProperty: 'graphics',
         filters: [
-            {
-                name: 'NVIDIA',
-                validate: containsString('NVIDIA')
-            },
-            {
-                name: 'AMD',
-                validate: containsString('AMD')
-            },
-            {
-                name: 'Intel',
-                validate: containsString('Intel')
-            }, 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'],
-    }];
+            { name: 'NVIDIA', validate: containsString('NVIDIA') },
+            { name: 'AMD', validate: containsString('AMD') },
+            { name: 'Intel', validate: containsString('Intel') }, 
+            'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770'],
+    }]
 
+    /** Update filter actions based on filter states. */
     function updateFilterAction(state, action) {
-        if (action.itemProperty === undefined ||
-            action.filter === undefined ||
-            action.checked === undefined)
-            return { ...state };
+        if (action.itemProperty === undefined || action.filter === undefined || action.checked === undefined) return { ...state }
         return state.map(fS => {
-            if (fS.itemProperty === action.itemProperty)
-            {
-                let newActive;
-                if (action.checked)
-                {
-                    newActive = fS.active.map(_ => _);
+            if (fS.itemProperty === action.itemProperty) {
+                let newActive
+                if (action.checked) {
+                    newActive = fS.active.map(_ => _)
                     newActive.push(action.filter)
+                } else {
+                    newActive = fS.active.filter(f => 
+                        action.filter.name === undefined ? f != action.filter : f.name != action.filter.name)
                 }
-                else
-                    newActive = fS.active.filter(f =>
-                        action.filter.name === undefined
-                            ? f != action.filter
-                            : f.name != action.filter.name)
-                return {
-                    ...fS,
-                    active: newActive
-                }
-            } else
-                return fS;
+                return { ...fS, active: newActive }
+            } else return fS
         })
     }
 
-    const [reducedFilters, updateFilter] = useReducer(updateFilterAction, filterSets.map(v => ({
-        itemProperty: v.itemProperty,
-        active: []
-    })))
+    // Update filters based on changed filter actions.
+    const [filters, updateFilters] = useReducer(updateFilterAction, filterCategories.map(v => ({
+        itemProperty: v.itemProperty, active: [] })))
 
-    const filteredComputers = useMemo(() => reducedFilters.reduce((iList, filter) =>
-        filter.active.length === 0
-            ? iList
-            : iList.filter(item => filter.active.find(aI => (aI.validate ?? (s => s === aI))(item[filter.itemProperty])) !== undefined)
-        , allInventory), [allInventory, reducedFilters]);
+    // Filter inventory based on active filters.
+    const filteredInventory = useMemo(() => filters.reduce((iList, filter) =>
+        filter.active.length === 0 ? iList : iList.filter(item => 
+            filter.active.find(aI => (aI.validate ?? (s => s === aI))(item[filter.itemProperty])) !== undefined)
+        , inventory), [inventory, filters])
 
-    const filtersDom = (
+    return (
         <div className='CustomerViewAll'>
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
@@ -139,30 +103,27 @@ export default function CustomerViewAll() {
             <div style={customerViewAll}>
                 <div style={customerViewAll.title}>-- ALL SITE INVENTORY --</div>
                 <div style={customerViewAll.filter}>
-                    <span style={{ fontWeight: 'bold', textAlign: 'center', display: 'block' }}>SEARCH FILTERS</span>
-                    {filterSets.map(fS => (
-                        <div>
-                            <span style={{ fontWeight: 'bold' }}>{fS.humanReadable}</span><br />
+                    <span style={customerViewAll.filterTitle}>SEARCH FILTERS</span>
+                    {filterCategories.map(fS => (
+                        <div key={fS.itemProperty}>
+                            <br /><b>{fS.humanReadable}:</b><br />
                             {fS.filters.map(filter => (
                                 <div>
-                                    <label><input type='checkbox' className='Checkbox' onClick={e => {
-                                        updateFilter({
-                                            itemProperty: fS.itemProperty,
-                                            filter,
-                                            checked: e.target.checked
-                                        })
-                                    }} name={fS.itemProperty} ></input>{filter.name ?? filter}</label>
+                                    <label><input type='checkbox' className='Checkbox' 
+                                    onClick={e => {updateFilters({itemProperty: fS.itemProperty, filter, checked: e.target.checked})}} 
+                                    name={fS.itemProperty} ></input>{filter.name ?? filter}</label>
                                 </div>
                             ))}
                         </div>
                     ))}
                 </div>
+
                 <div id='inventory' style={customerViewAll.inventory}>
-                    {filteredComputers.map(computer => (
+                    {filteredInventory.map(computer => (
                         <div key={computer.id}>
                             <div style={customerViewAll.computer}>
-                                <div style={customerViewAll.left}><span style={{ fontWeight: 'bold' }}>{computer.name}</span><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewAll.right}><span style={{ fontWeight: 'bold' }}>Total Price: ${computer.price + 1000.23}</span><br /><br />Store: {computer.storeName}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
+                                <div style={customerViewAll.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
+                                <div style={customerViewAll.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.storeName}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewAll.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewAll.button} className='Button-light'>Purchase</button>
@@ -172,6 +133,4 @@ export default function CustomerViewAll() {
             </div>
         </div>
     )
-
-    return filtersDom;
 }

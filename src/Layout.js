@@ -164,6 +164,12 @@ export const customerViewAll = {
         padding: '0.6em'
     },
 
+    filterTitle: {
+        fontWeight: 'bold', 
+        textAlign: 'center', 
+        display: 'block'
+    },
+
     inventory: {
         position: 'absolute',
         textAlign: 'center',
