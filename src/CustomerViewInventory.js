@@ -1,6 +1,7 @@
-import { useState, useMemo, useReducer } from 'react'
+import { useState, useMemo, useReducer, useContext, useEffect } from 'react'
 import { header, customerViewInventory } from './Layout'
 import { useNavigate } from 'react-router-dom'
+import CustomerGPSContext from './CustomerGPSContext'
 
 function retrieve() {
     // FOR TESTING
@@ -10,6 +11,8 @@ function retrieve() {
 export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
+    // Value saved as the customer's GPS location.
+    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // List of all inventory on site.
     const [inventory, setInventory] = useState(retrieve())
     // Determine if string contains a search string.
@@ -17,6 +20,12 @@ export default function CustomerViewInventory() {
     // Determine if value is within a range.
     const inRange = (low, high) => n => n >= low && n <= high
     
+    // Go to CustomerSetGPS if no GPS value is saved.
+    useEffect(() => { 
+        if (customerGPS[0].length === 0 || customerGPS[1].length === 0) 
+            navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory'}, replace: true })
+    }, [customerGPS])
+
     // Categories of filters and the values to use for filtering.
     const filterCategories = [{
         humanReadable: 'Price',

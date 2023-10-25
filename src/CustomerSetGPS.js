@@ -1,11 +1,14 @@
 import { useState, useContext } from 'react'
 import CustomerGPSContext from './CustomerGPSContext'
 import { customerSetGPS, header } from './Layout'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
-export default function CustomerSetGPS(props) {
+export default function CustomerSetGPS() {
     // Route navigation.
     const navigate = useNavigate()
+    // The page the user is trying to get to.
+    const destination = useLocation().state
+    // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // The input for the longitude coordinate.
     const [longitude, setLongitude] = useState(customerGPS[0])
@@ -20,6 +23,7 @@ export default function CustomerSetGPS(props) {
             if (longitude >= -180 && longitude <= 180 && latitude >= -90 && longitude <= 90) {
                 setCustomerGPS([longitude, latitude])
                 setConfirmation('Save successful!')
+                navigate(destination.destination)
             } else setConfirmation('Failed to save GPS, values must be in range.')            
         } else setConfirmation('Failed to save GPS, please fill in all fields.')
     }

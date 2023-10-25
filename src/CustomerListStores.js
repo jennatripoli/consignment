@@ -13,8 +13,6 @@ function CustomerListStores(props) {
     const navigate = useNavigate()
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
-    // Boolean to indicate if data is retrieved.
-    const [retrieved, setRetreived] = useState(false)
     // List of all stores.
     const [stores, setStores] = useState(retrieve())
     // HTML to display the list of all stores.
@@ -33,7 +31,7 @@ function CustomerListStores(props) {
     /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
         if (customerGPS.length > 0) navigate('/CustomerViewInventory')
-        else navigate('/CustomerSetGPS')
+        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory'}, replace: true })
     }
 
     return (
@@ -43,7 +41,7 @@ function CustomerListStores(props) {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <Link to='/SiteManagerLogin'><button style={header.buttonRight} className='Button-light'>Manage Site</button></Link>
                 <Link to='/OwnerCreateStore'><button style={header.buttonMiddle} className='Button-light'>Create Store</button></Link>
-                <Link to='/CustomerSetGPS'><button style={header.buttonLeft} className='Button-light'>Set GPS</button></Link>
+                <Link to='/CustomerSetGPS' state={{destination: '/CustomerSetGPS'}}><button style={header.buttonLeft} className='Button-light'>Set GPS</button></Link>
             </div>
 
             <div style={customerListStores}>
