@@ -36,8 +36,7 @@ function CustomerListStores(props) {
 
     /** Go to CustomerViewAll if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
-        console.log(props.history)
-        if (customerGPS.length > 0) navigate('/CustomerViewAll')
+        if (customerGPS.length > 0) navigate('/CustomerViewInventory')
         else navigate('/CustomerSetGPS')
     }
 

@@ -1,7 +1,6 @@
 import CustomerListStores from "./CustomerListStores"
 import CustomerSetGPS from './CustomerSetGPS'
-import CustomerViewStore from './CustomerViewStore'
-import CustomerViewAll from "./CustomerViewAll"
+import CustomerViewInventory from "./CustomerViewInventory"
 import CustomerCompare from './CustomerCompare'
 
-export { CustomerListStores, CustomerSetGPS, CustomerViewStore, CustomerViewAll, CustomerCompare }
+export { CustomerListStores, CustomerSetGPS, CustomerViewInventory, CustomerCompare }

@@ -15,7 +15,7 @@ function retrieve() {
     ]
 }
 
-export default function CustomerViewAll() {
+export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
     // List of all inventory on site.
@@ -93,7 +93,7 @@ export default function CustomerViewAll() {
         , inventory), [inventory, filters])
 
     return (
-        <div className='CustomerViewAll'>
+        <div className='CustomerViewInventory'>
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
