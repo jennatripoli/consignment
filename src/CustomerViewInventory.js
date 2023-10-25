@@ -1,5 +1,5 @@
 import { useState, useMemo, useReducer } from "react"
-import { header, customerViewAll } from "./Layout"
+import { header, customerViewInventory } from "./Layout"
 import { useNavigate } from "react-router-dom"
 
 function retrieve() {
@@ -100,10 +100,10 @@ export default function CustomerViewInventory() {
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
 
-            <div style={customerViewAll}>
-                <div style={customerViewAll.title}>-- ALL SITE INVENTORY --</div>
-                <div style={customerViewAll.filter}>
-                    <span style={customerViewAll.filterTitle}>SEARCH FILTERS</span>
+            <div style={customerViewInventory}>
+                <div style={customerViewInventory.title}>-- ALL SITE INVENTORY --</div>
+                <div style={customerViewInventory.filter}>
+                    <span style={customerViewInventory.filterTitle}>SEARCH FILTERS</span>
                     {filterCategories.map(fS => (
                         <div key={fS.itemProperty}>
                             <br /><b>{fS.humanReadable}:</b><br />
@@ -118,15 +118,15 @@ export default function CustomerViewInventory() {
                     ))}
                 </div>
 
-                <div id='inventory' style={customerViewAll.inventory}>
+                <div id='inventory' style={customerViewInventory.inventory}>
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
-                            <div style={customerViewAll.computer}>
-                                <div style={customerViewAll.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewAll.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.storeName}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
+                            <div style={customerViewInventory.computer}>
+                                <div style={customerViewInventory.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.storeName}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
                             </div>
-                            <button key={toString(computer.id).concat(' Compare')} style={customerViewAll.button} className='Button-light'>Compare</button>
-                            <button key={toString(computer.id).concat(' Purchase')} style={customerViewAll.button} className='Button-light'>Purchase</button>
+                            <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
+                            <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
                         </div>
                     ))}
                 </div>

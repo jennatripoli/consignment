@@ -136,9 +136,7 @@ export const customerSetGPS = {
     }
 }
 
-export const customerViewStore = {}
-
-export const customerViewAll = {
+export const customerViewInventory = {
     position: 'relative',
     display: 'block',
     width: '98%',
