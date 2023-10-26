@@ -16,6 +16,8 @@ headers = {
     'Access-Control-Allow-Origin':'*'
 }
 
+columns = ['storeName','username','password','balance','inventory','lat','long']
+
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
     method = event['httpMethod']
@@ -48,6 +50,8 @@ def get(event,context):
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
+
+        result = [dict(zip(columns,store)) for store in result]
 
     except Exception as e:
         return {
