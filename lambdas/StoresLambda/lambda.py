@@ -84,7 +84,7 @@ def post(event,context):
 
     return {
         'statusCode': 200,
-        'body': {
+        'body': json.dumps({
             'message':'succesfully created store'
-        }
+        })
     }
