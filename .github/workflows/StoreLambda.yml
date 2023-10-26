@@ -16,7 +16,6 @@ jobs:
     - name: Create deployment package
       working-directory: lambdas/StoresLambda
       run: |
-        cd lambdas/storeslambda
         zip -r package.zip .
 
     - name: Deploy to Lambda
