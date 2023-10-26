@@ -11,12 +11,12 @@ export default function CustomerViewInventory() {
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
 
-    if (customerGPS[0] === null || customerGPS[1] === null)
-    {
-        return <Navigate to="/CustomerSetGPS" state={{
-            destination: pathname
-        }} replace />
-    }
+    // if (customerGPS[0] === null || customerGPS[1] === null)
+    // {
+    //     return <Navigate to="/CustomerSetGPS" state={{
+    //         destination: pathname
+    //     }} replace />
+    // }
 
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
@@ -28,22 +28,33 @@ export default function CustomerViewInventory() {
     const { storeName } = useParams()
 
     async function retrieve(store) {
-        let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer?storeName=${store}`, {
-            method: 'GET'
-        })
-        let json = await resp.json()
-        if (resp.status === 200)
+        console.log(store);
+        if (store === undefined) setInventory([{ storeName: 'Store1', longitude: 100, latitude: 100, id: 1, name: 'Computer1', price: 100, memory: '1 GB', storage: '128 GB', processor: 'Intel Xeon', processorGen: '11th Gen Intel', graphics: 'Intel Integrated Graphics' },
+        { storeName: 'Store1', longitude: 400, latitude: 200, id: 2, name: 'Computer2', price: 1600, memory: '8 GB', storage: '512 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'NVIDIA GeForce RTX 4090' },
+        { storeName: 'Store1', longitude: 700, latitude: 600, id: 3, name: 'Computer3', price: 600, memory: '32 GB', storage: '2 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'NVIDIA GeForce RTX 4080' },
+        { storeName: 'Store2', longitude: 1000, latitude: 1000, id: 4, name: 'Computer4', price: 200, memory: '4 GB', storage: '256 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'Intel UHD Graphics 730' },
+        { storeName: 'Store3', longitude: 500, latitude: 800, id: 5, name: 'Computer5', price: 400, memory: '12 GB', storage: '512 GB', processor: 'AMD Ryzen 7', processorGen: 'AMD Ryzen 6000 Series', graphics: 'AMD Radeon Pro W6400' },
+        { storeName: 'Store4', longitude: 1000, latitude: 900, id: 6, name: 'Computer6', price: 1050, memory: '16 GB', storage: '1 TB', processor: 'AMD Ryzen 9', processorGen: 'AMD Ryzen 7000 Series', graphics: 'AMD Radeon Pro W6300' },
+        { storeName: 'Store4', longitude: 300, latitude: 100, id: 7, name: 'Computer7', price: 2050, memory: '32 GB', storage: '1 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'Intel UHD Graphics 770' }])
+        else
         {
-            setInventory(json)
-        } else
-        {
-            setInventory([{ storeName: 'Store1', longitude: 100, latitude: 100, id: 1, name: 'Computer1', price: 100, memory: '1 GB', storage: '128 GB', processor: 'Intel Xeon', processorGen: '11th Gen Intel', graphics: 'Intel Integrated Graphics' },
-            { storeName: 'Store1', longitude: 400, latitude: 200, id: 2, name: 'Computer2', price: 1600, memory: '8 GB', storage: '512 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'NVIDIA GeForce RTX 4090' },
-            { storeName: 'Store1', longitude: 700, latitude: 600, id: 3, name: 'Computer3', price: 600, memory: '32 GB', storage: '2 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'NVIDIA GeForce RTX 4080' },
-            { storeName: 'Store2', longitude: 1000, latitude: 1000, id: 4, name: 'Computer4', price: 200, memory: '4 GB', storage: '256 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'Intel UHD Graphics 730' },
-            { storeName: 'Store3', longitude: 500, latitude: 800, id: 5, name: 'Computer5', price: 400, memory: '12 GB', storage: '512 GB', processor: 'AMD Ryzen 7', processorGen: 'AMD Ryzen 6000 Series', graphics: 'AMD Radeon Pro W6400' },
-            { storeName: 'Store4', longitude: 1000, latitude: 900, id: 6, name: 'Computer6', price: 1050, memory: '16 GB', storage: '1 TB', processor: 'AMD Ryzen 9', processorGen: 'AMD Ryzen 7000 Series', graphics: 'AMD Radeon Pro W6300' },
-            { storeName: 'Store4', longitude: 300, latitude: 100, id: 7, name: 'Computer7', price: 2050, memory: '32 GB', storage: '1 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'Intel UHD Graphics 770' }])
+            let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer?storeName=${store}`, {
+                method: 'GET'
+            })
+            let json = await resp.json()
+            if (resp.status === 200)
+            {
+                setInventory(json)
+            } else
+            {
+                setInventory([{ storeName: 'Store1', longitude: 100, latitude: 100, id: 1, name: 'Computer1', price: 100, memory: '1 GB', storage: '128 GB', processor: 'Intel Xeon', processorGen: '11th Gen Intel', graphics: 'Intel Integrated Graphics' },
+                { storeName: 'Store1', longitude: 400, latitude: 200, id: 2, name: 'Computer2', price: 1600, memory: '8 GB', storage: '512 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'NVIDIA GeForce RTX 4090' },
+                { storeName: 'Store1', longitude: 700, latitude: 600, id: 3, name: 'Computer3', price: 600, memory: '32 GB', storage: '2 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'NVIDIA GeForce RTX 4080' },
+                { storeName: 'Store2', longitude: 1000, latitude: 1000, id: 4, name: 'Computer4', price: 200, memory: '4 GB', storage: '256 GB', processor: 'Intel i7', processorGen: '12th Gen Intel', graphics: 'Intel UHD Graphics 730' },
+                { storeName: 'Store3', longitude: 500, latitude: 800, id: 5, name: 'Computer5', price: 400, memory: '12 GB', storage: '512 GB', processor: 'AMD Ryzen 7', processorGen: 'AMD Ryzen 6000 Series', graphics: 'AMD Radeon Pro W6400' },
+                { storeName: 'Store4', longitude: 1000, latitude: 900, id: 6, name: 'Computer6', price: 1050, memory: '16 GB', storage: '1 TB', processor: 'AMD Ryzen 9', processorGen: 'AMD Ryzen 7000 Series', graphics: 'AMD Radeon Pro W6300' },
+                { storeName: 'Store4', longitude: 300, latitude: 100, id: 7, name: 'Computer7', price: 2050, memory: '32 GB', storage: '1 TB', processor: 'Intel i9', processorGen: '13th Gen Intel', graphics: 'Intel UHD Graphics 770' }])
+            }
         }
     }
 

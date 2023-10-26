@@ -4,6 +4,7 @@ import { CustomerListStores, CustomerSetGPS, CustomerViewInventory, CustomerComp
 import { SiteManagerLogin, SiteManagerListStores } from './SiteManager/SiteManagerViews'
 import { OwnerCreateStore, OwnerLogin, OwnerViewStore, OwnerAddComputer, OwnerEditPrice } from './StoreOwner/OwnerViews'
 import CustomerGPSProvider from './Customer/CustomerGPSProvider'
+import PrivateRoute from './PrivateRoute'
 
 // const instance = axios.create({ baseURL: 'URL' })
 
@@ -15,8 +16,14 @@ function App() {
           <Route path='/' element={<CustomerListStores />} />
           <Route path='/CustomerListStores' element={<CustomerListStores />} />
           <Route path='/CustomerSetGPS' element={<CustomerSetGPS />} />
-          <Route path='/CustomerViewInventory/' element={<CustomerViewInventory />} />
-          <Route path='/CustomerViewInventory/:storeName' element={<CustomerViewInventory />} />
+          <Route path='/CustomerViewInventory/' element={<PrivateRoute>
+            <CustomerViewInventory />
+          </PrivateRoute>} />
+          <Route path='/CustomerViewInventory/:storeName' element={
+            <PrivateRoute>
+              <CustomerViewInventory />
+            </PrivateRoute>
+          } />
           <Route path='/CustomerCompare' element={<CustomerCompare />} />
 
           <Route path='/SiteManagerLogin' element={<SiteManagerLogin />} />
