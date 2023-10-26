@@ -46,7 +46,7 @@ def get(event,context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT * FROM computer where store=%s",(event['pathParameters']['storeName']))
+        cursor.execute("SELECT * FROM computer where store='%s'",(event['queryStringParameters']['storeName']))
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
