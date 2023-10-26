@@ -60,6 +60,10 @@ def get(event,context):
 def post(event,context):
     conn = psycopg2.connect(**db_params)
     try:
+        return {
+            'statusCode': 400,
+            'body': event
+        }
         # Create a cursor object
         cursor = conn.cursor()
         statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
