@@ -1,4 +1,4 @@
-name: Deploy Store Lambda Function
+name: Deploy Computer Lambda Function
 
 on:
   push:
