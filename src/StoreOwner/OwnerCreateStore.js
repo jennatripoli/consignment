@@ -19,18 +19,30 @@ export default function OwnerCreateStore() {
   const [confirmation, setConfirmation] = useState(undefined)
 
   /** Create a store with input data. */
-  function handleButtonCreate() {
+  async function handleButtonCreate() {
     setStoreName(document.getElementById('storeName').value)
     setUsername(document.getElementById('username').value)
     setPassword(document.getElementById('password').value)
     setLongitude(document.getElementById('longitude').value)
     setLatitude(document.getElementById('latitude').value)
 
-    if (storeName && username && password && longitude && latitude)
+    setConfirmation('Creating Store, Please Wait')
+
+    let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          storeName: storeName,
+          username: username,
+          password: password,
+          longitude: longitude,
+          latitude: latitude
+        })
+      })
+
+    if (resp.status == 200)
     {
-      // FOR TESTING
       navigate('/OwnerViewStore')
-      // setConfirmation('Failed to create store, please choose a unique store name.')
     } else setConfirmation('Failed to create store, please fill in all fields.')
   }
 
