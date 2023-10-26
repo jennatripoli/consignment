@@ -12,7 +12,7 @@ db_params = {
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
-    body = json.load(event['body'])
+    body = json.loads(event['body'])
     return {
         'statusCode': 200,
         'headers':{"Content-Type": "application/json"},
