@@ -83,7 +83,6 @@ def post(event,context):
         'headers':{"Content-Type": "application/json"},
         'body': json.dumps({
             'message':'unable to create store',
-            'error': e.__str__
         })
     }
     finally:
