@@ -18,12 +18,11 @@ jobs:
       run: |
         zip -r package.zip .
 
-    - name: Deploy to Lambda
-      working-directory: lambdas/StoresLambda
-      run: |
-        aws lambda update-function-code \
-          --function-name GetStoreLambda \
-          --zip-file fileb://package.zip
+    - name: Push Zip to S3
+      uses: jakejarvis/s3-sync-action@v0.3.1
       env:
+        SOURCE_DIR: './artifacts'
+        AWS_REGION: 'eu-central-1'
+        AWS_S3_BUCKET: 'zipped-lambda-artifacts'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
