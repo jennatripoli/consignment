@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { CustomerListStores, CustomerSetGPS, CustomerViewInventory, CustomerCompare } from './Customer/CustomerViews'
 import { SiteManagerLogin, SiteManagerListStores } from './SiteManager/SiteManagerViews'
 import { OwnerCreateStore, OwnerLogin, OwnerViewStore, OwnerAddComputer, OwnerEditPrice } from './StoreOwner/OwnerViews'
-import CustomerGPSProvider from './CustomerGPSProvider'
+import CustomerGPSProvider from './Customer/CustomerGPSProvider'
 
 // const instance = axios.create({ baseURL: 'URL' })
 
