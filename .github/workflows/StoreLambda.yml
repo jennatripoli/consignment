@@ -19,6 +19,7 @@ jobs:
         zip -r package.zip .
 
     - name: Deploy to Lambda
+      working-directory: lambdas/StoresLambda
       run: |
         aws lambda update-function-code \
           --function-name GetStoreLambda \
