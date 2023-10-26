@@ -11,6 +11,10 @@ db_params = {
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
+    return {
+        'body': event
+    }
+    
     method = event['httpMethod']
 
     if method == 'GET':
