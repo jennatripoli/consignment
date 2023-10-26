@@ -37,7 +37,7 @@ jobs:
         aws lambda update-function-code \
         --function-name GetStoreLambda \
         --s3-bucket shishapangma-artifacts \
-        --s3-key artifacts/StoreLambda.zip
+        --s3-key StoreLambda.zip
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
