@@ -6,13 +6,15 @@ import CustomerGPSContext from './CustomerGPSContext'
 export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
+
+    const pathname = useResolvedPath().pathname
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
 
     if (customerGPS[0] === null || customerGPS[1] === null)
     {
         return <Navigate to="/CustomerSetGPS" state={{
-            destination: useResolvedPath().pathname
+            destination: pathname
         }} replace />
     }
 
