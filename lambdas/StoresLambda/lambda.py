@@ -54,7 +54,7 @@ def get(event,context):
 
     return {
         'statusCode': 200,
-        'body': result
+        'body': json.dumps(result)
     }
 
 def post(event,context):
@@ -72,10 +72,10 @@ def post(event,context):
     except Exception as e:
         return {
         'statusCode': 400,
-        'body': {
+        'body': json.dumps({
             'message':'unable to create store',
             'error': str(e)
-        }
+        })
     }
     finally:
         # Close the cursor and database connection
