@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { header, ownerCreateStore } from './Layout'
+import { header, ownerCreateStore } from '../Layout'
 import { useNavigate } from 'react-router-dom'
 
 export default function OwnerCreateStore() {
@@ -26,7 +26,8 @@ export default function OwnerCreateStore() {
     setLongitude(document.getElementById('longitude').value)
     setLatitude(document.getElementById('latitude').value)
 
-    if (storeName && username && password && longitude && latitude) {
+    if (storeName && username && password && longitude && latitude)
+    {
       // FOR TESTING
       navigate('/OwnerViewStore')
       // setConfirmation('Failed to create store, please choose a unique store name.')

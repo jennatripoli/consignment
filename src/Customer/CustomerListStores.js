@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { customerListStores, header } from './Layout'
+import { customerListStores, header } from '../Layout'
 import CustomerGPSContext from './CustomerGPSContext'
 import { useContext, useEffect, useState } from 'react'
 
@@ -30,13 +30,13 @@ function CustomerListStores() {
 
     /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
-        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: {store: ''} })
-        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory', store: ''} })
+        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: { store: '' } })
+        else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory', store: '' } })
     }
 
     function handleButtonViewStore(storeName) {
-        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: {store: storeName} })
-        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory', store: storeName} })
+        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: { store: storeName } })
+        else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory', store: storeName } })
     }
 
     return (
@@ -46,7 +46,7 @@ function CustomerListStores() {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <Link to='/SiteManagerLogin'><button style={header.buttonRight} className='Button-light'>Manage Site</button></Link>
                 <Link to='/OwnerCreateStore'><button style={header.buttonMiddle} className='Button-light'>Create Store</button></Link>
-                <Link to='/CustomerSetGPS' state={{destination: '/CustomerSetGPS'}}><button style={header.buttonLeft} className='Button-light'>Set GPS</button></Link>
+                <Link to='/CustomerSetGPS' state={{ destination: '/CustomerSetGPS' }}><button style={header.buttonLeft} className='Button-light'>Set GPS</button></Link>
             </div>
 
             <div style={customerListStores}>

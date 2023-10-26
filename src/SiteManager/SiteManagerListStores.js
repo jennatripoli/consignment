@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { header, siteManagerListStores } from './Layout'
+import { header, siteManagerListStores } from '../Layout'
 
 function retrieve() {
     // FOR TESTING
@@ -13,15 +13,17 @@ export default function SiteManagerListStores() {
     // HTML to display list of all stores.
     const [storesHTML, setStoresHTML] = useState([])
     // How to sort the stores based on inventory ('ascending' or 'descending').
-    const [sort, setSort] = useState('ascending')    
+    const [sort, setSort] = useState('ascending')
 
     // Update stores when sort changes.
     useEffect(() => {
-        if (sort === 'ascending') {
+        if (sort === 'ascending')
+        {
             document.getElementById('ascending').checked = true
             document.getElementById('descending').checked = false
             setStores([].concat(stores).sort((a, b) => b.inventory - a.inventory))
-        } else if (sort === 'descending') {
+        } else if (sort === 'descending')
+        {
             document.getElementById('descending').checked = true
             document.getElementById('ascending').checked = false
             setStores([].concat(stores).sort((a, b) => a.inventory - b.inventory))
