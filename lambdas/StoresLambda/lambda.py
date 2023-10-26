@@ -19,7 +19,7 @@ def lambda_handler(event, context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT * FROM customer")
+        cursor.execute("SELECT * FROM store")
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
