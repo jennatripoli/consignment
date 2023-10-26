@@ -58,18 +58,15 @@ def get(event,context):
 
 def post(event,context):
     conn = psycopg2.connect(**db_params)
-    result = ''
     try:
         # Create a cursor object
         cursor = conn.cursor()
-
-        statement = "INSERT INTO store values(%s,%s,%s,%f,%f,%f,%f)"
+        statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
         body = event['body']
         # Execute your SQL queries here
-        cursor.execute(statement,(event['storeName'],event['username'],event['password'],0,event['longitude'],event['latitude']))
+        cursor.execute(statement,(body['storeName'],body['username'],body['password'],0,0,body['longitude'],body['latitude']))
 
-        # Fetch and process the query results as needed
-        result = cursor.fetchall()
+        conn.commit()
 
     except Exception as e:
         return {
@@ -87,7 +84,6 @@ def post(event,context):
     return {
         'statusCode': 200,
         'body': {
-            'message':'succesfully created store',
-            'result': result
+            'message':'succesfully created store'
         }
     }
