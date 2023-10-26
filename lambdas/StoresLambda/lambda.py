@@ -11,9 +11,6 @@ db_params = {
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
-    return {
-        'body': event
-    }
     
     method = event['httpMethod']
 
@@ -23,7 +20,9 @@ def lambda_handler(event, context):
         post(event,context)
     else:
         return {
+        'isBase64Encoded': False,
         'statusCode': 404,
+        'headers':{},
         'body': 'method not allowed'
     }
 
@@ -47,7 +46,9 @@ def get(event,context):
 
     except Exception as e:
         return {
+        'isBase64Encoded': False,
         'statusCode': 500,
+        'headers':{},
         'body': 'something went wrong'
     }
     finally:
@@ -56,7 +57,9 @@ def get(event,context):
         conn.close()
 
     return {
+        'isBase64Encoded': False,
         'statusCode': 200,
+        'headers':{},
         'body': result
     }
 
@@ -74,7 +77,9 @@ def post(event,context):
 
     except Exception as e:
         return {
+        'isBase64Encoded': False,
         'statusCode': 500,
+        'headers':{},
         'body': {
             'message':'unable to create store',
             'error': e
@@ -86,7 +91,9 @@ def post(event,context):
         conn.close()
 
     return {
+        'isBase64Encoded': False,
         'statusCode': 200,
+        'headers':{},
         'body': {
             'message':'succesfully created store'
         }
