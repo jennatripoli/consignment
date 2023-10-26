@@ -16,9 +16,9 @@ def lambda_handler(event, context):
     method = event['httpMethod']
 
     if method == 'GET':
-        get(event,context)
+        return get(event,context)
     elif method == 'POST':
-        post(event,context)
+        return post(event,context)
     else:
         return {
         'isBase64Encoded': True,
