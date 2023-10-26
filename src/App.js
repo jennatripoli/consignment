@@ -15,7 +15,8 @@ function App() {
           <Route path='/' element={<CustomerListStores />} />
           <Route path='/CustomerListStores' element={<CustomerListStores />} />
           <Route path='/CustomerSetGPS' element={<CustomerSetGPS />} />
-          <Route path='/CustomerViewInventory' element={<CustomerViewInventory />} />
+          <Route path='/CustomerViewInventory/' element={<CustomerViewInventory />} />
+          <Route path='/CustomerViewInventory/:storeName' element={<CustomerViewInventory />} />
           <Route path='/CustomerCompare' element={<CustomerCompare />} />
 
           <Route path='/SiteManagerLogin' element={<SiteManagerLogin />} />
