@@ -20,7 +20,7 @@ def lambda_handler(event, context):
         post(event,context)
     else:
         return {
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'statusCode': 404,
         'headers':{},
         'body': 'method not allowed'
@@ -46,7 +46,7 @@ def get(event,context):
 
     except Exception as e:
         return {
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'statusCode': 500,
         'headers':{},
         'body': 'something went wrong'
@@ -57,7 +57,7 @@ def get(event,context):
         conn.close()
 
     return {
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'statusCode': 200,
         'headers':{},
         'body': result
@@ -77,7 +77,7 @@ def post(event,context):
 
     except Exception as e:
         return {
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'statusCode': 500,
         'headers':{},
         'body': {
@@ -91,7 +91,7 @@ def post(event,context):
         conn.close()
 
     return {
-        'isBase64Encoded': False,
+        'isBase64Encoded': True,
         'statusCode': 200,
         'headers':{},
         'body': {
