@@ -44,9 +44,9 @@ def get(event,context):
     try:
         # Create a cursor object
         cursor = conn.cursor()
+        store_name = event['queryStringParameters']['storeName']
 
-        # Execute your SQL queries here
-        cursor.execute("SELECT * FROM computer where store='%s'",(event['queryStringParameters']['storeName']))
+        cursor.execute("SELECT * FROM computer where store=%s",(store_name,))
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
@@ -103,3 +103,6 @@ def post(event,context):
             'message':'succesfully created store'
         })
     }
+
+if __name__ == '__main__':
+    print(lambda_handler({'httpMethod':'GET','queryStringParameters':{'storeName':'test'}},''))
