@@ -91,5 +91,3 @@ def post(event,context):
             'result': result
         }
     }
-
-lambda_handler('','')
