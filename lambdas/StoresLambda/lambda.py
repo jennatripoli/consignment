@@ -12,6 +12,12 @@ db_params = {
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
     
+    return {
+        'statusCode': 200,
+        'headers':{"Content-Type": "application/json"},
+        'body': event
+    }
+
     method = event['httpMethod']
 
     if method == 'GET':
@@ -59,10 +65,6 @@ def get(event,context):
 
 def post(event,context):
     conn = psycopg2.connect(**db_params)
-    return {
-        'statusCode': 400,
-        'body': event
-    }
     try:
         # Create a cursor object
         cursor = conn.cursor()
