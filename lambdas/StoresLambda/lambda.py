@@ -78,7 +78,6 @@ def post(event,context):
 
     except Exception as e:
         return {
-        'isBase64Encoded': True,
         'statusCode': 500,
         'headers':{"Content-Type": "application/json"},
         'body': json.dumps({
@@ -91,7 +90,6 @@ def post(event,context):
         conn.close()
 
     return {
-        'isBase64Encoded': True,
         'statusCode': 200,
         'headers':{"Content-Type": "application/json"},
         'body': json.dumps({
