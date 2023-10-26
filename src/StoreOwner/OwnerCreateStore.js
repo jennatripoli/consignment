@@ -41,9 +41,9 @@ export default function OwnerCreateStore() {
       })
     let json = await resp.json()
 
-    if (json.status == 200)
+    if (resp.status == 200)
     {
-      navigate('/OwnerViewStore')
+      navigate(`/OwnerViewStore/${storeName}`)
     } else setConfirmation('Failed to create store, please fill in all fields.')
 
   }

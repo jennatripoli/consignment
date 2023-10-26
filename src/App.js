@@ -23,7 +23,7 @@ function App() {
 
           <Route path='/OwnerCreateStore' element={<OwnerCreateStore />} />
           <Route path='/OwnerLogin' element={<OwnerLogin />} />
-          <Route path='/OwnerViewStore' element={<OwnerViewStore />} />
+          <Route path='/OwnerViewStore/:storeName' element={<OwnerViewStore />} />
           <Route path='/OwnerAddComputer' element={<OwnerAddComputer />} />
           <Route path='/OwnerEditPrice' element={<OwnerEditPrice />} />
         </Routes>
