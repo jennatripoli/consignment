@@ -46,7 +46,7 @@ def get(event,context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT * FROM computer")
+        cursor.execute("SELECT * FROM computer where store=%s",(event['pathParameters']['storeName']))
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
@@ -55,7 +55,7 @@ def get(event,context):
 
     except Exception as e:
         return {
-        'statusCode': 500,
+        'statusCode': 400,
         'headers': headers,
         'body': 'something went wrong'
     }

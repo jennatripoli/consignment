@@ -25,7 +25,7 @@ export default function CustomerSetGPS() {
             {
                 setCustomerGPS([longitude, latitude])
                 setConfirmation('Save successful!')
-                if (params.destination !== '/CustomerSetGPS') navigate(params.destination, { state: { store: params.store }, replace: true })
+                if (params !== null) navigate(params.destination, { replace: true })
             } else setConfirmation('Failed to save GPS, values must be in range.')
         } else setConfirmation('Failed to save GPS, please fill in all fields.')
     }

@@ -24,12 +24,12 @@ function CustomerListStores() {
 
     /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
-        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: { store: '' } })
-        else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory', store: '' } })
+        if (customerGPS[0] !== null && customerGPS[1] !== null) navigate('/CustomerViewInventory')
+        else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory' } })
     }
 
     function handleButtonViewStore(storeName) {
-        if (customerGPS[0].length + customerGPS[1].length > 0) navigate(`/CustomerViewInventory/${storeName}`, { state: { store: storeName } })
+        if (customerGPS[0] !== null && customerGPS[1] !== null) navigate(`/CustomerViewInventory/${storeName}`, { state: { store: storeName } })
         else navigate('/CustomerSetGPS', { state: { destination: `/CustomerViewInventory/${storeName}`, store: storeName } })
     }
 

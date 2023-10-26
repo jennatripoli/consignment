@@ -1,15 +1,21 @@
 import { useState, useMemo, useReducer, useContext, useEffect } from 'react'
 import { header, customerViewInventory } from '../Layout'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useLocation, useParams, useResolvedPath } from 'react-router-dom'
 import CustomerGPSContext from './CustomerGPSContext'
 
 export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
-    // Parameters sent with navigation.
-    const params = useLocation().state
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
+
+    if (customerGPS[0] === null || customerGPS[1] === null)
+    {
+        return <Navigate to="/CustomerSetGPS" state={{
+            destination: useResolvedPath().pathname
+        }} replace />
+    }
+
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
     // Determine if string contains a search string.
@@ -18,8 +24,6 @@ export default function CustomerViewInventory() {
     const inRange = (low, high) => n => n >= low && n <= high
 
     const { storeName } = useParams()
-
-    console.log(storeName);
 
     async function retrieve(store) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer?storeName=${store}`, {
@@ -42,12 +46,6 @@ export default function CustomerViewInventory() {
     }
 
     useEffect(() => { retrieve(storeName) }, [])
-
-    // Go to CustomerSetGPS if no GPS value is saved.
-    useEffect(() => {
-        if (customerGPS[0].length === 0 || customerGPS[1].length === 0)
-            navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory', store: params.store }, replace: true })
-    }, [customerGPS])
 
     // Categories of filters and the values to use for filtering.
     const filterCategories = [{
