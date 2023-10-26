@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         return {
         'isBase64Encoded': True,
         'statusCode': 404,
-        'headers':{},
+        'headers':{"Content-Type": "application/json"},
         'body': 'method not allowed'
     }
 
@@ -48,7 +48,7 @@ def get(event,context):
         return {
         'isBase64Encoded': True,
         'statusCode': 500,
-        'headers':{},
+        'headers':{"Content-Type": "application/json"},
         'body': 'something went wrong'
     }
     finally:
@@ -59,7 +59,7 @@ def get(event,context):
     return {
         'isBase64Encoded': True,
         'statusCode': 200,
-        'headers':{},
+        'headers':{"Content-Type": "application/json"},
         'body': result
     }
 
@@ -79,7 +79,7 @@ def post(event,context):
         return {
         'isBase64Encoded': True,
         'statusCode': 500,
-        'headers':{},
+        'headers':{"Content-Type": "application/json"},
         'body': {
             'message':'unable to create store',
             'error': e
@@ -93,7 +93,7 @@ def post(event,context):
     return {
         'isBase64Encoded': True,
         'statusCode': 200,
-        'headers':{},
+        'headers':{"Content-Type": "application/json"},
         'body': {
             'message':'succesfully created store'
         }
