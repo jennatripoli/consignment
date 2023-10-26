@@ -1,6 +1,5 @@
 import os
 import psycopg2
-import json
 
 db_params = {
         'user': os.environ['DB_USER'],
@@ -21,9 +20,7 @@ def lambda_handler(event, context):
         return post(event,context)
     else:
         return {
-        'isBase64Encoded': True,
         'statusCode': 404,
-        'headers':{"Content-Type": "application/json"},
         'body': 'method not allowed'
     }
 
@@ -47,9 +44,7 @@ def get(event,context):
 
     except Exception as e:
         return {
-        'isBase64Encoded': True,
         'statusCode': 500,
-        'headers':{"Content-Type": "application/json"},
         'body': 'something went wrong'
     }
     finally:
@@ -58,10 +53,8 @@ def get(event,context):
         conn.close()
 
     return {
-        'isBase64Encoded': True,
         'statusCode': 200,
-        'headers':{"Content-Type": "application/json"},
-        'body': json.dumps(result)
+        'body': result
     }
 
 def post(event,context):
@@ -79,11 +72,10 @@ def post(event,context):
     except Exception as e:
         return {
         'statusCode': 400,
-        'headers':{"Content-Type": "application/json"},
-        'body': json.dumps({
+        'body': {
             'message':'unable to create store',
             'error': e
-        })
+        }
     }
     finally:
         # Close the cursor and database connection
@@ -92,8 +84,7 @@ def post(event,context):
 
     return {
         'statusCode': 200,
-        'headers':{"Content-Type": "application/json"},
-        'body': json.dumps({
+        'body': {
             'message':'succesfully created store'
-        })
+        }
     }
