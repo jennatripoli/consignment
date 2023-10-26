@@ -8,7 +8,7 @@ function retrieve() {
     return ['Store 1', 'Store 2', 'Store 3', 'Store 4']
 }
 
-function CustomerListStores(props) {
+function CustomerListStores() {
     // Route navigation.
     const navigate = useNavigate()
     // Value saved as the customer's GPS location.
@@ -22,7 +22,7 @@ function CustomerListStores(props) {
     useEffect(() => {
         storesHTML.length = 0
         stores.forEach(store => {
-            const entry = (<button key={store} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
+            const entry = (<button key={store} onClick={() => handleButtonViewStore(store)} style={customerListStores.buttonStore} className='Button-dark'>{store}</button>)
             storesHTML.push(entry)
         })
         setStoresHTML([].concat(storesHTML))
@@ -30,8 +30,13 @@ function CustomerListStores(props) {
 
     /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewAll() {
-        if (customerGPS.length > 0) navigate('/CustomerViewInventory')
-        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory'}, replace: true })
+        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: {store: ''} })
+        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory', store: ''}, replace: true })
+    }
+
+    function handleButtonViewStore(storeName) {
+        if (customerGPS[0].length + customerGPS[1].length > 0) navigate('/CustomerViewInventory', { state: {store: storeName} })
+        else navigate('/CustomerSetGPS', { state: {destination: '/CustomerViewInventory', store: storeName}, replace: true })
     }
 
     return (
