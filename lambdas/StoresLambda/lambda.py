@@ -74,7 +74,7 @@ def post(event,context):
         'statusCode': 400,
         'body': {
             'message':'unable to create store',
-            'error': e
+            'error': str(e)
         }
     }
     finally:
