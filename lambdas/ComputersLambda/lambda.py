@@ -57,7 +57,7 @@ def get(event,context):
         return {
         'statusCode': 400,
         'headers': headers,
-        'body': 'something went wrong'
+        'body': str(e)
     }
     finally:
         # Close the cursor and database connection
