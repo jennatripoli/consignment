@@ -27,6 +27,7 @@ def lambda_handler(event, context):
     else:
         return {
         'statusCode': 404,
+        'headers': headers,
         'body': 'method not allowed'
     }
 
@@ -51,6 +52,7 @@ def get(event,context):
     except Exception as e:
         return {
         'statusCode': 500,
+        'headers': headers,
         'body': 'something went wrong'
     }
     finally:
@@ -60,6 +62,7 @@ def get(event,context):
 
     return {
         'statusCode': 200,
+        'headers': headers,
         'body': json.dumps(result)
     }
 
