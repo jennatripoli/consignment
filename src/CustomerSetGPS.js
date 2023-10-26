@@ -1,6 +1,7 @@
 import CustomerGPSContext from './CustomerGPSContext'
 import { customerSetGPS, header } from './Layout'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useContext, useState } from 'react'
 
 export default function CustomerSetGPS() {
     // Route navigation.
@@ -10,7 +11,9 @@ export default function CustomerSetGPS() {
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
     // The input for the longitude coordinate.
+    const [longitude, setLongitude] = useState(customerGPS[0])
     // The input for the latitude coordinate.
+    const [latitude, setLatitude] = useState(customerGPS[1])
     // The confirmation text that will indicate failure to save.
     const [confirmation, setConfirmation] = useState(undefined)
 
