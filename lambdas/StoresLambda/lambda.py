@@ -12,6 +12,13 @@ db_params = {
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
+    body = json.load(event['body'])
+    return {
+        'statusCode': 200,
+        'headers':{"Content-Type": "application/json"},
+        'body': body['storeName']
+    }
+
     method = event['httpMethod']
 
     if method == 'GET':
@@ -63,7 +70,7 @@ def post(event,context):
         # Create a cursor object
         cursor = conn.cursor()
         statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
-        body = json.load(event['body'])
+        body = event['body']
         # Execute your SQL queries here
         cursor.execute(statement,(body['storeName'],body['username'],body['password'],0,0,body['longitude'],body['latitude']))
 
