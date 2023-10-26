@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import json
 
 db_params = {
         'user': os.environ['DB_USER'],
@@ -60,7 +61,7 @@ def get(event,context):
         'isBase64Encoded': True,
         'statusCode': 200,
         'headers':{"Content-Type": "application/json"},
-        'body': result
+        'body': json.dumps(result)
     }
 
 def post(event,context):
@@ -80,10 +81,10 @@ def post(event,context):
         'isBase64Encoded': True,
         'statusCode': 500,
         'headers':{"Content-Type": "application/json"},
-        'body': {
+        'body': json.dumps({
             'message':'unable to create store',
             'error': e
-        }
+        })
     }
     finally:
         # Close the cursor and database connection
@@ -94,7 +95,7 @@ def post(event,context):
         'isBase64Encoded': True,
         'statusCode': 200,
         'headers':{"Content-Type": "application/json"},
-        'body': {
+        'body': json.dumps({
             'message':'succesfully created store'
-        }
+        })
     }
