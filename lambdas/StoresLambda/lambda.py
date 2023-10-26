@@ -10,6 +10,12 @@ db_params = {
         'port': 5432  # Default PostgreSQL port
     }
 
+headers = {
+    'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
+    'Access-Control-Allow-Methods':'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT',
+    'Access-Control-Allow-Origin':'*'
+}
+
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
     method = event['httpMethod']
@@ -72,6 +78,7 @@ def post(event,context):
     except Exception as e:
         return {
         'statusCode': 400,
+        'headers': json.dumps(headers),
         'body': json.dumps({
             'message':'unable to create store',
             'error': str(e)
@@ -84,6 +91,7 @@ def post(event,context):
 
     return {
         'statusCode': 200,
+        'headers': json.dumps(headers),
         'body': json.dumps({
             'message':'succesfully created store'
         })
