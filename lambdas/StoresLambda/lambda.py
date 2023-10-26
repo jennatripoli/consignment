@@ -78,7 +78,7 @@ def post(event,context):
     except Exception as e:
         return {
         'statusCode': 400,
-        'headers': json.dumps(headers),
+        'headers': headers,
         'body': json.dumps({
             'message':'unable to create store',
             'error': str(e)
@@ -91,7 +91,7 @@ def post(event,context):
 
     return {
         'statusCode': 200,
-        'headers': json.dumps(headers),
+        'headers': headers,
         'body': json.dumps({
             'message':'succesfully created store'
         })
