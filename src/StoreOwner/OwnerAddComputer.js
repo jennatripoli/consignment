@@ -67,28 +67,28 @@ export default function OwnerAddComputer() {
                     <input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} style={ownerCreateStore.entry} className='Entry-light'></input>
                     <br /><br />
                     <label>Memory:&emsp;&nbsp;&nbsp;&nbsp;</label>
-                    <select>
-                        {memoryChoices.map(choice => <option onChange={e => setMemory(e.target.value)} value={choice}>{choice}</option>)}
+                    <select onChange={e => setMemory(e.target.value)}>
+                        {memoryChoices.map(choice => <option value={choice}>{choice}</option>)}
                     </select>
                     <br /><br />
                     <label>Storage:&emsp;&emsp;</label>
-                    <select>
-                        {storageChoices.map(choice => <option onChange={e => setStorage(e.target.value)} value={choice}>{choice}</option>)}
+                    <select onChange={e => setStorage(e.target.value)}>
+                        {storageChoices.map(choice => <option value={choice}>{choice}</option>)}
                     </select>
                     <br /><br />
                     <label>Processor:&emsp;&nbsp;&nbsp;</label>
-                    <select>
-                        {processorChoices.map(choice => <option onChange={e => setProcessor(e.target.value)} value={choice}>{choice}</option>)}
+                    <select onChange={e => setProcessor(e.target.value)} >
+                        {processorChoices.map(choice => <option value={choice}>{choice}</option>)}
                     </select>
                     <br /><br />
                     <label>Processor Generation:&emsp;&emsp;&nbsp;</label>
-                    <select>
-                        {processorGenChoices.map(choice => <option onChange={e => setProcessorGen(e.target.value)} value={choice}>{choice}</option>)}
+                    <select onChange={e => setProcessorGen(e.target.value)}>
+                        {processorGenChoices.map(choice => <option value={choice}>{choice}</option>)}
                     </select>
                     <br /><br />
                     <label>Graphics:&emsp;&emsp;&nbsp;</label>
-                    <select>
-                        {graphicsChoices.map(choice => <option onChange={e => setGraphics(e.target.value)} value={choice}>{choice}</option>)}
+                    <select onChange={e => setGraphics(e.target.value)}>
+                        {graphicsChoices.map(choice => <option value={choice}>{choice}</option>)}
                     </select>
                 </div>
                 <button onClick={handleButtonCreate} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
