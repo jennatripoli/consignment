@@ -84,9 +84,9 @@ def post(event,context):
         statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         body = json.loads(event['body'])
         # Execute your SQL queries here
-        [lat,lon] = cursor.execute("SELECT lat,long from store where store=%s",(body['store'],))
-        cursor.execute(statement,(uuid.uuid4().int,body['price'],body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
-
+        cursor.execute("SELECT lat,long from store where storename=%s",(body['store'],))
+        [lat,lon] = cursor.fetchall()[0]
+        cursor.execute(statement,(str(uuid.uuid4()),float(body['price']),body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
         conn.commit()
 
     except Exception as e:
@@ -112,4 +112,4 @@ def post(event,context):
     }
 
 if __name__ == '__main__':
-    print(lambda_handler({'httpMethod':'GET','queryStringParameters':{}},''))
+    print(lambda_handler({'httpMethod':'POST', 'body': "{ \"price\": 100,\"memory\": \"memory\",\"storage\": \"storage\",\"processor\": \"processor\",\"processorGen\": \"processorGen\",\"graphics\": \"graphics\",\"store\": \"test\"}"},''))
