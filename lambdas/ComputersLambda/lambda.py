@@ -47,7 +47,7 @@ def get(event,context):
         params = event['queryStringParameters']
 
         if params != None:
-            cursor.execute("SELECT * FROM computer where store=%s",(event['storeName'],))
+            cursor.execute("SELECT * FROM computer where store=%s",(params['storeName'],))
         else:
             cursor.execute("SELECT * FROM computer")
 
