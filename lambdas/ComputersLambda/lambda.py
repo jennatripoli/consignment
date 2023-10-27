@@ -46,8 +46,8 @@ def get(event,context):
         cursor = conn.cursor()
         params = event['queryStringParameters']
 
-        if 'storeName' in params:
-            cursor.execute("SELECT * FROM computer where store=%s",(params['storeName'],))
+        if params != None:
+            cursor.execute("SELECT * FROM computer where store=%s",(event['storeName'],))
         else:
             cursor.execute("SELECT * FROM computer")
 
