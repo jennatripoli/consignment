@@ -44,9 +44,12 @@ def get(event,context):
     try:
         # Create a cursor object
         cursor = conn.cursor()
-        store_name = event['queryStringParameters']['storeName']
+        params = event['queryStringParameters']
 
-        cursor.execute("SELECT * FROM computer where store=%s",(store_name,))
+        if 'storeName' in params:
+            cursor.execute("SELECT * FROM computer where store=%s",(params['storeName'],))
+        else:
+            cursor.execute("SELECT * FROM computer")
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
@@ -105,4 +108,4 @@ def post(event,context):
     }
 
 if __name__ == '__main__':
-    print(lambda_handler({'httpMethod':'GET','queryStringParameters':{'storeName':'test'}},''))
+    print(lambda_handler({'httpMethod':'GET','queryStringParameters':{}},''))
