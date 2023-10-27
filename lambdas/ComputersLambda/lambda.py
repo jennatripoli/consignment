@@ -80,11 +80,11 @@ def post(event,context):
         # Create a cursor object
         cursor = conn.cursor()
 
-        [lat,lon] = cursor.execute("SELECT lat,long from store where store=%s",(body['store'],))
 
         statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         body = json.loads(event['body'])
         # Execute your SQL queries here
+        [lat,lon] = cursor.execute("SELECT lat,long from store where store=%s",(body['store'],))
         cursor.execute(statement,(uuid.uuid4().int,body['price'],body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
 
         conn.commit()
