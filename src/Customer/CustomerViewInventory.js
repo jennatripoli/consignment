@@ -28,7 +28,6 @@ export default function CustomerViewInventory() {
     const { storeName } = useParams()
 
     async function retrieve(store) {
-        console.log(store);
         if (store === undefined)
         {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
@@ -130,9 +129,10 @@ export default function CustomerViewInventory() {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
+            <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)}> Log In </button>
 
             <div style={customerViewInventory}>
-                <div style={customerViewInventory.title}>{'-- ALL SITE INVENTORY --'}</div>
+                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY --`}</div>
                 <div style={customerViewInventory.filter}>
                     <span style={customerViewInventory.filterTitle}>SEARCH FILTERS</span>
                     {filterCategories.map(fS => (
@@ -153,8 +153,8 @@ export default function CustomerViewInventory() {
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
                             <div style={customerViewInventory.computer}>
-                                <div style={customerViewInventory.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.storeName}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
+                                <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorGen}<br />Graphics: {computer.graphics}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
