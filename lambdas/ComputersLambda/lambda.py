@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import json
+import uuid
 
 db_params = {
         'user': os.environ['DB_USER'],
@@ -24,8 +25,8 @@ def lambda_handler(event, context):
 
     if method == 'GET':
         return get(event,context)
-    # elif method == 'POST':
-        # return post(event,context)
+    elif method == 'POST':
+        return post(event,context)
     else:
         return {
         'statusCode': 404,
@@ -78,10 +79,13 @@ def post(event,context):
     try:
         # Create a cursor object
         cursor = conn.cursor()
-        statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
+
+        [lat,lon] = cursor.execute("SELECT lat,long from store where store=%s",(body['store'],))
+
+        statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         body = json.loads(event['body'])
         # Execute your SQL queries here
-        cursor.execute(statement,(body['storeName'],body['username'],body['password'],0,0,body['longitude'],body['latitude']))
+        cursor.execute(statement,(uuid.uuid4().int,body['price'],body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
 
         conn.commit()
 
@@ -90,7 +94,7 @@ def post(event,context):
         'statusCode': 400,
         'headers': headers,
         'body': json.dumps({
-            'message':'unable to create store',
+            'message':'unable to create computer',
             'error': str(e)
         })
     }
@@ -103,7 +107,7 @@ def post(event,context):
         'statusCode': 200,
         'headers': headers,
         'body': json.dumps({
-            'message':'succesfully created store'
+            'message':'succesfully created computer'
         })
     }
 
