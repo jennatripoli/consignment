@@ -3,7 +3,7 @@ name: Deploy to cloudfront
 on:
   push:
     branches:
-      - main
+      - prod
 
 env:
   CI: false

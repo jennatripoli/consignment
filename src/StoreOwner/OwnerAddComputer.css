@@ -1,0 +1,31 @@
+select {
+    border: 3px solid #9FB8AD;
+    border-radius: 1em;
+    padding: 0.5em;
+    margin: 1em;
+}
+
+select:focus,
+select:hover {
+    outline: none;
+    border: 3px solid #799186;
+    transition: 0.5s;
+}
+
+option {
+    border: 3px solid #9FB8AD;
+    border-radius: 1em;
+    padding: 0.5em;
+}
+
+input {
+    border: 3px solid #9FB8AD;
+    border-radius: 1em;
+    padding: 0.5em;
+    margin: 1em;
+}
+
+.ownerCreateStoreInput {
+    display: flex;
+    flex-direction: column;
+}

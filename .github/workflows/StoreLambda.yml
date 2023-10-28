@@ -3,7 +3,7 @@ name: Deploy Store Lambda Function
 on:
   push:
     branches:
-      - main  # You can change this to the branch you want to trigger the deployment
+      - prod  # You can change this to the branch you want to trigger the deployment
 
 jobs:
   deploy:

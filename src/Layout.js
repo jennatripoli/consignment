@@ -165,8 +165,8 @@ export const customerViewInventory = {
     },
 
     filterTitle: {
-        fontWeight: 'bold', 
-        textAlign: 'center', 
+        fontWeight: 'bold',
+        textAlign: 'center',
         display: 'block'
     },
 
@@ -337,12 +337,6 @@ export const ownerCreateStore = {
         backgroundColor: 'white',
         padding: '1em',
         borderRadius: '1em',
-        color: '#475841'
-    },
-
-    entry: {
-        borderRadius: '1em',
-        padding: '0.5em',
         color: '#475841'
     },
 

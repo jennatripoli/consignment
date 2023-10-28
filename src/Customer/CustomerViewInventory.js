@@ -124,12 +124,26 @@ export default function CustomerViewInventory() {
 
     return (
         <div className='CustomerViewInventory'>
-            <div style={header}>
-                <div style={header.title}>Used Computers</div>
-                <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
+            {/* fix my styling 👉👈*/}
+            <div style={{
+                position: 'relative',
+                display: 'flex',
+                width: '98%',
+                margin: '1%',
+                textAlign: 'left'
+            }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <div style={header.title}>Used Computers</div>
+                    <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
+                </div>
+                <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
+                    <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)} style={{ borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log In </button>
+                    <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
+                </div>
             </div>
-            <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)}> Log In </button>
 
             <div style={customerViewInventory}>
                 <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY --`}</div>
