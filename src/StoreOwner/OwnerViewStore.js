@@ -9,6 +9,7 @@ export default function OwnerViewStore(props) {
 
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
+    const [totalInventory, setTotalInventory] = useState(0)
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
@@ -24,6 +25,7 @@ export default function OwnerViewStore(props) {
             {
                 let json = await resp.json()
                 setInventory(json)
+                setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
         else
@@ -35,6 +37,7 @@ export default function OwnerViewStore(props) {
             {
                 let json = await resp.json()
                 setInventory(json)
+                setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
     }
@@ -148,7 +151,7 @@ export default function OwnerViewStore(props) {
             </div>
 
             <div style={customerViewInventory}>
-                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY --`}</div>
+                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY -- Total: $${totalInventory}`}</div>
                 <div style={customerViewInventory.filter}>
                     <span style={customerViewInventory.filterTitle}>SEARCH FILTERS</span>
                     {filterCategories.map(fS => (
