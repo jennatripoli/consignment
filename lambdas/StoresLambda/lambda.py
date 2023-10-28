@@ -26,6 +26,8 @@ def lambda_handler(event, context):
         return get(event,context)
     elif method == 'POST':
         return post(event,context)
+    elif method == 'DELETE':
+        return delete(event,context)
     else:
         return {
         'statusCode': 404,
@@ -101,5 +103,42 @@ def post(event,context):
         'headers': headers,
         'body': json.dumps({
             'message':'succesfully created store'
+        })
+    }
+
+def delete(event,context):
+    conn = psycopg2.connect(**db_params)
+    try:
+        # Create a cursor object
+        cursor = conn.cursor()
+
+
+        delete_computers = "DELETE FROM computer WHERE store=%s"
+        statement = "DELETE FROM store WHERE storename=%s"
+        body = json.loads(event['body'])
+        # Execute your SQL queries here
+        cursor.execute(delete_computers,(body['storeName'],))
+        cursor.execute(statement,(body['storeName'],))
+        conn.commit()
+
+    except Exception as e:
+        return {
+        'statusCode': 400,
+        'headers': headers,
+        'body': json.dumps({
+            'message':'unable to delete store',
+            'error': str(e)
+        })
+    }
+    finally:
+        # Close the cursor and database connection
+        cursor.close()
+        conn.close()
+
+    return {
+        'statusCode': 200,
+        'headers': headers,
+        'body': json.dumps({
+            'message':'succesfully deleted store'
         })
     }

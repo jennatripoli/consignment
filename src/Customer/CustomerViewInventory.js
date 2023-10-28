@@ -71,7 +71,7 @@ export default function CustomerViewInventory() {
     }, {
         humanReadable: 'Storage',
         itemProperty: 'storage',
-        filters: ['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'],
+        filters: ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB'],
     }, {
         humanReadable: 'Processor',
         itemProperty: 'processor',

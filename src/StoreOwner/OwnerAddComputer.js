@@ -9,24 +9,24 @@ export default function OwnerAddComputer() {
 
     const navigate = useNavigate()
 
-    const [price, setPrice] = useState(0)
-    const [memory, setMemory] = useState('1 GB')
-    const [storage, setStorage] = useState('1 TB')
-    const [processor, setProcessor] = useState('AMD')
-    const [processorGen, setProcessorGen] = useState('AMD Ryzen 7000 Series')
-    const [graphics, setGraphics] = useState('NVIDIA GeForce RTX 4090')
-    const [confirmation, setConfirmation] = useState('')
 
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
 
     let memoryChoices = ['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB']
-    let storageChoices = ['2 TB', '1 TB', '512 GB', '256 GB', '128 GB']
+    let storageChoices = ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB']
     let processorChoices = ['AMD', 'Intel', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7']
     let processorGenChoices = ['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series']
     const [activeProcessorGenChoices, setActiveProcessorGenChoices] = useState(processorGenChoices.filter(containsString(processorChoices[0].split(' ')[0])))
     let graphicsChoices = ['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770']
 
+    const [price, setPrice] = useState(0)
+    const [memory, setMemory] = useState(memoryChoices[0])
+    const [storage, setStorage] = useState(storageChoices[0])
+    const [processor, setProcessor] = useState(processorChoices[0])
+    const [processorGen, setProcessorGen] = useState(processorGenChoices[0])
+    const [graphics, setGraphics] = useState(graphicsChoices[0])
+    const [confirmation, setConfirmation] = useState('')
 
     async function handleButtonCreate() {
         setConfirmation('Creating Store, Please Wait')

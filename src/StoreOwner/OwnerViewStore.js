@@ -58,7 +58,7 @@ export default function OwnerViewStore(props) {
     }, {
         humanReadable: 'Storage',
         itemProperty: 'storage',
-        filters: ['2 TB', '1 TB', '512 GB', '256 GB', '128 GB'],
+        filters: ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB'],
     }, {
         humanReadable: 'Processor',
         itemProperty: 'processor',
@@ -109,16 +109,17 @@ export default function OwnerViewStore(props) {
             filter.active.find(aI => (aI.validate ?? (s => s === aI))(item[filter.itemProperty])) !== undefined)
         , inventory), [inventory, filters])
 
-    async function deleteComputer(id) {
+    async function deleteComputer(computer) {
+        console.log(computer);
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
             method: 'DELETE',
-            body: JSON.stringify({
-                'computer': id
-            })
+            body: JSON.stringify(
+                computer
+            )
         })
         if (resp.status === 200)
         {
-            setInventory([...inventory.filter(comp => comp.id !== id)])
+            setInventory([...inventory.filter(comp => comp.id !== computer.id)])
         }
     }
 
@@ -173,7 +174,7 @@ export default function OwnerViewStore(props) {
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
-                            <button key={toString(computer.id).concat(' Delete')} style={customerViewInventory.button} onClick={e => deleteComputer(computer.id)} className='Button-light'>Delete</button>
+                            <button key={toString(computer.id).concat(' Delete')} style={customerViewInventory.button} onClick={e => deleteComputer(computer)} className='Button-light'>Delete</button>
                         </div>
                     ))}
                 </div>
