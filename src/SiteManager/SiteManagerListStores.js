@@ -7,20 +7,16 @@ export default function SiteManagerListStores() {
     // List of all stores on the site.
     const [stores, setStores] = useState([])
     const navigate = useNavigate()
-    // HTML to display list of all stores.
-    const [storesHTML, setStoresHTML] = useState([])
     // How to sort the stores based on inventory ('ascending' or 'descending').
-    const [sort, setSort] = useState('')
+    const [sort, setSort] = useState('ascending')
 
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'
         })
         let json = await resp.json()
-        setStores(json)
-        setSort('ascending')
+        setStores(json.sort((a, b) => b.inventory - a.inventory))
     }
-
 
     // Update stores when sort changes.
     useEffect(() => {
@@ -28,29 +24,14 @@ export default function SiteManagerListStores() {
         {
             document.getElementById('ascending').checked = true
             document.getElementById('descending').checked = false
-            setStores([].concat(stores).sort((a, b) => b.inventory - a.inventory))
+            setStores([...stores.sort((a, b) => b.inventory - a.inventory)])
         } else if (sort === 'descending')
         {
             document.getElementById('descending').checked = true
             document.getElementById('ascending').checked = false
-            setStores([].concat(stores).sort((a, b) => a.inventory - b.inventory))
+            setStores([...stores.sort((a, b) => a.inventory - b.inventory)])
         }
     }, [sort])
-
-    // Update storesHTML when stores changes.
-    useEffect(() => {
-        storesHTML.length = 0
-        stores.forEach(store => {
-            const entry = (
-                <div key={store.storeName}>
-                    <div onClick={() => navigate(`/CustomerViewInventory/${store.storeName}`)} style={siteManagerListStores.store}><span style={{ fontWeight: 'bold' }}>{store.storeName}<br />Inventory: </span>${store.inventory}<br /><span style={{ fontWeight: 'bold' }}>Balance: </span>${store.balance}</div>
-                    <button key={store.storeName.concat(' Button')} onClick={() => handleButtonDelete(store)} style={siteManagerListStores.button} className='Button-white'><svg xmlns='http://www.w3.org/2000/svg' height='4em' viewBox='0 0 448 512'><path d='M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z' /></svg></button>
-                </div>
-            )
-            storesHTML.push(entry)
-        })
-        setStoresHTML([].concat(storesHTML))
-    }, [stores])
 
     useEffect(() => { retrieve() }, [])
     /** Delete a store from the site. */
@@ -87,7 +68,10 @@ export default function SiteManagerListStores() {
                     <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={handleSort}></input>Ascending</label>&emsp;
                     <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={handleSort}></input>Descending</label>
                 </div>
-                <div id='stores' style={siteManagerListStores.stores}>{storesHTML}</div>
+                <div id='stores' style={siteManagerListStores.stores}>{stores.map(store => <div key={store.storeName}>
+                    <div onClick={() => navigate(`/CustomerViewInventory/${store.storeName}`)} style={siteManagerListStores.store}><span style={{ fontWeight: 'bold' }}>{store.storeName}<br />Inventory: </span>${store.inventory}<br /><span style={{ fontWeight: 'bold' }}>Balance: </span>${store.balance}</div>
+                    <button key={store.storeName.concat(' Button')} onClick={() => handleButtonDelete(store)} style={siteManagerListStores.button} className='Button-white'><svg xmlns='http://www.w3.org/2000/svg' height='4em' viewBox='0 0 448 512'><path d='M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z' /></svg></button>
+                </div>)}</div>
             </div>
         </div>
     )
