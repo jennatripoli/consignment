@@ -27,6 +27,24 @@ export default function CustomerViewInventory() {
 
     const { storeName } = useParams()
 
+    let selectedStore = null
+
+    function handleButtonCompare(computer) {
+        console.log(selectedStore)
+        if (selectedStore === null)
+        {
+            selectedStore = computer
+        }
+        else if(selectedStore === computer)
+        {
+            selectedStore = null
+        }
+        else
+        {
+            navigate('/CustomerCompare', {state: {computer1: selectedStore, computer2: computer}})
+        }
+    }
+
     async function retrieve(store) {
         if (store === undefined)
         {
@@ -170,8 +188,8 @@ export default function CustomerViewInventory() {
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
                             </div>
-                            <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
-                            <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
+                            <button id={computer.id + 'Compare'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonCompare(computer)}>Compare</button>
+                            <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => console.log('purchase')}>Purchase</button>
                         </div>
                     ))}
                 </div>
