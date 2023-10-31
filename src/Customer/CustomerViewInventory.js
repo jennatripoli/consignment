@@ -20,6 +20,8 @@ export default function CustomerViewInventory() {
 
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
+
+    const [selectedStore, setSelectedStore] = useState(null)
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
@@ -27,17 +29,15 @@ export default function CustomerViewInventory() {
 
     const { storeName } = useParams()
 
-    let selectedStore = null
 
     function handleButtonCompare(computer) {
-        console.log(selectedStore)
         if (selectedStore === null)
         {
-            selectedStore = computer
+            setSelectedStore(computer)
         }
         else if(selectedStore === computer)
         {
-            selectedStore = null
+            setSelectedStore(null)
         }
         else
         {
@@ -140,7 +140,7 @@ export default function CustomerViewInventory() {
             filter.active.find(aI => (aI.validate ?? (s => s === aI))(item[filter.itemProperty])) !== undefined)
         , inventory), [inventory, filters])
 
-    return (
+        return (
         <div className='CustomerViewInventory'>
             {/* fix my styling 👉👈*/}
             <div style={{
@@ -184,7 +184,7 @@ export default function CustomerViewInventory() {
                 <div id='inventory' style={customerViewInventory.inventory}>
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
-                            <div style={customerViewInventory.computer}>
+                            <div style={{...customerViewInventory.computer,outline:(selectedStore !== null && selectedStore.id == computer.id)?'3px solid orange':'none'}}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
                             </div>

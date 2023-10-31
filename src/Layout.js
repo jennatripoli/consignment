@@ -183,7 +183,6 @@ export const customerViewInventory = {
         borderRadius: '0.8em',
         padding: '0.6em',
         margin: '1.5em 1em 0 1em',
-        border: 'none',
         fontSize: '1em',
         backgroundColor: '#475841',
         color: 'white'
