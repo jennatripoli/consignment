@@ -3,15 +3,15 @@ import { customerListStores, header } from '../Layout'
 import CustomerGPSContext from './CustomerGPSContext'
 import { useContext, useEffect, useState } from 'react'
 
-
-function CustomerListStores() {
+export default function CustomerListStores() {
     // Route navigation.
     const navigate = useNavigate()
     // Value saved as the customer's GPS location.
-    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
+    const { customerGPS } = useContext(CustomerGPSContext)
     // List of all stores.
     const [stores, setStores] = useState([])
 
+    /** Retrieve data. */
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'
@@ -28,9 +28,10 @@ function CustomerListStores() {
         else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory' } })
     }
 
+    /** Go to CustomerViewInventory for a store if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewStore(storeName) {
-        if (customerGPS[0] !== null && customerGPS[1] !== null) navigate(`/CustomerViewInventory/${storeName}`, { state: { store: storeName } })
-        else navigate('/CustomerSetGPS', { state: { destination: `/CustomerViewInventory/${storeName}`, store: storeName } })
+        if (customerGPS[0] !== null && customerGPS[1] !== null) navigate(`/CustomerViewInventory/${storeName}`)
+        else navigate('/CustomerSetGPS', { state: { destination: `/CustomerViewInventory/${storeName}` } })
     }
 
     return (
@@ -51,5 +52,3 @@ function CustomerListStores() {
         </div>
     )
 }
-
-export default CustomerListStores

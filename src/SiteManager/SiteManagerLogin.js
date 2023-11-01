@@ -17,11 +17,8 @@ export default function SiteManagerLogin() {
         setUsername(document.getElementById('username').value)
         setPassword(document.getElementById('password').value)
 
-        if (username && password)
-        {
-            // FOR TESTING
-            navigate('/SiteManagerListStores')
-        } else setConfirmation('Invalid credentials.')
+        if (username && password) navigate('/SiteManagerListStores')
+        else setConfirmation('Invalid credentials.')
     }
 
     return (

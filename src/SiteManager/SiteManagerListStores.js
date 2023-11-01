@@ -2,11 +2,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { header, siteManagerListStores } from '../Layout'
 
-
 export default function SiteManagerListStores() {
+    // Route navigation.
+    const navigate = useNavigate()
     // List of all stores on the site.
     const [stores, setStores] = useState([])
-    const navigate = useNavigate()
     // How to sort the stores based on inventory ('ascending' or 'descending').
     const [sort, setSort] = useState('ascending')
 
@@ -20,13 +20,11 @@ export default function SiteManagerListStores() {
 
     // Update stores when sort changes.
     useEffect(() => {
-        if (sort === 'ascending')
-        {
+        if (sort === 'ascending') {
             document.getElementById('ascending').checked = true
             document.getElementById('descending').checked = false
             setStores([...stores.sort((a, b) => b.inventory - a.inventory)])
-        } else if (sort === 'descending')
-        {
+        } else if (sort === 'descending') {
             document.getElementById('descending').checked = true
             document.getElementById('ascending').checked = false
             setStores([...stores.sort((a, b) => a.inventory - b.inventory)])
@@ -34,6 +32,7 @@ export default function SiteManagerListStores() {
     }, [sort])
 
     useEffect(() => { retrieve() }, [])
+    
     /** Delete a store from the site. */
     async function handleButtonDelete(store) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store`, {
@@ -42,8 +41,7 @@ export default function SiteManagerListStores() {
                 store
             )
         })
-        if (resp.status === 200)
-        {
+        if (resp.status === 200) {
             setStores([...stores.filter(s => s.storeName !== store.storeName)])
         }
     }

@@ -19,10 +19,8 @@ export default function CustomerSetGPS() {
 
     /** Save the GPS data. */
     function handleButtonSave() {
-        if (longitude && latitude)
-        {
-            if (longitude >= -180 && longitude <= 180 && latitude >= -90 && longitude <= 90)
-            {
+        if (longitude && latitude) {
+            if (longitude >= -180 && longitude <= 180 && latitude >= -90 && longitude <= 90) {
                 setCustomerGPS([longitude, latitude])
                 setConfirmation('Save successful!')
                 if (params !== null) navigate(params.destination, { replace: true })

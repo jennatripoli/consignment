@@ -1,72 +1,45 @@
 import { useState, useMemo, useReducer, useContext, useEffect } from 'react'
 import { header, customerViewInventory } from '../Layout'
-import { Navigate, useNavigate, useLocation, useParams, useResolvedPath } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CustomerGPSContext from './CustomerGPSContext'
 
 export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
-
-    const pathname = useResolvedPath().pathname
+    // Store name from parameter.
+    const { storeName } = useParams()
     // Value saved as the customer's GPS location.
-    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
-
-    // if (customerGPS[0] === null || customerGPS[1] === null)
-    // {
-    //     return <Navigate to="/CustomerSetGPS" state={{
-    //         destination: pathname
-    //     }} replace />
-    // }
-
+    const { customerGPS } = useContext(CustomerGPSContext)
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
-
+    // Store that is selected for comparison.
     const [selectedStore, setSelectedStore] = useState(null)
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
     const inRange = (low, high) => n => n >= low && n <= high
 
-    const { storeName } = useParams()
-
-
+    /** Select a computer for comparison and redirect to CustomerCompare if two stores are selected. */
     function handleButtonCompare(computer) {
-        if (selectedStore === null)
-        {
-            setSelectedStore(computer)
-        }
-        else if(selectedStore === computer)
-        {
-            setSelectedStore(null)
-        }
-        else
-        {
-            navigate('/CustomerCompare', {state: {computer1: selectedStore, computer2: computer}})
-        }
+        if (selectedStore === null) setSelectedStore(computer)
+        else if (selectedStore === computer) setSelectedStore(null)
+        else navigate('/CustomerCompare', { state: { computer1: selectedStore, computer2: computer } })
     }
 
+    /** Retrieve data. */
     async function retrieve(store) {
-        if (store === undefined)
-        {
+        if (store === undefined) {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
                 method: 'GET'
             })
             let json = await resp.json()
-            if (resp.status === 200)
-            {
-                setInventory(json)
-            }
-        }
-        else
-        {
+            if (resp.status === 200) setInventory(json)
+        } else {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer?storeName=${store}`, {
                 method: 'GET'
             })
             let json = await resp.json()
-            if (resp.status === 200)
-            {
-                setInventory(json)
-            }
+            if (resp.status === 200) setInventory(json)
         }
     }
 
@@ -115,11 +88,9 @@ export default function CustomerViewInventory() {
     function updateFilterAction(state, action) {
         if (action.itemProperty === undefined || action.filter === undefined || action.checked === undefined) return { ...state }
         return state.map(fS => {
-            if (fS.itemProperty === action.itemProperty)
-            {
+            if (fS.itemProperty === action.itemProperty) {
                 let newActive
-                if (action.checked)
-                {
+                if (action.checked) {
                     newActive = fS.active.map(_ => _)
                     newActive.push(action.filter)
                 } else newActive = fS.active.filter(f =>
@@ -129,18 +100,18 @@ export default function CustomerViewInventory() {
         })
     }
 
-    function calculateShipping(computer)
-    {
-        var radius = 3959 // miles
-        var dLat = (computer.lat-parseFloat(customerGPS[0])) * Math.PI / 180
-        var dLon = (computer.long-parseFloat(customerGPS[1])) * Math.PI / 180
+    /** Calculate the shipping cost ($0.03 per mile). */
+    function calculateShipping(computer) {
+        var radius = 3959
+        var dLat = (computer.lat - parseFloat(customerGPS[0])) * Math.PI / 180
+        var dLon = (computer.long - parseFloat(customerGPS[1])) * Math.PI / 180
         var lat1 = parseFloat(customerGPS[0]) * Math.PI / 180
         var lat2 = computer.lat * Math.PI / 180
 
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
-        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
+        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
         var distance = radius * b
-        return (Math.round(distance * 100 * 0.03)/100).toFixed(2) //0.03 cents a mile
+        return (Math.round(distance * 100 * 0.03) / 100).toFixed(2)
     }
 
     // Update filters based on changed filter actions.
@@ -154,7 +125,7 @@ export default function CustomerViewInventory() {
             filter.active.find(aI => (aI.validate ?? (s => s === aI))(item[filter.itemProperty])) !== undefined)
         , inventory), [inventory, filters])
 
-        return (
+    return (
         <div className='CustomerViewInventory'>
             {/* fix my styling 👉👈*/}
             <div style={{
@@ -198,7 +169,7 @@ export default function CustomerViewInventory() {
                 <div id='inventory' style={customerViewInventory.inventory}>
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
-                            <div style={{...customerViewInventory.computer,outline:(selectedStore !== null && selectedStore.id == computer.id)?'3px solid orange':'none'}}>
+                            <div style={{ ...customerViewInventory.computer, outline: (selectedStore !== null && selectedStore.id == computer.id) ? '3px solid orange' : 'none' }}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
