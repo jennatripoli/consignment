@@ -140,7 +140,7 @@ export default function CustomerViewInventory() {
         var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
         var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
         var distance = radius * b
-        return Math.round(distance * 100)/100
+        return Math.round(distance * 100 * 0.03)/100 //0.03 cents a mile
     }
 
     // Update filters based on changed filter actions.
