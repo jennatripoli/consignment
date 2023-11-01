@@ -169,7 +169,7 @@ export default function CustomerViewInventory() {
                 <div id='inventory' style={customerViewInventory.inventory}>
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
-                            <div style={{ ...customerViewInventory.computer, outline: (selectedStore !== null && selectedStore.id == computer.id) ? '3px solid orange' : 'none' }}>
+                            <div style={{ ...customerViewInventory.computer, outline: (selectedStore !== null && selectedStore.id === computer.id) ? '3px solid orange' : 'none' }}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>

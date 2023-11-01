@@ -17,8 +17,7 @@ export default function OwnerLogin() {
         setUsername(document.getElementById('username').value)
         setPassword(document.getElementById('password').value)
 
-        if (username && password)
-        {
+        if (username && password) {
             // FOR TESTING
             navigate('/OwnerViewStore')
         } else setConfirmation('Invalid credentials.')

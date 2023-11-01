@@ -45,7 +45,7 @@ export default function OwnerAddComputer() {
                         store: location.state['store']
                     })
                 })
-            if (resp.status == 200)
+            if (resp.status === 200)
             {
                 navigate(-1)
             } else setConfirmation('Failed to create computer, please fill in all fields.')

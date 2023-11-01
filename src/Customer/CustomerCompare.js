@@ -1,32 +1,28 @@
-import { useState, useMemo, useReducer, useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { header, customerCompare } from '../Layout'
-import { Navigate, useNavigate, useLocation, useParams, useResolvedPath } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import CustomerGPSContext from './CustomerGPSContext'
 
 export default function CustomerViewInventory() {
     // Route navigation.
     const navigate = useNavigate()
-
-    const pathname = useResolvedPath().pathname
     // Value saved as the customer's GPS location.
-    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
-
+    const { customerGPS } = useContext(CustomerGPSContext)
+    // The two computers to compare.
     const { computer1, computer2 } = useLocation().state
 
-    console.log(computer1)
-
-    function calculateShipping(computer)
-    {
-        var radius = 3959 // miles
+    /** Calculate the shipping cost ($0.03 per mile). */
+    function calculateShipping(computer) {
+        var radius = 3959
         var dLat = (computer.lat-parseFloat(customerGPS[0])) * Math.PI / 180
         var dLon = (computer.long-parseFloat(customerGPS[1])) * Math.PI / 180
         var lat1 = parseFloat(customerGPS[0]) * Math.PI / 180
         var lat2 = computer.lat * Math.PI / 180
 
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
         var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
         var distance = radius * b
-        return (Math.round(distance * 100 * 0.03)/100).toFixed(2) // $0.03 per mile
+        return (Math.round(distance * 100 * 0.03)/100).toFixed(2)
     }
 
     return (

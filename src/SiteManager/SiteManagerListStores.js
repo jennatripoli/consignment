@@ -10,6 +10,7 @@ export default function SiteManagerListStores() {
     // How to sort the stores based on inventory ('ascending' or 'descending').
     const [sort, setSort] = useState('ascending')
 
+    /** Retrieve data. */
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'
@@ -32,7 +33,7 @@ export default function SiteManagerListStores() {
     }, [sort])
 
     useEffect(() => { retrieve() }, [])
-    
+
     /** Delete a store from the site. */
     async function handleButtonDelete(store) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store`, {
@@ -41,9 +42,7 @@ export default function SiteManagerListStores() {
                 store
             )
         })
-        if (resp.status === 200) {
-            setStores([...stores.filter(s => s.storeName !== store.storeName)])
-        }
+        if (resp.status === 200) setStores([...stores.filter(s => s.storeName !== store.storeName)])
     }
 
     /** Sort the stores by their inventory. */
