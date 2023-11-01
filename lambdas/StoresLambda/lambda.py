@@ -48,7 +48,7 @@ def get(event,context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT storename FROM store")
+        cursor.execute("SELECT * FROM store")
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
