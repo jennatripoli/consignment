@@ -129,6 +129,20 @@ export default function CustomerViewInventory() {
         })
     }
 
+    function calculateShipping(computer)
+    {
+        var radius = 3959 // miles
+        var dLat = (computer.lat-parseFloat(customerGPS[0])) * Math.PI / 180
+        var dLon = (computer.long-parseFloat(customerGPS[1])) * Math.PI / 180
+        var lat1 = parseFloat(customerGPS[0]) * Math.PI / 180
+        var lat2 = computer.lat * Math.PI / 180
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
+        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+        var distance = radius * b
+        return Math.round(distance * 100)/100
+    }
+
     // Update filters based on changed filter actions.
     const [filters, updateFilters] = useReducer(updateFilterAction, filterCategories.map(v => ({
         itemProperty: v.itemProperty, active: []
@@ -186,7 +200,7 @@ export default function CustomerViewInventory() {
                         <div key={computer.id}>
                             <div style={{...customerViewInventory.computer,outline:(selectedStore !== null && selectedStore.id == computer.id)?'3px solid orange':'none'}}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
                             <button id={computer.id + 'Compare'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonCompare(computer)}>Compare</button>
                             <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => console.log('purchase')}>Purchase</button>
