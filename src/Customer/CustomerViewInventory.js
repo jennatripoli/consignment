@@ -172,7 +172,7 @@ export default function CustomerViewInventory() {
                     <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 </div>
                 <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
-                    <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)} style={{ borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log In </button>
+                        {storeName && <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)} style={{ borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log In </button>}
                     <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
                 </div>
             </div>
