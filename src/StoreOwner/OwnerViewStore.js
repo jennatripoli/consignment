@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect, useReducer, useMemo } from 'react'
+import { useState, useEffect, useReducer, useMemo, useContext } from 'react'
 import { header, customerViewInventory } from '../Layout'
+import CustomerGPSContext from '../Customer/CustomerGPSContext'
 
 
 export default function OwnerViewStore(props) {
@@ -14,6 +15,8 @@ export default function OwnerViewStore(props) {
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
     const inRange = (low, high) => n => n >= low && n <= high
+    // GPS
+    const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
 
     async function retrieve(store) {
         if (store === undefined)
@@ -126,6 +129,20 @@ export default function OwnerViewStore(props) {
         }
     }
 
+    function calculateShipping(computer)
+    {
+        var radius = 3959 // miles
+        var dLat = (computer.lat-parseFloat(customerGPS[0])) * Math.PI / 180
+        var dLon = (computer.long-parseFloat(customerGPS[1])) * Math.PI / 180
+        var lat1 = parseFloat(customerGPS[0]) * Math.PI / 180
+        var lat2 = computer.lat * Math.PI / 180
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
+        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+        var distance = radius * b
+        return Math.round(distance * 100)/100
+    }    
+
     return (
         <div className='CustomerViewInventory'>
             {/* fix my styling 👉👈*/}
@@ -173,7 +190,7 @@ export default function OwnerViewStore(props) {
                         <div key={computer.id}>
                             <div style={customerViewInventory.computer}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + 1000.23}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${1000.23}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
