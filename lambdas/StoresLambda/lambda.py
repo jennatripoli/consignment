@@ -16,7 +16,7 @@ headers = {
     'Access-Control-Allow-Origin':'*'
 }
 
-columns = ['storeName','username','password','balance','inventory','lat','long']
+columns = ['storeName','balance','inventory','lat','long']
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
@@ -48,7 +48,7 @@ def get(event,context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT * FROM store")
+        cursor.execute("SELECT storename, balance, inventory, lat, long FROM store")
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
