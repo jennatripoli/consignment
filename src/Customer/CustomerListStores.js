@@ -2,13 +2,30 @@ import { Link, useNavigate } from 'react-router-dom'
 import { customerListStores, header } from '../Layout'
 import CustomerGPSContext from './CustomerGPSContext'
 import { useContext, useEffect, useState } from 'react'
+import { useGeolocated } from 'react-geolocated'
 
 
 function CustomerListStores() {
     // Route navigation.
     const navigate = useNavigate()
+
+    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
+            },
+            userDecisionTimeout: 5000,
+        });
+    
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
+    
+    useEffect(() => {
+        console.log(customerGPS);
+        setCustomerGPS([coords?.latitude, coords?.longitude])
+    }, [coords])
+    
+    
     // List of all stores.
     const [stores, setStores] = useState([])
 
