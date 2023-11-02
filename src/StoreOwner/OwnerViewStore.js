@@ -11,6 +11,7 @@ export default function OwnerViewStore(props) {
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
     const [totalInventory, setTotalInventory] = useState(0)
+    const [balance, setBalance] = useState(0)
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
@@ -43,6 +44,11 @@ export default function OwnerViewStore(props) {
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
+        let json = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store`, {
+                method: 'GET'
+        }).then(r => r.json())
+        json = json.filter(store => store.storeName === storeName)[0]
+        setBalance(json.balance)
     }
 
     useEffect(() => { retrieve(storeName) }, [])
@@ -120,13 +126,17 @@ export default function OwnerViewStore(props) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
             method: 'DELETE',
             body: JSON.stringify(
-                computer
+                { action:'DELETE',...computer }
             )
         })
         if (resp.status === 200)
         {
             setInventory([...inventory.filter(comp => comp.id !== computer.id)])
         }
+    }
+
+    function editComputer(computer) {
+        navigate('/OwnerEditPrice', { state: { computer: computer } })
     }
 
     function calculateShipping(computer)
@@ -162,13 +172,13 @@ export default function OwnerViewStore(props) {
                 </div>
                 <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
                     <button onClick={e => navigate('/OwnerAddComputer', { state: { store: storeName } })} style={{ borderRadius: '1em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Add Computer </button>
-                    <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log In </button>
+                    <button onClick={e => navigate(`/CustomerViewInventory/${storeName}`)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log Out </button>
                     <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
                 </div>
             </div>
 
             <div style={customerViewInventory}>
-                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY -- Total: $${totalInventory}`}</div>
+                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY -- Inventory: $${totalInventory} Balance: $${balance}`}</div>
                 <div style={customerViewInventory.filter}>
                     <span style={customerViewInventory.filterTitle}>SEARCH FILTERS</span>
                     {filterCategories.map(fS => (
@@ -190,11 +200,12 @@ export default function OwnerViewStore(props) {
                         <div key={computer.id}>
                             <div style={customerViewInventory.computer}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${(parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
                             <button key={toString(computer.id).concat(' Delete')} style={customerViewInventory.button} onClick={e => deleteComputer(computer)} className='Button-light'>Delete</button>
+                            <button key={toString(computer.id).concat(' Edit')} style={customerViewInventory.button} onClick={e => editComputer(computer)} className='Button-light'>Edit</button>
                         </div>
                     ))}
                 </div>

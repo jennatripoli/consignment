@@ -52,12 +52,12 @@ export default function CustomerViewInventory() {
                 <div id='inventory' style={customerCompare.inventory}>
                     <div key={computer1.id}>
                         <div style={customerCompare.computer}>
-                            <div style={customerCompare.center}><b>{computer1.id}</b><br /><br /><b>Total Price: ${computer1.price + calculateShipping(computer1)}</b><br /><br />List Price: ${computer1.price}<br />Shopping Cost: ${calculateShipping(computer1)}<br />Memory: {computer1.memory}<br />Storage Size: {computer1.storage}<br />Processor: {computer1.processor}<br />Processor Gen: {computer1.processorgen}<br />Graphics: {computer1.graphics}<br />Store: {computer1.store}<br />Shipping: ${1000.23}</div>
+                            <div style={customerCompare.center}><b>{computer1.name}</b><br /><br /><b>Total Price: ${(parseFloat(computer1.price) + parseFloat(calculateShipping(computer1))).toFixed(2)}</b><br /><br />List Price: ${computer1.price}<br />Shopping Cost: ${calculateShipping(computer1)}<br />Memory: {computer1.memory}<br />Storage Size: {computer1.storage}<br />Processor: {computer1.processor}<br />Processor Gen: {computer1.processorgen}<br />Graphics: {computer1.graphics}<br />Store: {computer1.store}<br />Shipping: ${1000.23}</div>
                         </div>
                     </div>
                     <div key={computer2.id}>
                         <div style={customerCompare.computer}>
-                            <div style={customerCompare.center}><b>{computer2.id}</b><br /><br /><b>Total Price: ${computer2.price + calculateShipping(computer2)}</b><br /><br />List Price: ${computer2.price}<br />Shopping Cost: ${calculateShipping(computer2)}<br />Memory: {computer2.memory}<br />Storage Size: {computer2.storage}<br />Processor: {computer2.processor}<br />Processor Gen: {computer2.processorgen}<br />Graphics: {computer2.graphics}<br />Store: {computer2.store}<br />Shipping: ${1000.23}</div>
+                            <div style={customerCompare.center}><b>{computer2.name}</b><br /><br /><b>Total Price: ${(parseFloat(computer2.price) + parseFloat(calculateShipping(computer2))).toFixed(2)}</b><br /><br />List Price: ${computer2.price}<br />Shopping Cost: ${calculateShipping(computer2)}<br />Memory: {computer2.memory}<br />Storage Size: {computer2.storage}<br />Processor: {computer2.processor}<br />Processor Gen: {computer2.processorgen}<br />Graphics: {computer2.graphics}<br />Store: {computer2.store}<br />Shipping: ${1000.23}</div>
                         </div>
                     </div>
                 </div>

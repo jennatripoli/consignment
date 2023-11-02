@@ -17,7 +17,7 @@ headers = {
     'Access-Control-Allow-Origin':'*'
 }
 
-columns = ['id','price','memory','storage','processor','processorgen','graphics','lat','long','store']
+columns = ['id','price','memory','storage','processor','processorgen','graphics','lat','long','store','timecreated','name']
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
@@ -56,8 +56,10 @@ def get(event,context):
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
-
+        
         result = [dict(zip(columns,store)) for store in result]
+        for item in result:
+            item['timecreated'] = json.dumps(item['timecreated'], default=str)
 
     except Exception as e:
         return {
@@ -79,19 +81,34 @@ def get(event,context):
 def post(event,context):
     conn = psycopg2.connect(**db_params)
     try:
-        # Create a cursor object
-        cursor = conn.cursor()
-
-
-        statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        update_store = "UPDATE store set inventory=%s where storename=%s"
         body = json.loads(event['body'])
-        # Execute your SQL queries here
-        cursor.execute("SELECT lat,long,inventory from store where storename=%s",(body['store'],))
-        [lat,lon,inventory] = cursor.fetchall()[0]
-        cursor.execute(statement,(str(uuid.uuid4()),float(body['price']),body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
-        cursor.execute(update_store,(inventory+float(body['price']),body['store']))
-        conn.commit()
+        cursor = conn.cursor()
+        if body['request'] == 'insert':
+            statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            update_store = "UPDATE store set inventory=%s where storename=%s"
+            
+            # Execute your SQL queries here
+            cursor.execute("SELECT lat,long,inventory from store where storename=%s",(body['store'],))
+            [lat,lon,inventory] = cursor.fetchall()[0]
+            cursor.execute(statement,(str(uuid.uuid4()),float(body['price']),body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store'],body['createTime'],body['name']))
+            cursor.execute(update_store,(inventory+float(body['price']),body['store']))
+            conn.commit()
+        elif body['request'] == 'update':
+            statement = "UPDATE computer SET price=%s WHERE cid=%s"
+            update_store = "UPDATE store SET inventory=%s WHERE storename=%s"
+            get_price = "SELECT price FROM computer WHERE cid=%s"
+            get_inventory = "SELECT inventory FROM store WHERE storename=%s"
+
+            cursor.execute(get_price,(body['id'],))
+            price = cursor.fetchall()[0][0]
+
+            cursor.execute(get_inventory,(body['store'],))
+            inventory = cursor.fetchall()[0][0]
+
+            cursor.execute(statement,(float(body['price']),body['id']))
+            
+            cursor.execute(update_store,(inventory+float(body['price'])-price,body['store']))
+            conn.commit()
 
     except Exception as e:
         return {
@@ -123,15 +140,21 @@ def delete(event,context):
 
 
         statement = "DELETE FROM computer WHERE cid=%s"
-        update_store = "UPDATE store set inventory=%s where storename=%s"
         body = json.loads(event['body'])
-        # Execute your SQL queries here
-        cursor.execute("SELECT lat,long,inventory from store where storename=%s",(body['store'],))
-        [lat,lon,inventory] = cursor.fetchall()[0]
-        cursor.execute(statement,(body['id'],))
-        cursor.execute(update_store,(inventory-float(body['price']),body['store']))
-        conn.commit()
-
+        cursor.execute("SELECT lat,long,inventory,balance from store where storename=%s",(body['store'],))
+        [lat,lon,inventory,balance] = cursor.fetchall()[0]
+        if body['action'] == 'DELETE':
+            update_store = "UPDATE store set inventory=%s where storename=%s"
+            cursor.execute(statement,(body['id'],))
+            cursor.execute(update_store,(inventory-float(body['price']),body['store']))
+            conn.commit()
+        elif body['action'] == 'PURCHASE':
+            update_store = "UPDATE store set inventory=%s,balance=%s where storename=%s"
+            cursor.execute(statement,(body['id'],))
+            cursor.execute(update_store,(inventory-float(body['price']),balance+float(body['price']),body['store']))
+            conn.commit()
+        else:
+            raise Exception('action is not supported')
     except Exception as e:
         return {
         'statusCode': 400,
