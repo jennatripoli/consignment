@@ -45,6 +45,26 @@ export default function CustomerViewInventory() {
         }
     }
 
+    async function handleButtonPurchase(computer) {
+        let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
+            method: 'DELETE',
+            body: JSON.stringify({
+                id: computer.id,
+                store: computer.store,
+                price: computer.price
+            })
+        })
+        let json = await resp.json()
+        if (resp.status === 200)
+        {
+            retrieve(storeName)
+            console.log('sold!')
+        }
+        else{
+            console.log('failed to sell')
+        }
+    }
+
     async function retrieve(store) {
         if (store === undefined)
         {
@@ -203,7 +223,7 @@ export default function CustomerViewInventory() {
                                 <div style={customerViewInventory.right}><b>Total Price: ${(parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
                             <button id={computer.id + 'Compare'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonCompare(computer)}>Compare</button>
-                            <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => console.log('purchase')}>Purchase</button>
+                            <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonPurchase(computer)}>Purchase</button>
                         </div>
                     ))}
                 </div>
