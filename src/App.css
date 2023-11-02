@@ -83,6 +83,10 @@ html {
   transition: 0.5s;
 }
 
+.disabled-input {
+  background-color: #acacac;
+}
+
 @media screen and (max-width: 1200px) {
   body { font-size: 80%; }
   svg { width: 80%; height: 80%; }

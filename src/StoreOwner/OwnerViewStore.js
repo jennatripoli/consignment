@@ -129,6 +129,10 @@ export default function OwnerViewStore(props) {
         }
     }
 
+    function editComputer(computer) {
+        navigate('/OwnerEditPrice', { state: { computer: computer } })
+    }
+
     function calculateShipping(computer)
     {
         var radius = 3959 // miles
@@ -195,6 +199,7 @@ export default function OwnerViewStore(props) {
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
                             <button key={toString(computer.id).concat(' Delete')} style={customerViewInventory.button} onClick={e => deleteComputer(computer)} className='Button-light'>Delete</button>
+                            <button key={toString(computer.id).concat(' Edit')} style={customerViewInventory.button} onClick={e => editComputer(computer)} className='Button-light'>Edit</button>
                         </div>
                     ))}
                 </div>

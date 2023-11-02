@@ -37,6 +37,7 @@ export default function OwnerAddComputer() {
                 {
                     method: 'POST',
                     body: JSON.stringify({
+                        request: 'insert',
                         name: name,
                         price: price,
                         memory: memory,
