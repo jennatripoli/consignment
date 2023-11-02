@@ -120,7 +120,7 @@ export default function OwnerViewStore(props) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
             method: 'DELETE',
             body: JSON.stringify(
-                computer
+                { action:'DELETE',...computer }
             )
         })
         if (resp.status === 200)

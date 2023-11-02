@@ -49,6 +49,7 @@ export default function CustomerViewInventory() {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
             method: 'DELETE',
             body: JSON.stringify({
+                action:'PURCHASE',
                 id: computer.id,
                 store: computer.store,
                 price: computer.price

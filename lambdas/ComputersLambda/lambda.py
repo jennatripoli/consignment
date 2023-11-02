@@ -140,15 +140,21 @@ def delete(event,context):
 
 
         statement = "DELETE FROM computer WHERE cid=%s"
-        update_store = "UPDATE store set inventory=%s where storename=%s"
         body = json.loads(event['body'])
-        # Execute your SQL queries here
-        cursor.execute("SELECT lat,long,inventory from store where storename=%s",(body['store'],))
-        [lat,lon,inventory] = cursor.fetchall()[0]
-        cursor.execute(statement,(body['id'],))
-        cursor.execute(update_store,(inventory-float(body['price']),body['store']))
-        conn.commit()
-
+        cursor.execute("SELECT lat,long,inventory,balance from store where storename=%s",(body['store'],))
+        [lat,lon,inventory,balance] = cursor.fetchall()[0]
+        if body['action'] == 'DELETE':
+            update_store = "UPDATE store set inventory=%s where storename=%s"
+            cursor.execute(statement,(body['id'],))
+            cursor.execute(update_store,(inventory-float(body['price']),body['store']))
+            conn.commit()
+        elif body['action'] == 'PURCHASE':
+            update_store = "UPDATE store set inventory=%s,balance=%s where storename=%s"
+            cursor.execute(statement,(body['id'],))
+            cursor.execute(update_store,(inventory-float(body['price']),balance+float(body['price']),body['store']))
+            conn.commit()
+        else:
+            raise Exception('action is not supported')
     except Exception as e:
         return {
         'statusCode': 400,
