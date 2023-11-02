@@ -190,7 +190,7 @@ export default function OwnerViewStore(props) {
                         <div key={computer.id}>
                             <div style={customerViewInventory.computer}>
                                 <div style={customerViewInventory.left}><b>{computer.id}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
-                                <div style={customerViewInventory.right}><b>Total Price: ${computer.price + calculateShipping(computer)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
+                                <div style={customerViewInventory.right}><b>Total Price: ${(parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
                             <button key={toString(computer.id).concat(' Compare')} style={customerViewInventory.button} className='Button-light'>Compare</button>
                             <button key={toString(computer.id).concat(' Purchase')} style={customerViewInventory.button} className='Button-light'>Purchase</button>
