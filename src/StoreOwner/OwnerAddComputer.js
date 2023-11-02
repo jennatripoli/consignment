@@ -20,6 +20,7 @@ export default function OwnerAddComputer() {
     const [activeProcessorGenChoices, setActiveProcessorGenChoices] = useState(processorGenChoices.filter(containsString(processorChoices[0].split(' ')[0])))
     let graphicsChoices = ['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770']
 
+    const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
     const [memory, setMemory] = useState(memoryChoices[0])
     const [storage, setStorage] = useState(storageChoices[0])
@@ -36,13 +37,15 @@ export default function OwnerAddComputer() {
                 {
                     method: 'POST',
                     body: JSON.stringify({
+                        name: name,
                         price: price,
                         memory: memory,
                         storage: storage,
                         processor: processor,
                         processorGen: processorGen,
                         graphics: graphics,
-                        store: location.state['store']
+                        store: location.state['store'],
+                        createTime: new Date().toISOString()
                     })
                 })
             if (resp.status == 200)
@@ -69,6 +72,10 @@ export default function OwnerAddComputer() {
             <div style={ownerCreateStore}>
                 <div style={ownerCreateStore.title}>-- ADD A COMPUTER --</div>
                 <div style={ownerCreateStore.store} className='ownerCreateStoreInput'>
+                    <div>
+                        <label>Name:</label>
+                        <input id='name' type='text' value={name} onChange={e => setName(e.target.value)} className='Entry-light'></input>
+                    </div>
                     <div>
                         <label>Price:</label>
                         <input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} className='Entry-light'></input>

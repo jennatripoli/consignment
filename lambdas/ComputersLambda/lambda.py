@@ -83,13 +83,13 @@ def post(event,context):
         cursor = conn.cursor()
 
 
-        statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        statement = "INSERT INTO computer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         update_store = "UPDATE store set inventory=%s where storename=%s"
         body = json.loads(event['body'])
         # Execute your SQL queries here
         cursor.execute("SELECT lat,long,inventory from store where storename=%s",(body['store'],))
         [lat,lon,inventory] = cursor.fetchall()[0]
-        cursor.execute(statement,(str(uuid.uuid4()),float(body['price']),body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store']))
+        cursor.execute(statement,(str(uuid.uuid4()),float(body['price']),body['memory'],body['storage'],body['processor'],body['processorGen'],body['graphics'],lat,lon,body['store'],body['createTime'],body['name']))
         cursor.execute(update_store,(inventory+float(body['price']),body['store']))
         conn.commit()
 
