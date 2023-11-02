@@ -11,6 +11,7 @@ export default function OwnerViewStore(props) {
     // List of inventory to display.
     const [inventory, setInventory] = useState([])
     const [totalInventory, setTotalInventory] = useState(0)
+    const [balance, setBalance] = useState(0)
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
     // Determine if value is within a range.
@@ -43,6 +44,11 @@ export default function OwnerViewStore(props) {
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
+        let json = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store`, {
+                method: 'GET'
+        }).then(r => r.json())
+        json = json.filter(store => store.storeName === storeName)[0]
+        setBalance(json.balance)
     }
 
     useEffect(() => { retrieve(storeName) }, [])
@@ -166,13 +172,13 @@ export default function OwnerViewStore(props) {
                 </div>
                 <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
                     <button onClick={e => navigate('/OwnerAddComputer', { state: { store: storeName } })} style={{ borderRadius: '1em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Add Computer </button>
-                    <button onClick={e => navigate(`/OwnerViewStore/${storeName}`)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log In </button>
+                    <button onClick={e => navigate(`/CustomerViewInventory/${storeName}`)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'> Log Out </button>
                     <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
                 </div>
             </div>
 
             <div style={customerViewInventory}>
-                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY -- Total: $${totalInventory}`}</div>
+                <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY -- Inventory: $${totalInventory} Balance: $${balance}`}</div>
                 <div style={customerViewInventory.filter}>
                     <span style={customerViewInventory.filterTitle}>SEARCH FILTERS</span>
                     {filterCategories.map(fS => (
