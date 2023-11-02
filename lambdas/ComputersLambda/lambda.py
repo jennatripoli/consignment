@@ -17,7 +17,7 @@ headers = {
     'Access-Control-Allow-Origin':'*'
 }
 
-columns = ['id','price','memory','storage','processor','processorgen','graphics','lat','long','store']
+columns = ['id','price','memory','storage','processor','processorgen','graphics','lat','long','store','timecreated','name']
 
 def lambda_handler(event, context):
     # Retrieve database connection parameters from environment variables
@@ -56,8 +56,10 @@ def get(event,context):
 
         # Fetch and process the query results as needed
         result = cursor.fetchall()
-
+        
         result = [dict(zip(columns,store)) for store in result]
+        for item in result:
+            item['timecreated'] = json.dumps(item['timecreated'], default=str)
 
     except Exception as e:
         return {
