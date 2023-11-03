@@ -32,6 +32,7 @@ export default function OwnerCreateStore() {
       {
         method: 'POST',
         body: JSON.stringify({
+          type: 'createStore',
           storeName: storeName,
           username: username,
           password: password,
