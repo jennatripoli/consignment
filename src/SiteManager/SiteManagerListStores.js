@@ -9,6 +9,8 @@ export default function SiteManagerListStores() {
     const navigate = useNavigate()
     // How to sort the stores based on inventory ('ascending' or 'descending').
     const [sort, setSort] = useState('ascending')
+    const [balance, setBalance] = useState(-1)
+    const [inventory, setInventory] = useState(-1)
 
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
@@ -16,6 +18,15 @@ export default function SiteManagerListStores() {
         })
         let json = await resp.json()
         setStores(json.sort((a, b) => b.inventory - a.inventory))
+    }
+
+    async function getStats() {
+        let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin', {
+            method: 'GET'
+        })
+        let json = await resp.json()
+        setBalance(json.balance)
+        setInventory(json.inventory)
     }
 
     // Update stores when sort changes.
@@ -54,6 +65,8 @@ export default function SiteManagerListStores() {
         else if (document.getElementById('descending').checked) setSort('descending')
     }
 
+    getStats()
+
     return (
         <div className='SiteManagerListStores'>
             <div style={header}>
@@ -63,7 +76,7 @@ export default function SiteManagerListStores() {
             </div>
 
             <div style={siteManagerListStores}>
-                <div style={siteManagerListStores.title}>-- ALL STORES --</div>
+                <div style={siteManagerListStores.title}>-- ALL STORES -- Inventory: ${inventory} Balance: ${balance}</div>
                 <div style={siteManagerListStores.sort}><span style={{ fontWeight: 'bold' }}>Sort Inventory:</span>&emsp;
                     <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={handleSort}></input>Ascending</label>&emsp;
                     <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={handleSort}></input>Descending</label>

@@ -23,11 +23,57 @@ def lambda_handler(event, context):
 
     if method == 'POST':
         return post(event,context)
+    elif method == 'GET':
+        return get(event,context)
     else:
         return {
         'statusCode': 404,
         'headers': headers,
         'body': 'method not allowed'
+    }
+
+def get(event,context):
+    conn = psycopg2.connect(**db_params)
+    try:
+        # Create a cursor object
+        cursor = conn.cursor()
+
+        # Execute your SQL queries here
+        cursor.execute("SELECT balance, inventory FROM store")
+
+        balance = 0.0
+        inventory = 0.0
+
+        for store in cursor.fetchall():
+            balance += store[0]
+            inventory += store[1]
+
+        balance = round(balance,2)
+        inventory = round(inventory,2)
+
+        conn.commit()
+
+    except Exception as e:
+        return {
+        'statusCode': 400,
+        'headers': headers,
+        'body': json.dumps({
+            'message':'unable to get balance and inventory',
+            'error': str(e)
+        })
+    }
+    finally:
+        # Close the cursor and database connection
+        cursor.close()
+        conn.close()
+
+    return {
+        'statusCode': 200,
+        'headers': headers,
+        'body': json.dumps({
+            'balance':balance,
+            'inventory':inventory
+        })
     }
 
 def post(event,context):
