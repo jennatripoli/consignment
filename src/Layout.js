@@ -32,7 +32,7 @@ export const header = {
     buttonMiddle: {
         position: 'absolute',
         borderRadius: '1em',
-        maxWidth: '7em',
+        maxWidth: '8em',
         padding: '0.2em 0.5em 0.2em 0.5em',
         borderColor: 'transparent',
         fontSize: '1.5em',
@@ -341,17 +341,34 @@ export const siteManagerListStores = {
         color: '#475841'
     },
 
+    info: {
+        position: 'relative',
+        display: 'block',
+        margin: '1em',
+        fontSize: '1.5em',
+        height: '100%'
+    },
+
+    data: {
+        display: 'inline-block',
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.5em 0.5em 0.5em',
+        border: 'none',
+        marginBottom: '0.5em',
+        backgroundColor: '#9FB8AD',
+        color: 'white',
+        width: '10em'
+    },
+
     sort: {
         position: 'relative',
         textAlign: 'center',
         margin: '1em',
         width: '50%',
-        left: '23%',
-        right: '23%',
         backgroundColor: 'white',
         padding: '0.3em 0.5em 0.5em 0.5em',
         borderRadius: '1em',
-        fontSize: '1.5em',
         color: '#475841'
     },
 
@@ -360,7 +377,8 @@ export const siteManagerListStores = {
         textAlign: 'center',
         width: '70%',
         left: '15%',
-        right: '15%'
+        right: '15%',
+        marginTop: '1em'
     },
 
     store: {
@@ -463,6 +481,83 @@ export const ownerLogin = {
     }
 }
 
-export const ownerViewStore = {}
+export const ownerViewStore = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    info: {
+        position: 'relative',
+        display: 'block',
+        margin: '1em 1em 0 1em',
+        fontSize: '1.5em',
+        height: '100%'
+    },
+
+    data: {
+        display: 'inline-block',
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.5em 0.5em 0.5em',
+        border: 'none',
+        marginBottom: '0.5em',
+        backgroundColor: '#9FB8AD',
+        color: 'white',
+        width: '10em'
+    },
+
+    sort: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '50%',
+        backgroundColor: 'white',
+        padding: '0.3em 0.5em 0.5em 0.5em',
+        borderRadius: '1em',
+        color: '#475841'
+    },
+
+    inventory: {
+        position: 'absolute',
+        textAlign: 'center',
+        width: '70%',
+        left: '15%',
+        right: '15%',
+    },
+
+    computer: {
+        display: 'inline-block',
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.6em',
+        margin: '1.5em 1em 0 1em',
+        fontSize: '1em',
+        backgroundColor: '#475841',
+        color: 'white',
+        width: '35%',
+    },
+
+    buttonEdit: {
+        display: 'inline-block',
+        textAlign: 'center',
+        transform: 'translate(0, -4em)'
+    },
+
+    buttonDelete: {
+        display: 'inline-block',
+        textAlign: 'center',
+        transform: 'translate(15em, -4em)'
+    }
+}
+
 export const ownerAddComputer = {}
 export const ownerEditPrice = {}

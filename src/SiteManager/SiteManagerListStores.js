@@ -9,7 +9,9 @@ export default function SiteManagerListStores() {
     const [stores, setStores] = useState([])
     // How to sort the stores based on inventory ('ascending' or 'descending').
     const [sort, setSort] = useState('ascending')
+    // Total balance amount for site.
     const [balance, setBalance] = useState(-1)
+    // Total inventory amount for site.
     const [inventory, setInventory] = useState(-1)
 
     /** Retrieve data. */
@@ -73,10 +75,14 @@ export default function SiteManagerListStores() {
             </div>
 
             <div style={siteManagerListStores}>
-                <div style={siteManagerListStores.title}>-- ALL STORES -- Inventory: ${inventory} Balance: ${balance}</div>
-                <div style={siteManagerListStores.sort}><span style={{ fontWeight: 'bold' }}>Sort Inventory:</span>&emsp;
-                    <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={handleSort}></input>Ascending</label>&emsp;
-                    <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={handleSort}></input>Descending</label>
+                <div style={siteManagerListStores.title}>-- ALL STORES --</div>
+                <div style={siteManagerListStores.info}>
+                    <span style={siteManagerListStores.data}><b>Inventory:</b> ${inventory}</span>
+                    <span style={siteManagerListStores.sort}><span style={{ fontWeight: 'bold' }}>Sort Inventory:</span>&emsp;
+                        <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={handleSort}></input>Ascending</label>&emsp;
+                        <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={handleSort}></input>Descending</label>
+                    </span>
+                    <span style={siteManagerListStores.data}><b>Balance:</b> ${balance}</span>
                 </div>
                 <div id='stores' style={siteManagerListStores.stores}>{stores.map(store => <div key={store.storeName}>
                     <div onClick={() => navigate(`/CustomerViewInventory/${store.storeName}`)} style={siteManagerListStores.store}><span style={{ fontWeight: 'bold' }}>{store.storeName}<br />Inventory: </span>${store.inventory}<br /><span style={{ fontWeight: 'bold' }}>Balance: </span>${store.balance}</div>
