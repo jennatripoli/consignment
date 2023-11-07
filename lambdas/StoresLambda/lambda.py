@@ -12,7 +12,7 @@ db_params = {
 
 headers = {
     'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
-    'Access-Control-Allow-Methods':'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT',
+    'Access-Control-Allow-Methods':'SELECT,DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT',
     'Access-Control-Allow-Origin':'*'
 }
 
@@ -74,15 +74,30 @@ def get(event,context):
 
 def post(event,context):
     conn = psycopg2.connect(**db_params)
+    body = json.loads(event['body'])
+    cursor = conn.cursor()
     try:
-        # Create a cursor object
-        cursor = conn.cursor()
-        statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
-        body = json.loads(event['body'])
-        # Execute your SQL queries here
-        cursor.execute(statement,(body['storeName'],body['username'],body['password'],0,0,body['longitude'],body['latitude']))
+        if(body['type'] == 'createStore'):
+            # Create a cursor object
+            statement = "INSERT INTO store values(%s,%s,%s,%s,%s,%s,%s)"
+            # Execute your SQL queries here
+            cursor.execute(statement,(body['storeName'],body['username'],body['password'],0,0,body['longitude'],body['latitude']))
 
-        conn.commit()
+            conn.commit()
+        elif(body['type'] == 'login'):
+            statement = "SELECT username, pw FROM store WHERE storename=%s"
+            cursor.execute(statement,(body['storeName'],))
+            [username,pw] = cursor.fetchall()[0]
+            if(body['password'] != pw or body['username'] != username):
+                return {
+                    'statusCode': 400,
+                    'headers': headers,
+                    'body': json.dumps({
+                        'message':'incorrect username or password'
+                    })
+                }
+            
+            conn.commit()
 
     except Exception as e:
         return {

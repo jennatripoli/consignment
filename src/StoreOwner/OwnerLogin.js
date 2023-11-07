@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { header, ownerLogin } from '../Layout'
 import { useState } from 'react'
 
@@ -12,15 +12,32 @@ export default function OwnerLogin() {
     // The confirmation text that will indicate failure to log in.
     const [confirmation, setConfirmation] = useState(undefined)
 
-    /** Log in to the store with the entered credentials. */
-    function handleButtonLogin() {
-        setUsername(document.getElementById('username').value)
-        setPassword(document.getElementById('password').value)
+    const { storeName } = useLocation().state
 
-        if (username && password) {
-            // FOR TESTING
-            navigate('/OwnerViewStore')
-        } else setConfirmation('Invalid credentials.')
+    /** Log in to the store with the entered credentials. */
+    async function handleButtonLogin() {
+        setConfirmation('Logging in, please wait.')
+        try
+        {
+            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        storeName: storeName,
+                        type: 'login'
+                    })
+                })
+            if (resp.status == 200)
+            {
+                navigate('/OwnerViewStore/' + storeName)
+            } else setConfirmation('Incorrect username or password.')
+        } catch (e)
+        {
+            console.log(e);
+            setConfirmation('Login attempt failed')
+        }
     }
 
     return (
@@ -31,7 +48,7 @@ export default function OwnerLogin() {
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
             <div style={ownerLogin}>
-                <div style={ownerLogin.title}>-- STORE NAME LOGIN --</div>
+                <div style={ownerLogin.title}>-- {storeName} LOGIN --</div>
                 <div style={ownerLogin.login}>
                     <label>Username:&emsp;</label>
                     <input id='username' type='text' value={username} onChange={e => setUsername(e.target.value)} style={ownerLogin.entry} className='Entry-light'></input>
