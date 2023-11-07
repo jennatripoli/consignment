@@ -8,21 +8,21 @@ export default function CustomerViewInventory() {
     const navigate = useNavigate()
     // Value saved as the customer's GPS location.
     const { customerGPS } = useContext(CustomerGPSContext)
-    // The two computers to compare.
+    // Computers selected for comparison.
     const { computer1, computer2 } = useLocation().state
 
-    /** Calculate the shipping cost ($0.03 per mile). */
+    /** Calculate the shipping cost for a computer ($0.03 per mile). */
     function calculateShipping(computer) {
         var radius = 3959
-        var dLat = (computer.lat-parseFloat(customerGPS[0])) * Math.PI / 180
-        var dLon = (computer.long-parseFloat(customerGPS[1])) * Math.PI / 180
+        var dLat = (computer.lat - parseFloat(customerGPS[0])) * Math.PI / 180
+        var dLon = (computer.long - parseFloat(customerGPS[1])) * Math.PI / 180
         var lat1 = parseFloat(customerGPS[0]) * Math.PI / 180
         var lat2 = computer.lat * Math.PI / 180
 
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2)
-        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+        var b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
         var distance = radius * b
-        return (Math.round(distance * 100 * 0.03)/100).toFixed(2)
+        return (Math.round(distance * 100 * 0.03) / 100).toFixed(2)
     }
 
     return (
@@ -42,7 +42,7 @@ export default function CustomerViewInventory() {
                     <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 </div>
                 <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
-                        <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
+                    <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
                 </div>
             </div>
             <div style={customerCompare}>

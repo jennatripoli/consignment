@@ -15,24 +15,19 @@ export default function SiteManagerLogin() {
     /** Log in to the site with the entered credentials. */
     async function handleButtonLogin() {
         setConfirmation('Logging in, please wait.')
-        try
-        {
-            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
+        try {
+            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: username,
+                    password: password
                 })
-            if (resp.status == 200)
-            {
-                navigate('/SiteManagerListStores')
-            } else setConfirmation('Incorrect username or password.')
-        } catch (e)
-        {
-            console.log(e);
-            setConfirmation('Login attempt failed')
+            })
+            if (resp.status === 200) navigate('/SiteManagerListStores')
+            else setConfirmation('Incorrect username or password.')
+        } catch (e) {
+            console.log(e)
+            setConfirmation('Login attempt failed.')
         }
     }
 

@@ -4,30 +4,25 @@ import CustomerGPSContext from './CustomerGPSContext'
 import { useContext, useEffect, useState } from 'react'
 import { useGeolocated } from 'react-geolocated'
 
-
-function CustomerListStores() {
+export default function CustomerListStores() {
     // Route navigation.
     const navigate = useNavigate()
-
-    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            },
-            userDecisionTimeout: 5000,
-        });
-    
     // Value saved as the customer's GPS location.
     const { customerGPS, setCustomerGPS } = useContext(CustomerGPSContext)
-    
-    useEffect(() => {
-        console.log(customerGPS);
-        setCustomerGPS([coords?.latitude, coords?.longitude])
-    }, [coords])
-    
-    
     // List of all stores.
     const [stores, setStores] = useState([])
+    // Get customer GPS location from Geolocation API.
+    const { geoCoords, isGeolocationAvailable, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: { enableHighAccuracy: false },
+            userDecisionTimeout: 5000,
+        })
+    
+    // Update customerGPS when geoCoords changes.
+    useEffect(() => {
+        console.log(customerGPS)
+        setCustomerGPS([geoCoords?.latitude, geoCoords?.longitude])
+    }, [geoCoords])
 
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
@@ -45,6 +40,7 @@ function CustomerListStores() {
         else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory' } })
     }
 
+    /** Go to CustomerViewInventory for a store if GPS is set, otherwise go to CustomerSetGPS. */
     function handleButtonViewStore(storeName) {
         if (customerGPS[0] !== null && customerGPS[1] !== null) navigate(`/CustomerViewInventory/${storeName}`, { state: { store: storeName } })
         else navigate('/CustomerSetGPS', { state: { destination: `/CustomerViewInventory/${storeName}`, store: storeName } })
@@ -68,5 +64,3 @@ function CustomerListStores() {
         </div>
     )
 }
-
-export default CustomerListStores

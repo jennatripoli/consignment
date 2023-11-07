@@ -11,32 +11,27 @@ export default function OwnerLogin() {
     const [password, setPassword] = useState('')
     // The confirmation text that will indicate failure to log in.
     const [confirmation, setConfirmation] = useState(undefined)
-
+    // Store name from parameter.
     const { storeName } = useLocation().state
 
     /** Log in to the store with the entered credentials. */
     async function handleButtonLogin() {
         setConfirmation('Logging in, please wait.')
-        try
-        {
-            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        username: username,
-                        password: password,
-                        storeName: storeName,
-                        type: 'login'
-                    })
+        try {
+            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    storeName: storeName,
+                    type: 'login'
                 })
-            if (resp.status == 200)
-            {
-                navigate('/OwnerViewStore/' + storeName)
-            } else setConfirmation('Incorrect username or password.')
-        } catch (e)
-        {
-            console.log(e);
-            setConfirmation('Login attempt failed')
+            })
+            if (resp.status == 200) navigate('/OwnerViewStore/' + storeName)
+            else setConfirmation('Incorrect username or password.')
+        } catch (e) {
+            console.log(e)
+            setConfirmation('Login attempt failed.')
         }
     }
 

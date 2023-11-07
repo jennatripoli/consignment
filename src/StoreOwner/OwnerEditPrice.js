@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import './OwnerAddComputer.css'
 
 export default function OwnerEditPrice() {
-    const {computer} = useLocation().state
+    const { computer } = useLocation().state
 
     const navigate = useNavigate()
 
@@ -13,28 +13,22 @@ export default function OwnerEditPrice() {
     const [price, setPrice] = useState(computer.price)
 
     async function handleButtonUpdate() {
-        setConfirmation('Updating Price, Please Wait')
-        try
-        {
-            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        request: 'update',
-                        id: computer.id,
-                        price: price,
-                        store: computer.store,
-                    })
+        setConfirmation('Updating price, please wait.')
+        try {
+            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer', {
+                method: 'POST',
+                body: JSON.stringify({
+                    request: 'update',
+                    id: computer.id,
+                    price: price,
+                    store: computer.store,
                 })
-            if (resp.status == 200)
-            {
-                navigate(-1)
-            } else setConfirmation('Failed to update price, please fill in all fields.')
-        }
-        catch (e)
-        {
-            console.log(e);
-            setConfirmation('Failed to update price')
+            })
+            if (resp.status == 200) navigate(-1)
+            else setConfirmation('Failed to update price, please fill in all fields.')
+        } catch (e) {
+            console.log(e)
+            setConfirmation('Failed to update price.')
         }
     }
 
@@ -75,7 +69,7 @@ export default function OwnerEditPrice() {
                     </div>
                     <div>
                         <label>Graphics:</label>
-                        <input value = {computer.graphics} disabled className="disabled-input"></input>
+                        <input value={computer.graphics} disabled className="disabled-input"></input>
                     </div>
                 </div>
                 <button onClick={handleButtonUpdate} style={ownerCreateStore.button} className='Button-light'>Update</button><br />

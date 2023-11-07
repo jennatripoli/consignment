@@ -26,27 +26,23 @@ export default function OwnerCreateStore() {
     setLongitude(document.getElementById('longitude').value)
     setLatitude(document.getElementById('latitude').value)
 
-    setConfirmation('Creating Store, Please Wait')
+    setConfirmation('Creating store, please wait.')
 
-    let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          type: 'createStore',
-          storeName: storeName,
-          username: username,
-          password: password,
-          longitude: longitude,
-          latitude: latitude
-        })
+    let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'createStore',
+        storeName: storeName,
+        username: username,
+        password: password,
+        longitude: longitude,
+        latitude: latitude
       })
+    })
     let json = await resp.json()
 
-    if (resp.status == 200)
-    {
-      navigate(`/OwnerViewStore/${storeName}`)
-    } else setConfirmation('Failed to create store, please fill in all fields.')
-
+    if (resp.status == 200) navigate(`/OwnerViewStore/${storeName}`)
+    else setConfirmation('Failed to create store, please fill in all fields.')
   }
 
   return (
