@@ -1,7 +1,6 @@
-import { memo, useState } from "react"
-import { header, ownerCreateStore } from "../Layout"
+import { useState } from "react"
+import { header, ownerAddComputer } from "../Layout"
 import { useLocation, useNavigate } from "react-router-dom"
-import './OwnerAddComputer.css'
 
 export default function OwnerAddComputer() {
     // Route navigation.
@@ -13,10 +12,10 @@ export default function OwnerAddComputer() {
     // Options for each of the different fields.
     let memoryChoices = ['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB']
     let storageChoices = ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB']
-    let processorChoices = ['AMD', 'Intel', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7']
+    let processorChoices = ['Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7']
     let processorGenChoices = ['13th Gen Intel', '12th Gen Intel', '11th Gen Intel', 'AMD Ryzen 7000 Series', 'AMD Ryzen 6000 Series']
     const [activeProcessorGenChoices, setActiveProcessorGenChoices] = useState(processorGenChoices.filter(containsString(processorChoices[0].split(' ')[0])))
-    let graphicsChoices = ['NVIDIA', 'AMD', 'Intel', 'NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770']
+    let graphicsChoices = ['NVIDIA GeForce RTX 4090', 'NVIDIA GeForce RTX 4080', 'AMD Radeon Pro W6300', 'AMD Radeon Pro W6400', 'Intel Integrated Graphics', 'Intel UHD Graphics 730', 'Intel UHD Graphics 770']
 
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -54,52 +53,28 @@ export default function OwnerAddComputer() {
     }
 
     return (
-        <div className='OwnerCreateStore'>
+        <div className='OwnerAddComputer'>
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
-
-            <div style={ownerCreateStore}>
-                <div style={ownerCreateStore.title}>-- ADD A COMPUTER --</div>
-                <div style={ownerCreateStore.store} className='ownerCreateStoreInput'>
-                    <div>
-                        <label>Name:</label>
-                        <input id='name' type='text' value={name} onChange={e => setName(e.target.value)} className='Entry-light'></input>
-                    </div>
-                    <div>
-                        <label>Price:</label>
-                        <input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} className='Entry-light'></input>
-                    </div>
-                    <div>
-                        <label>Memory:</label>
-                        <select onChange={e => setMemory(e.target.value)}>
-                            {memoryChoices.map(choice => <option value={choice}>{choice}</option>)}
-                        </select>
-                        <label>Storage:</label>
-                        <select onChange={e => setStorage(e.target.value)}>
-                            {storageChoices.map(choice => <option value={choice}>{choice}</option>)}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Processor:</label>
-                        <select onChange={e => { setProcessor(e.target.value); setActiveProcessorGenChoices(processorGenChoices.filter(containsString(e.target.value.split(' ')[0]))); }} >
-                            {processorChoices.map(choice => <option value={choice}>{choice}</option>)}
-                        </select>
-                        <label>Generation:</label>
-                        <select onChange={e => setProcessorGen(e.target.value)}>
-                            {activeProcessorGenChoices.map(choice => <option value={choice}>{choice}</option>)}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Graphics:</label>
-                        <select onChange={e => setGraphics(e.target.value)}>
-                            {graphicsChoices.map(choice => <option value={choice}>{choice}</option>)}
-                        </select>
-                    </div>
+            <div style={ownerAddComputer}>
+                <div style={ownerAddComputer.title}>-- ADD A COMPUTER --</div>
+                <div style={ownerAddComputer.computer}>
+                    <label>Name:</label>&emsp;<input id='name' type='text' value={name} onChange={e => setName(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'></input>
+                    <br /><br />
+                    <label>Price:</label>&emsp;<input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'></input>
+                    <br /><br />
+                    <label>Memory:</label>&emsp;<select onChange={e => setMemory(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'>{memoryChoices.map(choice => <option value={choice}>{choice}</option>)}</select>&emsp;
+                    <label>Storage:</label>&emsp;<select onChange={e => setStorage(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'>{storageChoices.map(choice => <option value={choice}>{choice}</option>)}</select>
+                    <br /><br />
+                    <label>Processor:</label>&emsp;<select onChange={e => { setProcessor(e.target.value); setActiveProcessorGenChoices(processorGenChoices.filter(containsString(e.target.value.split(' ')[0]))) }} style={ownerAddComputer.entry} className='Entry-light'>{processorChoices.map(choice => <option value={choice}>{choice}</option>)}</select>&emsp;
+                    <label>Generation:</label>&emsp;<select onChange={e => setProcessorGen(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'>{activeProcessorGenChoices.map(choice => <option value={choice}>{choice}</option>)}</select>
+                    <br /><br />
+                    <label>Graphics:</label>&emsp;<select onChange={e => setGraphics(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'>{graphicsChoices.map(choice => <option value={choice}>{choice}</option>)}</select>
                 </div>
-                <button onClick={handleButtonCreate} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
+                <button onClick={handleButtonCreate} style={ownerAddComputer.button} className='Button-light'>Add to Store</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
         </div >

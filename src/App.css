@@ -78,14 +78,15 @@ html {
   border: 3px solid #9FB8AD;
 }
 
+.Entry-light-disabled {
+  border: 3px solid #9FB8AD;
+  background-color: #CED0CE;
+}
+
 .Entry-light:focus, .Entry-light:hover {
   outline: none;
   border: 3px solid #799186;
   transition: 0.5s;
-}
-
-.disabled-input {
-  background-color: #acacac;
 }
 
 @media screen and (max-width: 1200px) {

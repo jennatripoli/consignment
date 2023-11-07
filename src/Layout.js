@@ -389,6 +389,12 @@ export const ownerCreateStore = {
         color: '#475841'
     },
 
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em',
+        color: '#475841'
+    },
+
     button: {
         position: 'relative',
         borderRadius: '0.8em',
@@ -520,5 +526,88 @@ export const ownerViewStore = {
     }
 }
 
-export const ownerAddComputer = {}
-export const ownerEditPrice = {}
+export const ownerAddComputer = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    computer: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '38%',
+        left: '29%',
+        right: '29%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em',
+        color: '#475841'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em',
+        color: '#475841'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}
+
+export const ownerEditPrice = {
+    position: 'relative',
+    display: 'block',
+    width: '98%',
+    margin: '1%',
+    textAlign: 'center',
+
+    title: {
+        position: 'relative',
+        fontSize: '2em',
+        fontWeight: 'bold',
+        color: '#475841'
+    },
+
+    computer: {
+        position: 'relative',
+        textAlign: 'center',
+        margin: '1em',
+        width: '45%',
+        left: '25%',
+        right: '25%',
+        backgroundColor: 'white',
+        padding: '1em',
+        borderRadius: '1em',
+        color: '#475841'
+    },
+
+    entry: {
+        borderRadius: '1em',
+        padding: '0.5em',
+        color: '#475841'
+    },
+
+    button: {
+        position: 'relative',
+        borderRadius: '0.8em',
+        padding: '0.3em 0.6em 0.3em 0.6em',
+        border: 'none',
+        fontSize: '1.5em',
+        marginBottom: '0.5em'
+    }
+}

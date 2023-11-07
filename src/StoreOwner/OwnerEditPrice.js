@@ -1,18 +1,18 @@
 import { useState } from "react"
-import { header, ownerCreateStore } from "../Layout"
+import { header, ownerCreateStore, ownerEditPrice } from "../Layout"
 import { useLocation, useNavigate } from "react-router-dom"
-import './OwnerAddComputer.css'
 
 export default function OwnerEditPrice() {
-    const { computer } = useLocation().state
-
+    // Route navigation.
     const navigate = useNavigate()
-
+    // Computer being edited from parameter.
+    const { computer } = useLocation().state
+    // Confirmation text below button.
     const [confirmation, setConfirmation] = useState('')
-
+    // The computer's price.
     const [price, setPrice] = useState(computer.price)
 
-    async function handleButtonUpdate() {
+    async function updatePrice() {
         setConfirmation('Updating price, please wait.')
         try {
             let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer', {
@@ -40,39 +40,22 @@ export default function OwnerEditPrice() {
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
 
-            <div style={ownerCreateStore}>
-                <div style={ownerCreateStore.title}>-- ADD A COMPUTER --</div>
-                <div style={ownerCreateStore.store} className='ownerCreateStoreInput'>
-                    <div>
-                        <label>Name:</label>
-                        <input id='name' type='text' value={computer.name} readOnly disabled className='disabled-input'></input>
-                    </div>
-                    <div>
-                        <label>Price:</label>
-                        <input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} className='Entry-light'></input>
-                    </div>
-                    <div>
-                        <label>Memory:</label>
-                        <input value={computer.memory} disabled className="disabled-input"></input>
-                    </div>
-                    <div>
-                        <label>Storage:</label>
-                        <input value={computer.storage} disabled className="disabled-input"></input>
-                    </div>
-                    <div>
-                        <label>Processor:</label>
-                        <input value={computer.processor} disabled className="disabled-input"></input>
-                    </div>
-                    <div>
-                        <label>Generation:</label>
-                        <input value={computer.processorgen} disabled className="disabled-input"></input>
-                    </div>
-                    <div>
-                        <label>Graphics:</label>
-                        <input value={computer.graphics} disabled className="disabled-input"></input>
-                    </div>
+            <div style={ownerEditPrice}>
+                <div style={ownerEditPrice.title}>-- ADD A COMPUTER --</div>
+                <div style={ownerEditPrice.computer}>
+                    <label>Name:</label>&emsp;<input id='name' type='text' value={computer.name} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>
+                    <br /><br />
+                    <label>Price:</label>&emsp;<input id='price' type='text' value={price} onChange={e => setPrice(e.target.value)} style={ownerEditPrice.entry} className='Entry-light'></input>
+                    <br /><br />
+                    <label>Memory:</label>&emsp;<input value={computer.memory} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>&emsp;
+                    <label>Storage:</label>&emsp;<input value={computer.storage} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>
+                    <br /><br />
+                    <label>Processor:</label>&emsp;<input value={computer.processor} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>&emsp;
+                    <label>Generation:</label>&emsp;<input value={computer.processorgen} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>
+                    <br /><br />
+                    <label>Graphics:</label>&emsp;<input value={computer.graphics} style={ownerEditPrice.entry} readOnly disabled className='Entry-light-disabled'></input>
                 </div>
-                <button onClick={handleButtonUpdate} style={ownerCreateStore.button} className='Button-light'>Update</button><br />
+                <button onClick={updatePrice} style={ownerCreateStore.button} className='Button-light'>Update</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
         </div >
