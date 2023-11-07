@@ -6,8 +6,6 @@ import { OwnerCreateStore, OwnerLogin, OwnerViewStore, OwnerAddComputer, OwnerEd
 import CustomerGPSProvider from './Customer/CustomerGPSProvider'
 import PrivateRoute from './PrivateRoute'
 
-// const instance = axios.create({ baseURL: 'URL' })
-
 function App() {
   return (
     <CustomerGPSProvider>
