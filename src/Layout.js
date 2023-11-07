@@ -502,6 +502,11 @@ export const ownerViewStore = {
     },
 
     computer: {
+        display:'flex', 
+        justifyContent:'center'
+    },
+
+    text: {
         display: 'inline-block',
         position: 'relative',
         borderRadius: '0.8em',
@@ -513,16 +518,11 @@ export const ownerViewStore = {
         width: '35%',
     },
 
-    buttonEdit: {
-        display: 'inline-block',
-        textAlign: 'center',
-        transform: 'translate(0, -4em)'
-    },
-
-    buttonDelete: {
-        display: 'inline-block',
-        textAlign: 'center',
-        transform: 'translate(15em, -4em)'
+    button: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100px',
+        justifyContent: 'center'
     }
 }
 
