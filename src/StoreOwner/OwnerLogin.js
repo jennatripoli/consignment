@@ -27,7 +27,7 @@ export default function OwnerLogin() {
                     type: 'login'
                 })
             })
-            if (resp.status == 200) navigate('/OwnerViewStore/' + storeName)
+            if (resp.status === 200) navigate('/OwnerViewStore/' + storeName)
             else setConfirmation('Incorrect username or password.')
         } catch (e) {
             console.log(e)

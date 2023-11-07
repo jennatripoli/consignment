@@ -1,4 +1,4 @@
-import { memo, useState } from "react"
+import { useState } from "react"
 import { header, ownerCreateStore } from "../Layout"
 import { useLocation, useNavigate } from "react-router-dom"
 import './OwnerAddComputer.css'
@@ -24,7 +24,7 @@ export default function OwnerEditPrice() {
                     store: computer.store,
                 })
             })
-            if (resp.status == 200) navigate(-1)
+            if (resp.status === 200) navigate(-1)
             else setConfirmation('Failed to update price, please fill in all fields.')
         } catch (e) {
             console.log(e)

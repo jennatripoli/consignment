@@ -1,6 +1,6 @@
 import { useState, useMemo, useReducer, useContext, useEffect } from 'react'
 import { header, customerViewInventory } from '../Layout'
-import { Navigate, useNavigate, useLocation, useParams, useResolvedPath } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CustomerGPSContext from './CustomerGPSContext'
 
 export default function CustomerViewInventory() {
@@ -188,7 +188,7 @@ export default function CustomerViewInventory() {
                 <div id='inventory' style={customerViewInventory.inventory}>
                     {filteredInventory.map(computer => (
                         <div key={computer.id}>
-                            <div style={{ ...customerViewInventory.computer, outline: (selected !== null && selected.id == computer.id) ? '3px solid orange' : 'none' }}>
+                            <div style={{ ...customerViewInventory.computer, outline: (selected !== null && selected.id === computer.id) ? '3px solid orange' : 'none' }}>
                                 <div style={customerViewInventory.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${(parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>

@@ -4,15 +4,13 @@ import { useLocation, useNavigate } from "react-router-dom"
 import './OwnerAddComputer.css'
 
 export default function OwnerAddComputer() {
-
-    let location = useLocation()
-
+    // Route navigation.
     const navigate = useNavigate()
-
-
+    // Parameters sent through state variable.
+    let location = useLocation()
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
-
+    // Options for each of the different fields.
     let memoryChoices = ['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB']
     let storageChoices = ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB']
     let processorChoices = ['AMD', 'Intel', 'Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7']
@@ -30,36 +28,29 @@ export default function OwnerAddComputer() {
     const [confirmation, setConfirmation] = useState('')
 
     async function handleButtonCreate() {
-        setConfirmation('Creating Store, Please Wait')
-        try
-        {
-            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        request: 'insert',
-                        name: name,
-                        price: price,
-                        memory: memory,
-                        storage: storage,
-                        processor: processor,
-                        processorGen: processorGen,
-                        graphics: graphics,
-                        store: location.state['store'],
-                        createTime: new Date().toISOString()
-                    })
+        setConfirmation('Creating Store, please wait.')
+        try {
+            let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer', {
+                method: 'POST',
+                body: JSON.stringify({
+                    request: 'insert',
+                    name: name,
+                    price: price,
+                    memory: memory,
+                    storage: storage,
+                    processor: processor,
+                    processorGen: processorGen,
+                    graphics: graphics,
+                    store: location.state['store'],
+                    createTime: new Date().toISOString()
                 })
-            if (resp.status === 200)
-            {
-                navigate(-1)
-            } else setConfirmation('Failed to create computer, please fill in all fields.')
-
-        } catch (e)
-        {
-            console.log(e);
-            setConfirmation('Failed to create computer')
+            })
+            if (resp.status === 200) navigate(-1)
+            else setConfirmation('Failed to add computer, please fill in all fields.')
+        } catch (e) {
+            console.log(e)
+            setConfirmation('Failed to add computer.')
         }
-
     }
 
     return (
