@@ -73,7 +73,7 @@ export default function OwnerViewStore() {
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                <Link to='/OwnerAddComputer'><button style={header.buttonMiddle} className='Button-light'>Add Computer</button></Link>
+                <button onClick={e => navigate('/OwnerAddComputer', { state: { store: storeName } })} style={header.buttonMiddle} className='Button-light'>Add Computer</button>
                 <button onClick={() => navigate(-2)} style={header.buttonRight} className='Button-light'>Logout</button>
             </div>
             <div style={ownerViewStore}>
