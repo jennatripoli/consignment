@@ -32,6 +32,7 @@ export default function CustomerCompare() {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
+            
             <div style={customerCompare}>
                 <div style={customerCompare.title}>{`-- COMPARE COMPUTERS --`}</div>
                 <div id='inventory' style={customerCompare.inventory}>

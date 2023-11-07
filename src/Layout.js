@@ -498,7 +498,7 @@ export const ownerViewStore = {
         textAlign: 'center',
         width: '70%',
         left: '15%',
-        right: '15%',
+        right: '15%'
     },
 
     computer: {
@@ -515,7 +515,7 @@ export const ownerViewStore = {
         fontSize: '1em',
         backgroundColor: '#475841',
         color: 'white',
-        width: '35%',
+        width: '35%'
     },
 
     button: {

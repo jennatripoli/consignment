@@ -52,8 +52,7 @@ export default function CustomerViewInventory() {
             })
             let json = await resp.json()
             if (resp.status === 200) setInventory(json)
-        }
-        else {
+        } else {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer?storeName=${store}`, {
                 method: 'GET'
             })
@@ -152,6 +151,7 @@ export default function CustomerViewInventory() {
                 {storeName && <button onClick={e => navigate('/OwnerLogin', { state: { storeName: storeName } })} style={header.buttonMiddle} className='Button-light'> Log In </button>}
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
+
             <div style={customerViewInventory}>
                 <div style={customerViewInventory.title}>{`-- ${storeName ? storeName : 'ALL SITE'} INVENTORY --`}</div>
                 <div style={customerViewInventory.filter}>

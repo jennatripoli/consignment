@@ -9,7 +9,7 @@ export default function OwnerAddComputer() {
     let location = useLocation()
     // Determine if string contains a search string.
     const containsString = searchStr => str => str.includes(searchStr)
-    // Options for each of the different fields.
+    // Choices for each of the different fields.
     let memoryChoices = ['32 GB', '16 GB', '12 GB', '8 GB', '4 GB', '1 GB']
     let storageChoices = ['4 TB', '2 TB', '1 TB', '512 GB', '256 GB', '128 GB']
     let processorChoices = ['Intel Xeon', 'Intel i9', 'Intel i7', 'AMD Ryzen 9', 'AMD Ryzen 7']
@@ -59,6 +59,7 @@ export default function OwnerAddComputer() {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
+
             <div style={ownerAddComputer}>
                 <div style={ownerAddComputer.title}>-- ADD A COMPUTER --</div>
                 <div style={ownerAddComputer.computer}>
@@ -77,6 +78,6 @@ export default function OwnerAddComputer() {
                 <button onClick={addComputer} style={ownerAddComputer.button} className='Button-light'>Add to Store</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
-        </div >
+        </div>
     )
 }

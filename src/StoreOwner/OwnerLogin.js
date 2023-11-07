@@ -42,6 +42,7 @@ export default function OwnerLogin() {
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
+
             <div style={ownerLogin}>
                 <div style={ownerLogin.title}>-- {storeName} LOGIN --</div>
                 <div style={ownerLogin.login}>

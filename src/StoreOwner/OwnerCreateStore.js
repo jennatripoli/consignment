@@ -72,6 +72,6 @@ export default function OwnerCreateStore() {
         <button onClick={createStore} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
         <label>{confirmation}</label>
       </div>
-    </div >
+    </div>
   )
 }

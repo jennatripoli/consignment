@@ -59,6 +59,6 @@ export default function OwnerEditPrice() {
                 <button onClick={updatePrice} style={ownerCreateStore.button} className='Button-light'>Update</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
-        </div >
+        </div>
     )
 }
