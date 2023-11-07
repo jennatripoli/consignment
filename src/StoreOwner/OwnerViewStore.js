@@ -74,10 +74,10 @@ export default function OwnerViewStore() {
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
                 <Link to='/OwnerAddComputer'><button style={header.buttonMiddle} className='Button-light'>Add Computer</button></Link>
-                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Logout</button>
+                <button onClick={() => navigate(-2)} style={header.buttonRight} className='Button-light'>Logout</button>
             </div>
             <div style={ownerViewStore}>
-                <div style={ownerViewStore.title}>-- ALL STORES --</div>
+                <div style={ownerViewStore.title}>-- ALL COMPUTERS --</div>
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort Date:</span>&emsp;
