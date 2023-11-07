@@ -63,7 +63,7 @@ export default function OwnerViewStore() {
     }
 
     /** Sort the stores by their inventory. */
-    function handleSort() {
+    function sortInventory() {
         if (document.getElementById('ascending').checked) setSort('ascending')
         else if (document.getElementById('descending').checked) setSort('descending')
     }
@@ -81,8 +81,8 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={handleSort}></input>Ascending</label>&emsp;
-                        <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={handleSort}></input>Descending</label>
+                        <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={sortInventory}></input>Ascending</label>&emsp;
+                        <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={sortInventory}></input>Descending</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>

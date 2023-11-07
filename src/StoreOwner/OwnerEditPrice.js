@@ -12,6 +12,7 @@ export default function OwnerEditPrice() {
     // The computer's price.
     const [price, setPrice] = useState(computer.price)
 
+    /** Update the price of the computer. */
     async function updatePrice() {
         setConfirmation('Updating price, please wait.')
         try {
@@ -33,7 +34,7 @@ export default function OwnerEditPrice() {
     }
 
     return (
-        <div className='OwnerCreateStore'>
+        <div className='OwnerEditPrice'>
             <div style={header}>
                 <div style={header.title}>Used Computers</div>
                 <div style={header.subtitle}><i>Virtual Consignment Site</i></div>

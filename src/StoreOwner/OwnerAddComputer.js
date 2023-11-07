@@ -26,8 +26,8 @@ export default function OwnerAddComputer() {
     const [graphics, setGraphics] = useState(graphicsChoices[0])
     const [confirmation, setConfirmation] = useState('')
 
-    async function handleButtonCreate() {
-        setConfirmation('Creating Store, please wait.')
+    async function addComputer() {
+        setConfirmation('Adding computer, please wait.')
         try {
             let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer', {
                 method: 'POST',
@@ -74,7 +74,7 @@ export default function OwnerAddComputer() {
                     <br /><br />
                     <label>Graphics:</label>&emsp;<select onChange={e => setGraphics(e.target.value)} style={ownerAddComputer.entry} className='Entry-light'>{graphicsChoices.map(choice => <option value={choice}>{choice}</option>)}</select>
                 </div>
-                <button onClick={handleButtonCreate} style={ownerAddComputer.button} className='Button-light'>Add to Store</button><br />
+                <button onClick={addComputer} style={ownerAddComputer.button} className='Button-light'>Add to Store</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
         </div >

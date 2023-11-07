@@ -13,7 +13,7 @@ export default function SiteManagerLogin() {
     const [confirmation, setConfirmation] = useState('')
 
     /** Log in to the site with the entered credentials. */
-    async function handleButtonLogin() {
+    async function login() {
         setConfirmation('Logging in, please wait.')
         try {
             let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin', {
@@ -48,7 +48,7 @@ export default function SiteManagerLogin() {
                     <label>Password:&emsp;&nbsp;</label>
                     <input id='password' type='password' value={password} onChange={e => setPassword(e.target.value)} style={siteManagerLogin.entry} className='Entry-light'></input>
                 </div>
-                <button onClick={handleButtonLogin} style={siteManagerLogin.button} className='Button-light'>Log In</button><br />
+                <button onClick={login} style={siteManagerLogin.button} className='Button-light'>Log In</button><br />
                 {confirmation.length > 0 && <label>{confirmation}</label>}
             </div>
         </div>

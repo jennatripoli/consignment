@@ -20,14 +20,14 @@ export default function CustomerViewInventory() {
     const { storeName } = useParams()
 
     /** Select a computer for comparison. If two are selected, go to CustomerCompare. */
-    function handleButtonCompare(computer) {
+    function compareComputers(computer) {
         if (selected === null) setSelected(computer)
         else if (selected === computer) setSelected(null)
         else navigate('/CustomerCompare', { state: { computer1: selected, computer2: computer } })
     }
 
     /** Purchase a computer from the available inventory. */
-    async function handleButtonPurchase(computer) {
+    async function purchaseComputer(computer) {
         let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
             method: 'DELETE',
             body: JSON.stringify({
@@ -176,8 +176,8 @@ export default function CustomerViewInventory() {
                                 <div style={customerViewInventory.left}><b>{computer.name}</b><br /><br />Memory: {computer.memory}<br />Storage Size: {computer.storage}<br />Processor: {computer.processor}<br />Processor Gen: {computer.processorgen}<br />Graphics: {computer.graphics}</div>
                                 <div style={customerViewInventory.right}><b>Total Price: ${(parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)}</b><br /><br />Store: {computer.store}<br />List Price: ${computer.price}<br />Shipping: ${calculateShipping(computer)}</div>
                             </div>
-                            <button id={computer.id + 'Compare'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonCompare(computer)}>Compare</button>
-                            <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => handleButtonPurchase(computer)}>Purchase</button>
+                            <button id={computer.id + 'Compare'} style={customerViewInventory.button} className='Button-light' onClick={() => compareComputers(computer)}>Compare</button>
+                            <button id={computer.id + 'Purchase'} style={customerViewInventory.button} className='Button-light' onClick={() => purchaseComputer(computer)}>Purchase</button>
                         </div>
                     ))}
                 </div>

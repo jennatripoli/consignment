@@ -15,7 +15,7 @@ export default function OwnerLogin() {
     const { storeName } = useLocation().state
 
     /** Log in to the store with the entered credentials. */
-    async function handleButtonLogin() {
+    async function login() {
         setConfirmation('Logging in, please wait.')
         try {
             let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
@@ -51,7 +51,7 @@ export default function OwnerLogin() {
                     <label>Password:&emsp;&nbsp;</label>
                     <input id='password' type='password' value={password} onChange={e => setPassword(e.target.value)} style={ownerLogin.entry} className='Entry-light'></input>
                 </div>
-                <button onClick={handleButtonLogin} style={ownerLogin.button} className='Button-light'>Log In</button><br />
+                <button onClick={login} style={ownerLogin.button} className='Button-light'>Log In</button><br />
                 <label>{confirmation}</label>
             </div>
         </div>

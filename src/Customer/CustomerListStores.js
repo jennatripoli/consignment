@@ -35,13 +35,13 @@ export default function CustomerListStores() {
     useEffect(() => { retrieve() }, [])
 
     /** Go to CustomerViewInventory if GPS is set, otherwise go to CustomerSetGPS. */
-    function handleButtonViewAll() {
+    function viewAllInventory() {
         if (customerGPS[0] !== null && customerGPS[1] !== null) navigate('/CustomerViewInventory')
         else navigate('/CustomerSetGPS', { state: { destination: '/CustomerViewInventory' } })
     }
 
     /** Go to CustomerViewInventory for a store if GPS is set, otherwise go to CustomerSetGPS. */
-    function handleButtonViewStore(storeName) {
+    function viewStoreInventory(storeName) {
         if (customerGPS[0] !== null && customerGPS[1] !== null) navigate(`/CustomerViewInventory/${storeName}`, { state: { store: storeName } })
         else navigate('/CustomerSetGPS', { state: { destination: `/CustomerViewInventory/${storeName}`, store: storeName } })
     }
@@ -58,8 +58,8 @@ export default function CustomerListStores() {
 
             <div style={customerListStores}>
                 <div style={customerListStores.title}>-- ALL STORES --</div>
-                <button onClick={handleButtonViewAll} style={customerListStores.buttonInventory} className='Button-light'>View Inventory on Entire Site</button>
-                <div style={customerListStores.stores}>{stores.map((store) => <button key={store.storeName} onClick={() => handleButtonViewStore(store.storeName)} style={customerListStores.buttonStore} className='Button-dark'>{store.storeName}</button>)}</div>
+                <button onClick={viewAllInventory} style={customerListStores.buttonInventory} className='Button-light'>View Inventory on Entire Site</button>
+                <div style={customerListStores.stores}>{stores.map((store) => <button key={store.storeName} onClick={() => viewStoreInventory(store.storeName)} style={customerListStores.buttonStore} className='Button-dark'>{store.storeName}</button>)}</div>
             </div>
         </div>
     )

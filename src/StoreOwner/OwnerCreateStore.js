@@ -19,14 +19,13 @@ export default function OwnerCreateStore() {
   const [confirmation, setConfirmation] = useState(undefined)
 
   /** Create a store with input data. */
-  async function handleButtonCreate() {
+  async function createStore() {
+    setConfirmation('Creating store, please wait.')
     setStoreName(document.getElementById('storeName').value)
     setUsername(document.getElementById('username').value)
     setPassword(document.getElementById('password').value)
     setLongitude(document.getElementById('longitude').value)
     setLatitude(document.getElementById('latitude').value)
-
-    setConfirmation('Creating store, please wait.')
 
     let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
       method: 'POST',
@@ -40,7 +39,6 @@ export default function OwnerCreateStore() {
       })
     })
     let json = await resp.json()
-
     if (resp.status === 200) navigate(`/OwnerViewStore/${storeName}`)
     else setConfirmation('Failed to create store, please fill in all fields.')
   }
@@ -71,7 +69,7 @@ export default function OwnerCreateStore() {
           <label>Latitude:&emsp;&emsp;&nbsp;</label>
           <input id='latitude' type='number' value={latitude} onChange={e => setLatitude(e.target.value)} style={ownerCreateStore.entry} className='Entry-light'></input>
         </div>
-        <button onClick={handleButtonCreate} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
+        <button onClick={createStore} style={ownerCreateStore.button} className='Button-light'>Create</button><br />
         <label>{confirmation}</label>
       </div>
     </div >

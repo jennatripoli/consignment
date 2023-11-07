@@ -18,7 +18,7 @@ export default function CustomerSetGPS() {
     const [confirmation, setConfirmation] = useState(undefined)
 
     /** Save the GPS data. */
-    function handleButtonSave() {
+    function saveGPS() {
         if (longitude && latitude) {
             if (longitude >= -180 && longitude <= 180 && latitude >= -90 && longitude <= 90) {
                 setCustomerGPS([longitude, latitude])
@@ -45,7 +45,7 @@ export default function CustomerSetGPS() {
                     <label>Latitude:&emsp;&nbsp;&nbsp;&nbsp;</label>
                     <input id='latitude' type='number' value={latitude} style={customerSetGPS.entry} onChange={(e) => setLatitude(e.target.value)} className='Entry-light'></input>
                 </div>
-                <button onClick={handleButtonSave} style={customerSetGPS.button} className='Button-light'>Save</button><br />
+                <button onClick={saveGPS} style={customerSetGPS.button} className='Button-light'>Save</button><br />
                 <label>{confirmation}</label>
             </div>
         </div>
