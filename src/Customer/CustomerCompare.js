@@ -3,7 +3,7 @@ import { header, customerCompare } from '../Layout'
 import { useNavigate, useLocation } from 'react-router-dom'
 import CustomerGPSContext from './CustomerGPSContext'
 
-export default function CustomerViewInventory() {
+export default function CustomerCompare() {
     // Route navigation.
     const navigate = useNavigate()
     // Value saved as the customer's GPS location.
@@ -27,38 +27,19 @@ export default function CustomerViewInventory() {
 
     return (
         <div className='CustomerCompare'>
-            <div style={{
-                position: 'relative',
-                display: 'flex',
-                width: '98%',
-                margin: '1%',
-                textAlign: 'left'
-            }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <div style={header.title}>Used Computers</div>
-                    <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
-                </div>
-                <div style={{ flex: '1', display: 'flex', justifyContent: 'end' }}>
-                    <button onClick={() => navigate(-1)} style={{ marginLeft: '.5em', borderRadius: '1em', maxWidth: '7em', border: 'transparent', fontSize: '1.5em', padding: '0.2em 0.5em 0.2em 0.5em', alignSelf: 'center' }} className='Button-light'>Back</button>
-                </div>
+            <div style={header}>
+                <div style={header.title}>Used Computers</div>
+                <div style={header.subtitle}><i>Virtual Consignment Site</i></div>
+                <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Back</button>
             </div>
             <div style={customerCompare}>
                 <div style={customerCompare.title}>{`-- COMPARE COMPUTERS --`}</div>
-            </div>
-            <div style={customerCompare} className='customerCompare'>
                 <div id='inventory' style={customerCompare.inventory}>
-                    <div key={computer1.id}>
-                        <div style={customerCompare.computer}>
-                            <div style={customerCompare.center}><b>{computer1.name}</b><br /><br /><b>Total Price: ${(parseFloat(computer1.price) + parseFloat(calculateShipping(computer1))).toFixed(2)}</b><br /><br />List Price: ${computer1.price}<br />Shopping Cost: ${calculateShipping(computer1)}<br />Memory: {computer1.memory}<br />Storage Size: {computer1.storage}<br />Processor: {computer1.processor}<br />Processor Gen: {computer1.processorgen}<br />Graphics: {computer1.graphics}<br />Store: {computer1.store}<br />Shipping: ${1000.23}</div>
-                        </div>
+                    <div key={computer1.id} style={customerCompare.computer}>
+                        <b>{computer1.name}<br />Total Price: ${(parseFloat(computer1.price) + parseFloat(calculateShipping(computer1))).toFixed(2)}</b><br /><br />List Price: ${computer1.price}<br />Shipping Cost: ${calculateShipping(computer1)}<br /><br />Memory: {computer1.memory}<br />Storage Size: {computer1.storage}<br />Processor: {computer1.processor}<br />Processor Gen: {computer1.processorgen}<br />Graphics: {computer1.graphics}<br />Store: {computer1.store}
                     </div>
-                    <div key={computer2.id}>
-                        <div style={customerCompare.computer}>
-                            <div style={customerCompare.center}><b>{computer2.name}</b><br /><br /><b>Total Price: ${(parseFloat(computer2.price) + parseFloat(calculateShipping(computer2))).toFixed(2)}</b><br /><br />List Price: ${computer2.price}<br />Shopping Cost: ${calculateShipping(computer2)}<br />Memory: {computer2.memory}<br />Storage Size: {computer2.storage}<br />Processor: {computer2.processor}<br />Processor Gen: {computer2.processorgen}<br />Graphics: {computer2.graphics}<br />Store: {computer2.store}<br />Shipping: ${1000.23}</div>
-                        </div>
+                    <div key={computer2.id} style={customerCompare.computer}>
+                        <b>{computer2.name}<br />Total Price: ${(parseFloat(computer2.price) + parseFloat(calculateShipping(computer2))).toFixed(2)}</b><br /><br />List Price: ${computer2.price}<br />Shipping Cost: ${calculateShipping(computer2)}<br /><br />Memory: {computer2.memory}<br />Storage Size: {computer2.storage}<br />Processor: {computer2.processor}<br />Processor Gen: {computer2.processorgen}<br />Graphics: {computer2.graphics}<br />Store: {computer2.store}
                     </div>
                 </div>
             </div>

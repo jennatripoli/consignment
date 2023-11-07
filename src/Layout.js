@@ -225,43 +225,6 @@ export const customerCompare = {
         color: '#475841'
     },
 
-    filter: {
-        position: 'absolute',
-        textAlign: 'left',
-        width: '17%',
-        left: '21%',
-        backgroundColor: 'white',
-        margin: '1.5em 0 0 0',
-        borderRadius: '0.8em',
-        fontSize: '1em',
-        padding: '0.6em'
-    },
-
-    filterTitle: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        display: 'block'
-    },
-
-    left: {
-        textAlign: 'left',
-        width: '70%',
-        float: 'left'
-    },
-
-    right: {
-        textAlign: 'right',
-        height: 'fit-content',
-        width: '40%',
-        float: 'right'
-    },
-
-    center: {
-        textAlign: 'center',
-        height: 'fit-content',
-        width: '80%'
-    },
-
     inventory: {
         width: '100%',
         display: 'flex',
@@ -269,18 +232,16 @@ export const customerCompare = {
     },
 
     computer: {
-        display: 'flex',
+        display: 'inline-block',
         position: 'relative',
         borderRadius: '0.8em',
         padding: '0.6em',
-        margin: '1.5em 1em 0 1em',
+        margin: '1.5em 1em 1em 1em',
         border: 'none',
         fontSize: '1em',
         backgroundColor: '#475841',
         color: 'white',
-        justifyContent: 'center',
-        width: '30em',
-        height: '20em'
+        width: '25em',
     }
 }
 

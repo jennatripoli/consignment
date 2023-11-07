@@ -76,7 +76,6 @@ export default function OwnerViewStore() {
                 <Link to='/OwnerAddComputer'><button style={header.buttonMiddle} className='Button-light'>Add Computer</button></Link>
                 <button onClick={() => navigate(-1)} style={header.buttonRight} className='Button-light'>Logout</button>
             </div>
-
             <div style={ownerViewStore}>
                 <div style={ownerViewStore.title}>-- ALL STORES --</div>
                 <div style={ownerViewStore.info}>
