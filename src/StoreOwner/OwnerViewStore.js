@@ -13,8 +13,8 @@ export default function OwnerViewStore() {
     const [totalInventory, setTotalInventory] = useState(0)
     // Total balance amount for store.
     const [totalBalance, setTotalBalance] = useState(0)
-    // How to sort the computers based on date added ('ascending' or 'descending').
-    const [sort, setSort] = useState('ascending')
+    // How to sort the computers based on date added ('oldest' or 'newest'). [oldest -> newest], [newest -> oldest]
+    const [sort, setSort] = useState('oldest')
 
     async function retrieve(store) {
         if (store === undefined) {
@@ -64,8 +64,8 @@ export default function OwnerViewStore() {
 
     /** Sort the stores by their inventory. */
     function sortInventory() {
-        if (document.getElementById('ascending').checked) setSort('ascending')
-        else if (document.getElementById('descending').checked) setSort('descending')
+        if (document.getElementById('oldest').checked) setSort('oldest')
+        else if (document.getElementById('newest').checked) setSort('newest')
     }
 
     return (
@@ -81,9 +81,9 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.title}>-- ALL COMPUTERS --</div>
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
-                    <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={sortInventory}></input>Ascending</label>&emsp;
-                        <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={sortInventory}></input>Descending</label>
+                    <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort by Date:</span>&emsp;
+                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortInventory}></input>Oldest</label>&emsp;
+                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortInventory}></input>Newest</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>
