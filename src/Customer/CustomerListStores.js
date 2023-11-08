@@ -14,14 +14,15 @@ export default function CustomerListStores() {
     // Get customer GPS location from Geolocation API.
     const { geoCoords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
-            positionOptions: { enableHighAccuracy: false },
+            positionOptions: { enableHighAccuracy: true },
             userDecisionTimeout: 5000,
         })
     
     // Update customerGPS when geoCoords changes.
     useEffect(() => {
-        console.log(customerGPS)
-        setCustomerGPS([geoCoords?.latitude, geoCoords?.longitude])
+        if(geoCoords?.latitude !== undefined && geoCoords?.longitude !== undefined){
+            setCustomerGPS([geoCoords?.latitude, geoCoords?.longitude])
+        }
     }, [geoCoords])
 
     async function retrieve() {
