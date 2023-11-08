@@ -305,7 +305,7 @@ export const siteManagerListStores = {
     info: {
         position: 'relative',
         display: 'block',
-        margin: '1em',
+        margin: '1em 1em 0 1em',
         fontSize: '1.5em',
         height: '100%'
     },
