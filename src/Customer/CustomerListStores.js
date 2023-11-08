@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { customerListStores, header } from '../Layout'
 import CustomerGPSContext from './CustomerGPSContext'
 import { useContext, useEffect, useState } from 'react'
-import { useGeolocated } from 'react-geolocated'
 
 export default function CustomerListStores() {
     // Route navigation.
@@ -12,19 +11,7 @@ export default function CustomerListStores() {
     // List of all stores.
     const [stores, setStores] = useState([])
     // Get customer GPS location from Geolocation API.
-    const { geoCoords, isGeolocationAvailable, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: { enableHighAccuracy: true },
-            userDecisionTimeout: 5000,
-        })
     
-    // Update customerGPS when geoCoords changes.
-    useEffect(() => {
-        if(geoCoords?.latitude !== undefined && geoCoords?.longitude !== undefined){
-            setCustomerGPS([geoCoords?.latitude, geoCoords?.longitude])
-        }
-    }, [geoCoords])
-
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'

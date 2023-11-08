@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import CustomerGPSProvider from './Customer/CustomerGPSProvider'
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <CustomerGPSProvider>
+      <App />
+    </CustomerGPSProvider>
   </React.StrictMode>
 );
 
