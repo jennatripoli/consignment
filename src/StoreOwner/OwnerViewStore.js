@@ -24,7 +24,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
+                setComputers(json.sort((a, b) => new Date(a.timecreated) - new Date(b.timecreated)))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         } else {
@@ -33,7 +33,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
+                setComputers(json.sort((a, b) => new Date(a.timecreated) - new Date(b.timecreated)))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
@@ -49,11 +49,11 @@ export default function OwnerViewStore() {
         if (sort === 'oldest') {
             document.getElementById('oldest').checked = true
             document.getElementById('newest').checked = false
-            setComputers([...inventory.sort((a, b) => b.timecreated - a.timecreated)])
+            setComputers([...inventory.sort((a, b) => new Date(a.timecreated) - new Date(b.timecreated))])
         } else if (sort === 'newest') {
             document.getElementById('newest').checked = true
             document.getElementById('oldest').checked = false
-            setComputers([...inventory.sort((a, b) => a.timecreated - b.timecreated)])
+            setComputers([...inventory.sort((a, b) => new Date(b.timecreated) - new Date(a.timecreated))])
         }
     }, [sort])
 
@@ -76,11 +76,6 @@ export default function OwnerViewStore() {
         navigate('/OwnerEditPrice', { state: { computer: computer } })
     }
 
-    /** Sort the stores by their inventory. */
-    function sortComputer() {
-        if (document.getElementById('oldest').checked) setSort('oldest')
-        else if (document.getElementById('newest').checked) setSort('newest')
-    }
 
     return (
         <div className='OwnerViewStore'>
@@ -96,8 +91,8 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort by Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortComputer}></input>Oldest</label>&emsp;
-                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortComputer}></input>Newest</label>
+                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={() => { setSort('oldest') }}></input>Oldest</label>&emsp;
+                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={() => { setSort('newest') }}></input>Newest</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>
