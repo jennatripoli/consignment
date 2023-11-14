@@ -14,7 +14,7 @@ export default function SiteManagerListStores() {
     // Total inventory amount for site.
     const [inventory, setInventory] = useState(-1)
 
-    /** Retrieve data. */
+    // Retrieve data.
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'
@@ -23,6 +23,7 @@ export default function SiteManagerListStores() {
         setStores(json.sort((a, b) => b.inventory - a.inventory))
     }
 
+    // get store stats
     async function getStats() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin', {
             method: 'GET'
@@ -80,7 +81,7 @@ export default function SiteManagerListStores() {
                     <span style={siteManagerListStores.data}><b>Inventory:</b> ${inventory}</span>
                     <span style={siteManagerListStores.sort}><span style={{ fontWeight: 'bold' }}>Sort Inventory:</span>&emsp;
                         <label><input type='radio' className='Radio' id='ascending' name='sort' value='ascending' onChange={sortStores}></input>Ascending</label>&emsp;
-                        <label><input type='radio' className='Radio' id='descending' name='sort' value='ascending' onChange={sortStores}></input>Descending</label>
+                        <label><input type='radio' className='Radio' id='descending' name='sort' value='descending' onChange={sortStores}></input>Descending</label>
                     </span>
                     <span style={siteManagerListStores.data}><b>Balance:</b> ${balance}</span>
                 </div>

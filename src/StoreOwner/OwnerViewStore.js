@@ -8,14 +8,15 @@ export default function OwnerViewStore() {
     // Store name from parameter.
     const { storeName } = useParams()
     // List of inventory to display.
-    const [inventory, setInventory] = useState([])
-    // Total inventory amount for store.
-    const [totalInventory, setTotalInventory] = useState(0)
+    const [inventory, setComputers] = useState([])
+    // How to sort the computers based on date added ('oldest' or 'newest'). [oldest -> newest], [newest -> oldest]
+    const [sort, setSort] = useState([])
     // Total balance amount for store.
     const [totalBalance, setTotalBalance] = useState(0)
-    // How to sort the computers based on date added ('oldest' or 'newest'). [oldest -> newest], [newest -> oldest]
-    const [sort, setSort] = useState('oldest')
+    // Total inventory amount for store.
+    const [totalInventory, setTotalInventory] = useState(0)
 
+    // Retrieve computers.
     async function retrieve(store) {
         if (store === undefined) {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
@@ -23,7 +24,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setInventory(json)
+                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         } else {
@@ -32,7 +33,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setInventory(json)
+                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
@@ -42,6 +43,19 @@ export default function OwnerViewStore() {
         json = json.filter(store => store.storeName === storeName)[0]
         setTotalBalance(json.balance)
     }
+
+    // Update computers when sort changes.
+    useEffect(() => {
+        if (sort === 'oldest') {
+            document.getElementById('oldest').checked = true
+            document.getElementById('newest').checked = false
+            setComputers([...inventory.sort((a, b) => b.timecreated - a.timecreated)])
+        } else if (sort === 'newest') {
+            document.getElementById('newest').checked = true
+            document.getElementById('oldest').checked = false
+            setComputers([...inventory.sort((a, b) => a.timecreated - b.timecreated)])
+        }
+    }, [sort])
 
     useEffect(() => { retrieve(storeName) }, [])
 
@@ -54,7 +68,7 @@ export default function OwnerViewStore() {
                 { action: 'DELETE', ...computer }
             )
         })
-        if (resp.status === 200) setInventory([...inventory.filter(comp => comp.id !== computer.id)])
+        if (resp.status === 200) setComputers([...inventory.filter(comp => comp.id !== computer.id)])
     }
 
     /** Edit the price of a computer. */
@@ -63,7 +77,7 @@ export default function OwnerViewStore() {
     }
 
     /** Sort the stores by their inventory. */
-    function sortInventory() {
+    function sortComputer() {
         if (document.getElementById('oldest').checked) setSort('oldest')
         else if (document.getElementById('newest').checked) setSort('newest')
     }
@@ -82,8 +96,8 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort by Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortInventory}></input>Oldest</label>&emsp;
-                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortInventory}></input>Newest</label>
+                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortComputer}></input>Oldest</label>&emsp;
+                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortComputer}></input>Newest</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>
