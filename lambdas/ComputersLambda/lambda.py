@@ -147,7 +147,14 @@ def delete(event,context):
             update_store = "UPDATE store set inventory=%s where storename=%s"
             cursor.execute(statement,(body['id'],))
             cursor.execute(update_store,(inventory-float(body['price']),body['store']))
+
+            get_manager = "SELECT username, sitebalance FROM sitemanager"
+            cursor.execute(get_manager)
+            [username,manager_balance] = cursor.fetchall()[0]
+            update_manager = "UPDATE sitemanager set sitebalance=%s where username=%s"
+            cursor.execute(update_manager,(manager_balance+float(25),username))
             conn.commit()
+
         elif body['action'] == 'PURCHASE':
             update_store = "UPDATE store set inventory=%s,balance=%s where storename=%s"
             cursor.execute(statement,(body['id'],))
