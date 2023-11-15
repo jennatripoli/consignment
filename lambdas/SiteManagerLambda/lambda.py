@@ -48,6 +48,10 @@ def get(event,context):
             balance += store[0]
             inventory += store[1]
 
+        cursor.execute("SELECT sitebalance FROM sitemanager")
+
+        balance += cursor.fetchall()[0][0]
+
         balance = round(balance,2)
         inventory = round(inventory,2)
 
