@@ -34,7 +34,8 @@ export default function CustomerViewInventory() {
                 action: 'PURCHASE',
                 id: computer.id,
                 store: computer.store,
-                price: (parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2) // figure out if this should include shipping should be included in inventory or not, if not lambdas need a refactor
+                price: computer.price,
+                shipping: calculateShipping(computer)
             })
         })
         let json = await resp.json()

@@ -162,8 +162,8 @@ def delete(event,context):
             cursor.execute(get_manager)
             [username,manager_balance] = cursor.fetchall()[0]
             cursor.execute(statement,(body['id'],))
-            cursor.execute(update_store,(inventory-float(body['price']),balance+float(body['price'])*.95,body['store']))
-            cursor.execute(update_manager,(manager_balance+float(body['price'])*.05,username))
+            cursor.execute(update_store,(inventory-float(body['price']),balance+(float(body['price'])+float(body['shipping']))*.95,body['store']))
+            cursor.execute(update_manager,(manager_balance+(float(body['price'])+float(body['shipping']))*.95,username))
             conn.commit()
         else:
             raise Exception('action is not supported')
