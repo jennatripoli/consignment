@@ -34,7 +34,7 @@ export default function CustomerViewInventory() {
                 action: 'PURCHASE',
                 id: computer.id,
                 store: computer.store,
-                price: computer.price
+                price: (parseFloat(computer.price) + parseFloat(calculateShipping(computer))).toFixed(2)
             })
         })
         let json = await resp.json()

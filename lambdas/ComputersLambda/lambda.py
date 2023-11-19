@@ -157,8 +157,12 @@ def delete(event,context):
 
         elif body['action'] == 'PURCHASE':
             update_store = "UPDATE store set inventory=%s,balance=%s where storename=%s"
+            get_manager = "SELECT username, sitebalance FROM sitemanager"
+            cursor.execute(get_manager)
+            [username,manager_balance] = cursor.fetchall()[0]
             cursor.execute(statement,(body['id'],))
-            cursor.execute(update_store,(inventory-float(body['price']),balance+float(body['price']),body['store']))
+            cursor.execute(update_store,(inventory-float(body['price']),balance+float(body['price']*.95),body['store']))
+            cursor.execute(update_manager,(manager_balance+float(body['price']*.05),username))
             conn.commit()
         else:
             raise Exception('action is not supported')
