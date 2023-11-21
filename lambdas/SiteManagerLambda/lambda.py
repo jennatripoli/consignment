@@ -39,18 +39,16 @@ def get(event,context):
         cursor = conn.cursor()
 
         # Execute your SQL queries here
-        cursor.execute("SELECT balance, inventory FROM store")
+        cursor.execute("SELECT inventory FROM store")
 
-        balance = 0.0
         inventory = 0.0
 
         for store in cursor.fetchall():
-            balance += store[0]
-            inventory += store[1]
+            inventory += store[0]
 
         cursor.execute("SELECT sitebalance FROM sitemanager")
 
-        balance += cursor.fetchall()[0][0]
+        balance = cursor.fetchall()[0][0]
 
         balance = round(balance,2)
         inventory = round(inventory,2)
