@@ -10,7 +10,7 @@ export default function OwnerViewStore() {
     // List of inventory to display.
     const [inventory, setComputers] = useState([])
     // How to sort the computers based on date added ('oldest' or 'newest'). [oldest -> newest], [newest -> oldest]
-    const [sort, setSort] = useState([])
+    const [sort, setSort] = useState('oldest')
     // Total balance amount for store.
     const [totalBalance, setTotalBalance] = useState(0)
     // Total inventory amount for store.
@@ -71,6 +71,12 @@ export default function OwnerViewStore() {
         if (resp.status === 200) setComputers([...inventory.filter(comp => comp.id !== computer.id)])
     }
 
+    /** Sort the stores by their inventory. */
+    function sortComputers() {
+        if (document.getElementById('oldest').checked) setSort('oldest')
+        else if (document.getElementById('newest').checked) setSort('newest')
+    }
+
     /** Edit the price of a computer. */
     function editComputer(computer) {
         navigate('/OwnerEditPrice', { state: { computer: computer } })
@@ -91,8 +97,8 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort by Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={() => { setSort('oldest') }}></input>Oldest</label>&emsp;
-                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={() => { setSort('newest') }}></input>Newest</label>
+                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortComputers}></input>Oldest</label>&emsp;
+                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortComputers}></input>Newest</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>

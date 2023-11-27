@@ -20,7 +20,7 @@ export default function SiteManagerListStores() {
             method: 'GET'
         })
         let json = await resp.json()
-        setStores(json.sort((a, b) => b.inventory - a.inventory))
+        setStores(json.sort((a, b) => a.inventory - b.inventory))
     }
 
     // get store stats
