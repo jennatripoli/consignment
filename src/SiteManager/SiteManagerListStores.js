@@ -38,11 +38,11 @@ export default function SiteManagerListStores() {
         if (sort === 'ascending') {
             document.getElementById('ascending').checked = true
             document.getElementById('descending').checked = false
-            setStores([...stores.sort((a, b) => b.inventory - a.inventory)])
+            setStores([...stores.sort((a, b) => a.inventory - b.inventory)])
         } else if (sort === 'descending') {
             document.getElementById('descending').checked = true
             document.getElementById('ascending').checked = false
-            setStores([...stores.sort((a, b) => a.inventory - b.inventory)])
+            setStores([...stores.sort((a, b) => b.inventory - a.inventory)])
         }
     }, [sort])
 
