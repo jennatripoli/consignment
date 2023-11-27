@@ -72,10 +72,10 @@ export default function OwnerViewStore() {
     }
 
     /** Sort the stores by their inventory. */
-    function sortComputers() {
-        if (document.getElementById('oldest').checked) setSort('oldest')
-        else if (document.getElementById('newest').checked) setSort('newest')
-    }
+    // function sortComputers() {
+    //     if (document.getElementById('oldest').checked) setSort('oldest')
+    //     else if (document.getElementById('newest').checked) setSort('newest')
+    // }
 
     /** Edit the price of a computer. */
     function editComputer(computer) {
@@ -97,8 +97,8 @@ export default function OwnerViewStore() {
                 <div style={ownerViewStore.info}>
                     <span style={ownerViewStore.data}><b>Inventory:</b> ${totalInventory}</span>
                     <span style={ownerViewStore.sort}><span style={{ fontWeight: 'bold' }}>Sort by Date:</span>&emsp;
-                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={sortComputers}></input>Oldest</label>&emsp;
-                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={sortComputers}></input>Newest</label>
+                        <label><input type='radio' className='Radio' id='oldest' name='sort' value='oldest' onChange={() => { setSort('oldest') }}></input>Oldest</label>&emsp;
+                        <label><input type='radio' className='Radio' id='newest' name='sort' value='newest' onChange={() => { setSort('newest') }}></input>Newest</label>
                     </span>
                     <span style={ownerViewStore.data}><b>Balance:</b> ${totalBalance}</span>
                 </div>
