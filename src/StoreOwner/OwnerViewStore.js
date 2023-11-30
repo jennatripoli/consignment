@@ -10,12 +10,12 @@ export default function OwnerViewStore() {
     // List of inventory to display.
     const [inventory, setComputers] = useState([])
     // How to sort the computers based on date added ('oldest' or 'newest'). [oldest -> newest], [newest -> oldest]
-    const [sort, setSort] = useState('oldest')
+    const [sort, setSort] = useState('newest')
     // Total balance amount for store.
     const [totalBalance, setTotalBalance] = useState(0)
     // Total inventory amount for store.
     const [totalInventory, setTotalInventory] = useState(0)
-
+    
     // Retrieve computers.
     async function retrieve(store) {
         if (store === undefined) {
@@ -24,7 +24,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
+                setComputers(json.sort((a, b) => new Date(b.timecreated) - new Date(a.timecreated)))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         } else {
@@ -33,7 +33,7 @@ export default function OwnerViewStore() {
             })
             if (resp.status === 200) {
                 let json = await resp.json()
-                setComputers(json.sort((a, b) => a.timecreated - b.timecreated))
+                setComputers(json.sort((a, b) => new Date(b.timecreated) - new Date(a.timecreated)))
                 setTotalInventory(json.reduce((tot, comp) => tot + comp.price, 0))
             }
         }
