@@ -16,7 +16,6 @@ export default function OwnerViewStore() {
     // Total inventory amount for store.
     const [totalInventory, setTotalInventory] = useState(0)
     
-    // Retrieve computers.
     async function retrieve(store) {
         if (store === undefined) {
             let resp = await fetch(`https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/computer`, {
@@ -71,17 +70,10 @@ export default function OwnerViewStore() {
         if (resp.status === 200) setComputers([...inventory.filter(comp => comp.id !== computer.id)])
     }
 
-    /** Sort the stores by their inventory. */
-    // function sortComputers() {
-    //     if (document.getElementById('oldest').checked) setSort('oldest')
-    //     else if (document.getElementById('newest').checked) setSort('newest')
-    // }
-
     /** Edit the price of a computer. */
     function editComputer(computer) {
         navigate('/OwnerEditPrice', { state: { computer: computer } })
     }
-
 
     return (
         <div className='OwnerViewStore'>

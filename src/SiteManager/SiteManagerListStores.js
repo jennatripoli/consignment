@@ -14,7 +14,6 @@ export default function SiteManagerListStores() {
     // Total inventory amount for site.
     const [inventory, setInventory] = useState(-1)
 
-    // Retrieve data.
     async function retrieve() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/store', {
             method: 'GET'
@@ -23,8 +22,7 @@ export default function SiteManagerListStores() {
         setStores(json.sort((a, b) => a.inventory - b.inventory))
     }
 
-    // get store stats
-    async function getStats() {
+    async function statistics() {
         let resp = await fetch('https://rd2h68s92m.execute-api.us-east-1.amazonaws.com/prod/SiteManagerLogin', {
             method: 'GET'
         })
@@ -65,7 +63,7 @@ export default function SiteManagerListStores() {
         else if (document.getElementById('descending').checked) setSort('descending')
     }
 
-    getStats()
+    statistics()
 
     return (
         <div className='SiteManagerListStores'>

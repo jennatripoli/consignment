@@ -26,6 +26,7 @@ export default function OwnerAddComputer() {
     const [graphics, setGraphics] = useState(graphicsChoices[0])
     const [confirmation, setConfirmation] = useState('')
 
+    /** Add a computer with input data. */
     async function addComputer() {
         setConfirmation('Adding computer, please wait.')
         try {
